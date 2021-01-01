@@ -33,7 +33,7 @@ export default function ViewEmployee() {
     variables:{
       company_id: user?.employee?.company_id,
       limit: itemsPerPage,
-      offset: (activePage-1) * itemsPerPage,  // Pagination logic
+      offset: (activePage-1) * itemsPerPage,
       search: `%${search}%`,
     }
   })
