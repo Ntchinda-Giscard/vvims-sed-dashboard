@@ -1,5 +1,5 @@
 "use client"
-import { AppShell, Burger, Group, Skeleton } from '@mantine/core';
+import { AppShell, Burger, Group, NavLink, Skeleton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import UserTopButton from './userSectionTopBar';
 import classes from "@/app/components/css/topBar.module.css"
@@ -8,6 +8,7 @@ import cx from 'clsx';
 import Link from "next/link";
 import {links} from "@/app/components/links";
 import { usePathname } from 'next/navigation';
+import { IconGauge } from '@tabler/icons-react';
 
 
 const poppins_logo = Poppins({ subsets: ["latin"], weight:["500"] });
@@ -57,12 +58,23 @@ export default function ResponsiveSizes(
         </Group>
             
       </AppShell.Header>
-      <AppShell.Navbar p="md">
+      <AppShell.Navbar>
         <div className="flex flex-col gap-3">
         {links.map((l , index) => (
           <div className="flex flex-row">
             {/* <>{l?.icon}</> */}
-              <Link href={l?.link} className={cx([poppins_light.className, isActive(l?.link) ? classes.active : classes.inactive] )} > {l?.label} </Link>
+              <NavLink 
+                href={l?.link} 
+                className={cx([poppins_light.className, isActive(l?.link) ? classes.active : classes.inactive] )}
+                childrenOffset={28}
+                label= {l?.label} 
+                key={l?.label}
+                active= { isActive(l?.link)} 
+                variant="subtle"
+
+              > 
+                
+              </NavLink>
           </div>
             
           ))}
