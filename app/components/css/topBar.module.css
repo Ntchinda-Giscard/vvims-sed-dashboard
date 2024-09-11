@@ -1,0 +1,17 @@
+.username{
+    text-transform: uppercase;
+    color: white;
+    font-size: medium;
+}
+
+.active{
+    color: #386BF6;
+}
+
+.inactive{
+    color: #404040;
+}
+.logo{
+    font-size: x-large;
+    color: white;
+}

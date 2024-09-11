@@ -1,6 +1,18 @@
 "use client"
 import { AppShell, Burger, Group, Skeleton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import UserTopButton from './userSectionTopBar';
+import classes from "@/app/components/css/topBar.module.css"
+import { Poppins } from "next/font/google";
+import cx from 'clsx';
+import Link from "next/link";
+import {links} from "@/app/components/links";
+import { usePathname } from 'next/navigation';
+
+
+const poppins_logo = Poppins({ subsets: ["latin"], weight:["500"] });
+const poppins_light = Poppins({ subsets: ["latin"], weight:["400"] });
+
 
 export default function ResponsiveSizes(
     {
@@ -10,30 +22,54 @@ export default function ResponsiveSizes(
       }>
 ) {
   const [opened, { toggle }] = useDisclosure();
+  const pathname = usePathname()
+
+  const isActive = (path: string) => {
+    if (path === '/') {
+      return pathname === '/';
+    }
+    return pathname.startsWith(path);
+  };
 
   return (
     <AppShell
       header={{ height: { base: 60, md: 70, lg: 80 } }}
       navbar={{
-        width: { base: 100, md: 200, lg: 300 },
+        width: { base: 50, md: 100, lg: 200 },
         breakpoint: 'sm',
         collapsed: { mobile: !opened },
       }}
       padding="md"
     >
-      <AppShell.Header>
+      <AppShell.Header styles={{
+        header:{
+            background: "#386BF6"
+        }
+      }}>
         <Group h="100%" px="md">
+          
+          <Group justify='space-between' w="100%">
+            
+            <span className={cx([classes.logo, poppins_logo.className])}>VVIMS <span style={{color: "#17DBCC"}}>®</span></span>
+            <UserTopButton />
+          </Group>
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         </Group>
+            
       </AppShell.Header>
       <AppShell.Navbar p="md">
-        {Array(15)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton key={index} h={28} mt="sm" animate={false} />
+        <div className="flex flex-col gap-3">
+        {links.map((l , index) => (
+          <div className="flex flex-row">
+            {/* <>{l?.icon}</> */}
+              <Link href={l?.link} className={cx([poppins_light.className, isActive(l?.link) ? classes.active : classes.inactive] )} > {l?.label} </Link>
+          </div>
+            
           ))}
+        </div>
+        
       </AppShell.Navbar>
-      <AppShell.Main>{children}</AppShell.Main>
+      <AppShell.Main styles={{ main: {backfround: "#D9D9D9"} }} >{children}</AppShell.Main>
     </AppShell>
   );
 }
