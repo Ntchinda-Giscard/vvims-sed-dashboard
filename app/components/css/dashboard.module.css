@@ -1,3 +1,49 @@
 .heading{
     color: #404040;
+    font-size: x-large;
+}
+
+.cardTitle{
+    font-size: large;
+    width: 100px;
+}
+
+.amount{
+    color: #404040;
+    font-size: xx-large;
+}
+
+.perc{
+    font-size: small;
+    color: #16DBCC;
+}
+
+.percDesc{
+    font-size: small;
+    color: #404040;
+}
+
+.titleCars{
+    color: #404040;
+    font-size: large;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+}
+
+.cmake{
+    color: #C9C9C9;
+    font-size: medium;
+    text-transform: capitalize;
+}
+
+.license{
+    font-size: medium;
+    color: #386BF6;
+    text-transform: uppercase;
+}
+
+.time{
+    font-size: smaller;
+    color: #404040;
+    text-transform: lowercase;
 }
