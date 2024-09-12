@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import '@mantine/core/styles.css';
 import '@mantine/charts/styles.css';
-import "./globals.css";
-import ResponsiveSizes from "./dashboard/components/appshell";
-import Provider from "./provider";
+import "@/app/globals.css";
+import Provider from "../provider";
+import ResponsiveSizes from "./components/appshell";
 
 const inter = Poppins({ subsets: ["latin"], weight:["500"] });
 
@@ -22,9 +22,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Provider>
-          {/* <ResponsiveSizes> */}
+          <ResponsiveSizes>
             {children}
-          {/* </ResponsiveSizes> */}
+          </ResponsiveSizes>
         </Provider>
       </body>
     </html>

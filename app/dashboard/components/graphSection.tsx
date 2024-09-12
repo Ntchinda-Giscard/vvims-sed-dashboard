@@ -1,8 +1,8 @@
 "use client"
-import { Paper, Group, Radio, SegmentedControl, Select } from "@mantine/core";
+import { Paper, Group, SegmentedControl, Select } from "@mantine/core";
 import { useState } from "react";
 import { LineChart } from '@mantine/charts';
-import classes from "@/app/components/css/dashboard.module.css"
+import classes from "@/app/dashboard/components/css/dashboard.module.css"
 import cx from "clsx"
 
 

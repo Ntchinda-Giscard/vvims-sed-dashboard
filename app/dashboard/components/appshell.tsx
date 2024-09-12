@@ -2,11 +2,11 @@
 import { AppShell, Burger, Group, NavLink, Skeleton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import UserTopButton from './userSectionTopBar';
-import classes from "@/app/components/css/topBar.module.css"
+import classes from "@/app/dashboard/components/css/topBar.module.css"
 import { Poppins } from "next/font/google";
 import cx from 'clsx';
 import Link from "next/link";
-import {links} from "@/app/components/links";
+import {links} from "@/app/dashboard/components/links";
 import { usePathname } from 'next/navigation';
 import { IconGauge } from '@tabler/icons-react';
 
@@ -26,6 +26,7 @@ export default function ResponsiveSizes(
   const pathname = usePathname()
 
   const isActive = (path: string) => {
+    console.log(pathname)
     if (path === '/') {
       return pathname === '/';
     }
@@ -44,7 +45,7 @@ export default function ResponsiveSizes(
     >
       <AppShell.Header styles={{
         header:{
-            background: "#386BF6"
+            background: "#386BF6",
         }
       }}>
         <Group h="100%" px="md">
@@ -58,7 +59,12 @@ export default function ResponsiveSizes(
         </Group>
             
       </AppShell.Header>
-      <AppShell.Navbar>
+      <AppShell.Navbar
+        styles={{
+          navbar:{
+          }
+        }}
+      >
         <div className="flex flex-col gap-3">
         {links.map((l , index) => (
           <div className="flex flex-row">

@@ -2,7 +2,7 @@ import { ActionIcon, Avatar } from '@mantine/core';
 import { IconBellFilled, IconSettingsFilled } from '@tabler/icons-react';
 import { Poppins } from "next/font/google";
 import cx from 'clsx'
-import classes from '@/app/components/css/topBar.module.css'
+import classes from '@/app/dashboard/components/css/topBar.module.css'
 
 const poppins = Poppins({ subsets: ["latin"], weight:["700"] });
 

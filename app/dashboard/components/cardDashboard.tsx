@@ -1,7 +1,7 @@
 import { Badge, Group, Paper } from '@mantine/core'
 import Image from 'next/image'
 import { ReactElement } from 'react'
-import classes from "@/app/components/css/dashboard.module.css";
+import classes from "@/app/dashboard/components/css/dashboard.module.css";
 import { Poppins } from "next/font/google";
 import cx from 'clsx'
 import { IconChevronUp } from '@tabler/icons-react';
