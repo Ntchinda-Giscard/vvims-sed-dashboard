@@ -6,6 +6,8 @@ import { card_info } from "./components/card_info";
 import CardDashboard from "./components/cardDashboard";
 import GraphSection from "./components/graphSection";
 import LoogedCars from "./components/loogedCars";
+import RecentVisitoTable from "./components/recentVisitorTable";
+
 
 const font_heading = Poppins({ subsets: ["latin"], weight:["500"] });
 
@@ -33,11 +35,11 @@ export default function Home() {
         <div className="flex w-3/4">
           <GraphSection />
         </div>
-        <div className="flex w-1/4">
+        <div className="flex w-2/4">
           <LoogedCars />
         </div>
-
       </div>
+      <RecentVisitoTable />
     </main>
   );
 }

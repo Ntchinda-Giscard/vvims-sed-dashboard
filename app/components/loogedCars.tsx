@@ -29,7 +29,9 @@ export default LoogedCars;
 
 function CardItem(){
     return(
-        <Group>
+        <Group
+            w="100%"
+        >
         <Image src={car_f} alt={"image"} />
         <Group justify="space-between">
             <Stack>
