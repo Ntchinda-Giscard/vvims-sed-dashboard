@@ -9,17 +9,17 @@ import {
 
 export const links = [
     {link: '/dashboard', label: 'Dashboard', sub_links: [], icon: IconDashboard},
+    {link: '/dashboard/company-setup', label: 'Company Setup', sub_links: [
+        {link: "/dashboard/position", label: "position"},
+        {link: "/dashboard/departments", label:  "departments"},
+        {link: "/dashboard/services", label: "services"},
+    ], icon: IconDashboard},
     {link: '/dashboard/employees', label: 'Employees', 
         sub_links: [
             {link: "/dashboard/company-setup/position", label: "position"},
             {link: "/dashboard/company-setup/departments", label:  "departments"},
             {link: "/dashboard/company-setup/services", label: "services"},
         ], icon: IconDashboard},
-    {link: '/dashboard/company-setup', label: 'Company Setup', sub_links: [
-        {link: "/dashboard/company-setup/position", label: "position"},
-        {link: "/dashboard/company-setup/departments", label:  "departments"},
-        {link: "/dashboard/company-setup/services", label: "services"},
-    ], icon: IconDashboard},
     {link: '/dashboard/visitors', label: 'Visitors', sub_links: [], icon: IconDashboard},
     {link: '/dashboard/appointment', label: 'Appointments', sub_links: [], icon: IconCalendar},
     {link: '/dashboard/vehicle', label: 'Vehicles', sub_links: [], icon: IconCar4wd},

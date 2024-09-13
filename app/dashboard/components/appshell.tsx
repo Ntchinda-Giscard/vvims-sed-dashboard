@@ -65,10 +65,9 @@ export default function ResponsiveSizes(
       >
         <div className="flex flex-col gap-3">
         {links.map((l , index) => (
-          <div className="flex flex-row">
-            {/* <>{l?.icon}</> */}
+          // <div className="flex flex-row">
               <NavLink 
-                href={l?.sub_links.length > 0 ? l?.link : ""} 
+                href={l?.sub_links.length > 0 ? "" : l?.link} 
                 className={cx([poppins_light.className, isActive(l?.link) ? classes.active : classes.inactive] )}
                 // childrenOffset={28}
                 label= {l?.label} 
@@ -77,15 +76,20 @@ export default function ResponsiveSizes(
                 variant="subtle"
                 leftSection={<l.icon size={"1rem"} stroke={1} />}
               >
-                  {
+                 { 
+                  l?.sub_links.length > 0 ?
+                  <span>
+                    {
                     l?.sub_links.map((sub, index) => (
-                    <NavLink href={sub?.link} key={sub?.label} label={sub?.label} variant="subtle" />
-                  ))
-                }
+                        <NavLink href={sub?.link} key={sub?.label} label={sub?.label} variant="subtle" />
+                      ))
+                    }
+                  </span>
+                  : null
+              }
               </NavLink>
-          </div>
             
-          ))}
+        ))}
         </div>
         
       </AppShell.Navbar>

@@ -6,20 +6,22 @@ import { Poppins } from "next/font/google";
 import classes from "@/app/auth/login/css/login.module.css";
 import { Alert, Button, Checkbox, Group, Paper, PasswordInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useQuery, gql, useLazyQuery } from '@apollo/client';
-import { LOGIN_EPLOYEE } from "./queries/login_employee";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation"
 import { IconInfoCircle } from "@tabler/icons-react";
-import { useDispatch } from "react-redux";
-import { login } from "./slice/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "./slice/authSlice";
+import { useState } from "react";
 
 
 const poppins_logo = Poppins({ subsets: ["latin"], weight:["800"] });
 function Login() {
     const router = useRouter()
-    const [getEmployee, { loading, error: loginError, data }] = useLazyQuery(LOGIN_EPLOYEE);
+    const [loginError, setloginError] = useState(false)
+    const [errMsg, setErrMsg] = useState("")
+    const [loading, setLoading] = useState(false)
     const dispatch = useDispatch();
+    //@ts-ignore
+    const userInfo = useSelector((state) => state.auth.userInfo)
 
 
     const form = useForm({
@@ -36,28 +38,37 @@ function Login() {
         },
       });
 
-    useEffect(() =>{
-        console.log(data)
-        console.log("Error", loginError)
-    }, [data, loginError])
+      async function loginUser(value:any) {
+        const url = "https://ntchinda-giscard-vvims-bakcend.hf.space/api/v1/login";
+        setLoading(true)
+        try {
+          const response = await fetch(url,{
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ phone_number: value?.email, password: value?.password }),
+          });
+          if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+          }
+      
+          const data = await response.json();
+          dispatch(login(data))
+          localStorage.setItem("token", data?.token)
+          router.push("/dashboard")
+          console.log(data);
+          setLoading(false)
+        } catch (error) {
+            setloginError(true)
+            //@ts-ignore
+            setErrMsg(error.message)
+            setLoading(false)
+            //@ts-ignore
+            console.error(error.message);
+        }
+      }
+      
     
-    function loginUser(value: any){
-        console.log(value)
-        try{
-            getEmployee({
-                variables:{
-                    phoneNumber: value.email,
-                    password: value.password
-                },
-                onCompleted: (d) =>{
-                    console.log("Data ====>", d)
-                    dispatch(login(d))
-                }
-            })
-        }catch (error){
-            console.log("Error", error)
-        }   
-    }
+
     const icon = <IconInfoCircle />;
     
     return ( <>
@@ -76,7 +87,8 @@ function Login() {
                     w={"80%"}
                     shadow="md"
                 >
-                    <form  style={{width: "100%"}}  onSubmit={form.onSubmit((values) => loginUser(values))}>
+                    <form  style={{width: "100%"}}  
+                    onSubmit={form.onSubmit((values) => loginUser(values))}>
                         <Group justify="center">
                             <h2 style={{color: "#404040", fontSize: "large"}}> Enter credential to login </h2>
                         </Group>
@@ -85,7 +97,7 @@ function Login() {
 
                             <Alert variant="light" color="red" withCloseButton mt={10} title="Alert" icon={icon}>
                                 <p style={{color: "red"}}>
-                                    {loginError?.message}
+                                    {errMsg}
                                 </p> 
                             </Alert>
                         }
@@ -113,7 +125,9 @@ function Login() {
                         
 
                         <Group justify="center" grow mt="md">
-                            <Button type="submit" loading={loading}>Submit</Button>
+                            <Button type="submit"
+                            loading={loading}
+                            >Submit</Button>
                         </Group>
                     </form>
                 </Paper>

@@ -30,10 +30,10 @@ export default LoogedCars;
 function CardItem(){
     return(
         <Group
-            // w="100%"
+            w="100%"
         >
         <Image src={car_f} alt={"image"} />
-        <Group justify="space-between" w="100%">
+        <Group justify="space-between" grow>
             <Stack>
                 <p  className={cx([classes.cmake, font_heading.className])}> toyota yaris</p>
                 <p className={cx([classes.license, font_heading.className])}>sw 000 99</p>
