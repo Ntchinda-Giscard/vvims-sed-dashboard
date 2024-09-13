@@ -5,10 +5,8 @@ import UserTopButton from './userSectionTopBar';
 import classes from "@/app/dashboard/components/css/topBar.module.css"
 import { Poppins } from "next/font/google";
 import cx from 'clsx';
-import Link from "next/link";
 import {links} from "@/app/dashboard/components/links";
 import { usePathname } from 'next/navigation';
-import { IconGauge } from '@tabler/icons-react';
 
 
 const poppins_logo = Poppins({ subsets: ["latin"], weight:["500"] });
@@ -70,16 +68,20 @@ export default function ResponsiveSizes(
           <div className="flex flex-row">
             {/* <>{l?.icon}</> */}
               <NavLink 
-                href={l?.link} 
+                href={l?.sub_links.length > 0 ? l?.link : ""} 
                 className={cx([poppins_light.className, isActive(l?.link) ? classes.active : classes.inactive] )}
-                childrenOffset={28}
+                // childrenOffset={28}
                 label= {l?.label} 
                 key={l?.label}
                 active= { isActive(l?.link)} 
                 variant="subtle"
-
-              > 
-                
+                leftSection={<l.icon size={"1rem"} stroke={1} />}
+              >
+                  {
+                    l?.sub_links.map((sub, index) => (
+                    <NavLink href={sub?.link} key={sub?.label} label={sub?.label} variant="subtle" />
+                  ))
+                }
               </NavLink>
           </div>
             
