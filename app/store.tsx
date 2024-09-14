@@ -1,7 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
-import authReducer from "@/app/auth/login/slice/authSlice"
+import authReducer from "@/app/auth/login/slice/authSlice";
+import deletePosReducer from "@/app/dashboard/position/slices/deleteSlice"
+import editPosReducer from "@/app/dashboard/position/slices/editSlice"
 // Configuration for Redux Persist
 const persistConfig = {
   key: 'root',
@@ -9,7 +11,9 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  deletePos: deletePosReducer,
+  editPos: editPosReducer
 })
 
 // Wrap the root reducer with persistReducer

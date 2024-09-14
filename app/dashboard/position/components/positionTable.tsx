@@ -11,17 +11,17 @@ const elements = [
     { position: 56, mass: 137.33, symbol: 'Ba', name: 'Barium' },
     { position: 58, mass: 140.12, symbol: 'Ce', name: 'Cerium' },
   ];
-export default function PositionTable({datas}:any) {
+export default function PositionTable({datas, onEdit, onDelete}:any) {
   const rows = datas?.map((data: { id: Key | null | undefined; text_content: { content: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; level: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; employees_aggregate: { aggregate: { count: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; }; }) => (
     <Table.Tr key={data?.id}>
       <Table.Td>{data?.text_content?.content}</Table.Td>
       <Table.Td>{data?.level}</Table.Td>
       <Table.Td>{data?.employees_aggregate?.aggregate?.count}</Table.Td>
       <Table.Td>
-        <ActionIcon variant="transparent" color="green" aria-label="Settings">
+        <ActionIcon onClick={() => onEdit(data)} variant="transparent" color="green" aria-label="Settings">
           <IconEdit style={{ width: '70%', height: '70%' }}  stroke={1.5} />
         </ActionIcon>
-        <ActionIcon variant="transparent" color="red" aria-label="Settings">
+        <ActionIcon  onClick={() => onDelete(data)} variant="transparent" color="red" aria-label="Settings">
           <IconTrash style={{ width: '70%', height: '70%' }}  stroke={1.5} />
         </ActionIcon>
         
