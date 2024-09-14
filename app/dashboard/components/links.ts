@@ -11,6 +11,7 @@ export const links = [
     {link: '/dashboard', label: 'Dashboard', sub_links: [], icon: IconDashboard},
     {link: '/dashboard/company-setup', label: 'Company Setup', sub_links: [
         {link: "/dashboard/position", label: "position"},
+        {link: "/dashboard/agency", label: "agency"},
         {link: "/dashboard/departments", label:  "departments"},
         {link: "/dashboard/services", label: "services"},
     ], icon: IconDashboard},

@@ -8,6 +8,7 @@ import editPosReducer from "@/app/dashboard/position/slices/editSlice"
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist: ['auth']
 };
 
 const rootReducer = combineReducers({
