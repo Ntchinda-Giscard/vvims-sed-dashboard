@@ -6,6 +6,7 @@ query GetPositions($company_id: uuid!, $limit: Int!, $offset: Int!) {
   positions(where: {company_id: {_eq: $company_id}}, limit: $limit, offset: $offset, order_by: {level: asc}) {
     id
     text_content {
+      id
       content
     }
     employees_aggregate {
