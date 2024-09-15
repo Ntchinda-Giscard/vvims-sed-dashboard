@@ -47,14 +47,14 @@ function Position() {
         console.log(dataPos?.positions)
     },[dataPos])
 
-    if (errAgg) {
-        console.log(errAgg)
-         return `Error AGG: ${errAgg}` 
-    }
-    if (errPos) {
-        console.log(errPos)
-         return `Error AGG: ${errPos}` 
-    }
+    // if (errAgg) {
+    //     console.log(errAgg)
+    //      return `Error AGG: ${errAgg}` 
+    // }
+    // if (errPos) {
+    //     console.log(errPos)
+    //      return `Error AGG: ${errPos}` 
+    // }
 
     function handelEdit(values: any){
         console.log(values)

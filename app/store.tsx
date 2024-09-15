@@ -6,6 +6,8 @@ import deletePosReducer from "@/app/dashboard/position/slices/deleteSlice"
 import editPosReducer from "@/app/dashboard/position/slices/editSlice";
 import editAgencyeEducer from "@/app/dashboard/agency/slices/editAgencySlice";
 import deleteAgencyReducer from "@/app/dashboard/agency/slices/deleteAgencySlice";
+import deleteDeptReducer from "@/app/dashboard/departments/slices/delDepSlice";
+import editDeptReducer from "@/app/dashboard/departments/slices/editDeptSlice";
 // Configuration for Redux Persist
 const persistConfig = {
   key: 'root',
@@ -18,7 +20,9 @@ const rootReducer = combineReducers({
   deletePos: deletePosReducer,
   editPos: editPosReducer,
   editAgen: editAgencyeEducer,
-  deleteAgen: deleteAgencyReducer
+  deleteAgen: deleteAgencyReducer,
+  delDept: deleteDeptReducer,
+  editDept: editDeptReducer,
 })
 
 // Wrap the root reducer with persistReducer
