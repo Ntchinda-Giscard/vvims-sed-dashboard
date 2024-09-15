@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import '@mantine/core/styles.css';
 import '@mantine/charts/styles.css';
-import "@/app/globals.css";
 import Providers from "../provider";
 import ResponsiveSizes from "./components/appshell";
 

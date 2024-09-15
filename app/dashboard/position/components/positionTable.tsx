@@ -44,12 +44,3 @@ export default function PositionTable({datas, onEdit, onDelete}:any) {
   );
 }
 
-
-
-
-{/* <ActionIcon variant="transparent" color="red" aria-label="Settings">
-            <IconTrash style={{ width: '70%', height: '70%' }}  stroke={1.5} />
-        </ActionIcon>
-        <ActionIcon variant="transparent" color="green" aria-label="Settings">
-            <IconEdit style={{ width: '70%', height: '70%' }}  stroke={1.5} />
-        </ActionIcon> */}

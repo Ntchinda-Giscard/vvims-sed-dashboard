@@ -1,11 +1,11 @@
-// src/features/authSlice.js
+
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   editPos: null,   
 };
 
-const authSlice = createSlice({
+const editPosSlice = createSlice({
   name: 'editPos',
   initialState,
   reducers: {
@@ -15,5 +15,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { editPosition } = authSlice.actions;
-export default authSlice.reducer;
+export const { editPosition } = editPosSlice.actions;
+export default editPosSlice.reducer;

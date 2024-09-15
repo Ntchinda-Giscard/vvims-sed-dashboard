@@ -7,6 +7,7 @@ import { Poppins } from "next/font/google";
 import cx from 'clsx';
 import {links} from "@/app/dashboard/components/links";
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 
 const poppins_logo = Poppins({ subsets: ["latin"], weight:["500"] });
@@ -25,9 +26,10 @@ export default function ResponsiveSizes(
 
   const isActive = (path: string) => {
     console.log(pathname)
-    if (path === '/') {
-      return pathname === '/';
+    if (path === '/dashboard') {
+      return pathname === '/dashboard';
     }
+    console.log("Path :===>", path)
     return pathname.startsWith(path);
   };
 
@@ -72,16 +74,25 @@ export default function ResponsiveSizes(
                 // childrenOffset={28}
                 label= {l?.label} 
                 key={l?.label}
-                active= { isActive(l?.link)} 
+                active= { l?.sub_links.length < 0 ? isActive(l?.link) : false} 
                 variant="subtle"
                 leftSection={<l.icon size={"1rem"} stroke={1} />}
+                component={Link}
               >
                  { 
                   l?.sub_links.length > 0 ?
                   <span>
                     {
-                    l?.sub_links.map((sub, index) => (
-                        <NavLink href={sub?.link} key={sub?.label} label={sub?.label} variant="subtle" />
+                    l?.sub_links.map((sub, _) => (
+                        <NavLink 
+                          href={sub?.link} 
+                          key={sub?.label} 
+                          label={sub?.label} 
+                          variant="subtle" 
+                          active={isActive(sub?.link)}
+                          defaultOpened={isActive(sub?.link)}
+                          component={Link}
+                        />
                       ))
                     }
                   </span>
