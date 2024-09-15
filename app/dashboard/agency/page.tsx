@@ -9,7 +9,7 @@ import AgencyTable from "./components/agencyTable";
 import { useDispatch, useSelector } from "react-redux";
 import { editAgency } from "./slices/editAgencySlice";
 import { deleteAgency } from "./slices/deleteAgencySlice";
-import { useQuery } from "@apollo/client";
+import { useQuery, useSubscription } from "@apollo/client";
 import { GET_AGENCY } from "./query/getAgency";
 import { useEffect, useState } from "react";
 import FootPage from "../components/fotter";
@@ -26,14 +26,14 @@ function Agency(){
     const [editAgencyOpened, { open: openEditAgency, close: closeEditAgency }] = useDisclosure(false);
     const [activePage, setPage] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(10);
-    const {data: dataAgency, error: errAgency, loading: loadAegncy} = useQuery(GET_AGENCY,{
+    const {data: dataAgency, error: errAgency, loading: loadAegncy} = useSubscription(GET_AGENCY,{
         variables:{
             company_id: user?.employee?.company_id,
             limit: itemsPerPage,
             offset: activePage*itemsPerPage,
         }
     })
-    const {data: dataAgg, error: errAgg, loading: laodAgg} = useQuery(AGENCY_AGG, {
+    const {data: dataAgg, error: errAgg, loading: laodAgg} = useSubscription(AGENCY_AGG, {
         variables:{
             company_id: user?.employee?.company_id,
         }

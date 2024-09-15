@@ -4,6 +4,7 @@ import '@mantine/core/styles.css';
 import '@mantine/charts/styles.css';
 import "./globals.css";
 import Provider from "./provider";
+import '@mantine/nprogress/styles.css'
 
 const inter = Poppins({ subsets: ["latin"], weight:["500"] });
 

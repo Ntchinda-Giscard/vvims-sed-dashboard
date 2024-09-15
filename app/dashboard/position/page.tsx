@@ -29,7 +29,7 @@ function Position() {
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
     const [activePage, setPage] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(10);
-    const { loading: loadPos, error: errPos, data: dataPos } = useQuery(GET_POSITIONS,{
+    const { loading: loadPos, error: errPos, data: dataPos } = useSubscription(GET_POSITIONS,{
         variables:{
             company_id: user?.employee?.company_id,
             limit: itemsPerPage,
@@ -37,7 +37,7 @@ function Position() {
         }
     });
 
-    const {loading: loadAgg, error: errAgg, data: dataAgg} = useQuery(GET_POS_AGG,{
+    const {loading: loadAgg, error: errAgg, data: dataAgg} = useSubscription(GET_POS_AGG,{
         variables:{
             company_id: user?.employee?.company_id,
         }
@@ -47,14 +47,14 @@ function Position() {
         console.log(dataPos?.positions)
     },[dataPos])
 
-    // if (errAgg) {
-    //     console.log(errAgg)
-    //      return `Error AGG: ${errAgg}` 
-    // }
-    // if (errPos) {
-    //     console.log(errPos)
-    //      return `Error AGG: ${errPos}` 
-    // }
+    if (errAgg) {
+        console.log(errAgg)
+         return `Error AGG: ${errAgg}` 
+    }
+    if (errPos) {
+        console.log(errPos)
+         return `Error AGG: ${errPos}` 
+    }
 
     function handelEdit(values: any){
         console.log(values)

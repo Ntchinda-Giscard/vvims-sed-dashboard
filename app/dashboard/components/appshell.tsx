@@ -25,11 +25,9 @@ export default function ResponsiveSizes(
   const pathname = usePathname()
 
   const isActive = (path: string) => {
-    console.log(pathname)
     if (path === '/dashboard') {
       return pathname === '/dashboard';
     }
-    console.log("Path :===>", path)
     return pathname.startsWith(path);
   };
 
