@@ -1,16 +1,15 @@
 "use client"
 import '@mantine/core/styles.css';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import { hf_client } from './apollo/client_hf';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 import { persistor, store } from '@/app/store';
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react';
-import {setContext} from "@apollo/client/link/context";
 import '@mantine/nprogress/styles.css';
 import { NavigationProgress } from '@mantine/nprogress';
-import { WebSocketLink } from "@apollo/client/link/ws";
 import { client_hasura } from './apollo/client_hasura';
+import {Notifications} from "@mantine/notifications";
+import {Toaster} from "react-hot-toast"
 
 
 
@@ -58,8 +57,9 @@ export default function Providers({
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
         <MantineProvider>
-        <NavigationProgress />
-          {children}
+          <Toaster />
+            <NavigationProgress />
+            {children}
         </MantineProvider>
         </PersistGate>
       </Provider>
