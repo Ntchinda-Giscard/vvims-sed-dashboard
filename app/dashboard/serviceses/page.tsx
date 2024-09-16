@@ -9,9 +9,11 @@ import FootPage from "../components/fotter";
 import { useSubscription } from "@apollo/client";
 import { useSelector } from "react-redux";
 import { GET_AGG_SERV, GET_SERVICES } from "./queries/get_services";
+import AddserviceModal from "./components/addServiceModal";
+import { deleteService } from "./slices/deleteServSlice";
 
 function Services() {
-    const [addService, { open: openAddService, close: closeAddService }] = useDisclosure(false);
+    const [addServOpened, { open: openAddService, close: closeAddService }] = useDisclosure(false);
     const [deleOpended, { open: openDelete, close: closeDelete }] = useDisclosure(false);
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
     const [activePage, setPage] = useState(0);
@@ -40,19 +42,26 @@ function Services() {
     }
     function handleDelete(values: any){
         console.log(values)
-        // dispatch(deleteDeparment(values))
+        dispatch(deleteService(values))
         openDelete()
     }
     return ( <>
     <main className="flex flex-col min-w-full min-h-full"> 
-        <p> Deparments </p>
-        <Button
-            onClick={openAddService}
-            bg={"#16DBCC"} 
-            leftSection={<IconPlus size={14} />}
-            >
-            Add Position
-        </Button>
+        <AddserviceModal 
+            opened={addServOpened}
+            close={closeAddService}
+        />
+        <div className="flex flex-row w-full items-center justify-between">
+            <p> Deparments </p>
+            <Button
+                onClick={openAddService}
+                bg={"#16DBCC"} 
+                leftSection={<IconPlus size={14} />}
+                >
+                Add Deparment
+            </Button>
+        </div>
+        
 
         <Paper mt="md" p={15} radius="md" shadow="md">
             <ServiceTable 
@@ -71,3 +80,7 @@ function Services() {
 }
 
 export default Services;
+
+function dispatch(arg0: { payload: any; type: "delServ/deleteService"; }) {
+    throw new Error("Function not implemented.");
+}

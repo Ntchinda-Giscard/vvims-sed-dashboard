@@ -13,8 +13,8 @@ export const links = [
         {link: "/dashboard/position", label: "position"},
         {link: "/dashboard/agency", label: "agency"},
         {link: "/dashboard/departments", label:  "departments"},
-        {link: "/dashboard/services", label: "services"},
-    ], icon: IconDashboard},
+        {link: "/dashboard/serviceses", label: "services"},
+    ], icon: IconBuilding},
     {link: '/dashboard/employees', label: 'Employees', 
         sub_links: [
             {link: "/dashboard/company-setup/position", label: "position"},
