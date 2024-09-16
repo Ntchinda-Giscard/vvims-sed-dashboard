@@ -40,12 +40,12 @@ function Departments(){
     
     function handelEdit(values: any){
         console.log(values)
-        dispatch(deleteDeparment(values))
+        dispatch(editDepartment(values))
         openEdit()
     }
     function handleDelete(values: any){
         console.log(values)
-        dispatch(editDepartment(values))
+        dispatch(deleteDeparment(values))
         openDelete()
     }
 

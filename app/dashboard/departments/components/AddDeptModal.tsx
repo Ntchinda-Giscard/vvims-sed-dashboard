@@ -7,6 +7,7 @@ import { GET_AGENCY_WOUT_DEPT } from '../queries/get_agency_without_dept';
 import { GET_ALL_DEPT } from '../queries/get_dept';
 import { useEffect, useState } from 'react';
 import { INSERT_DEPT } from '../mutation/insert_dept';
+import toast from 'react-hot-toast';
 
 
 interface addDept{
@@ -26,6 +27,9 @@ export default function AddDeptModal({ opened, close }: addDept) {
         company_id: user?.employee?.company_id
       }
     })
+
+    const [insertDept, {data, error, loading, reset}] = useMutation(INSERT_DEPT);
+    const [pressSub, setPressSub] = useState(false);
 
     const[dataArr, setDataArr] = useState([]);
     const[dataDeptArr, setDeptDataArr] = useState([]);
@@ -49,17 +53,13 @@ export default function AddDeptModal({ opened, close }: addDept) {
     useEffect(() =>{
       console.log("Data agency",dataAgen)
       const agencyOption = dataAgen?.agencies?.map((a: { id: any; text_content: { content: any; }; }) =>({
-            value: a?.id,
-            label: a?.text_content?.content
-          }))
+        value: a?.id,
+        label: a?.text_content?.content
+      }))
       const deptOptions = dataDept?.departments?.map((d: { id: any; text_content: { content: any; }; }) =>({
           value: d?.id,
           label: d?.text_content?.content
       }))
-
-      const [insertDept, {data, error, loading, reset}] = useMutation(INSERT_DEPT);
-      const [pressSub, setPressSub] = useState(false);
-
       setDataArr(agencyOption)
       setDeptDataArr(deptOptions)
     },[dataAgen, dataDept])
@@ -85,7 +85,7 @@ export default function AddDeptModal({ opened, close }: addDept) {
         onCompleted: () =>{
           setPressSub(false)
           close()
-          toast.sucess("Operation sucessful")
+          toast.success("Operation sucessful")
         },
         onError: (err) =>{
           setPressSub(false)
@@ -142,7 +142,7 @@ export default function AddDeptModal({ opened, close }: addDept) {
             />
           </Stack>
       <Group justify="flex-end" mt="md" grow>
-        <Button type="submit" color="#16DBCC" >Submit</Button>
+        <Button type="submit" loading={loading} color="#16DBCC" >Submit</Button>
         <Button onClick={handleCancel} color="red"   radius="md">Cancel</Button>
       </Group>
     </form>
