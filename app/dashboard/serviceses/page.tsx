@@ -7,10 +7,11 @@ import { useState } from "react";
 import ServiceTable from "./components/serviceTable";
 import FootPage from "../components/fotter";
 import { useSubscription } from "@apollo/client";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GET_AGG_SERV, GET_SERVICES } from "./queries/get_services";
 import AddserviceModal from "./components/addServiceModal";
 import { deleteService } from "./slices/deleteServSlice";
+import DeleteServModal from "./components/deleteServModal";
 
 function Services() {
     const [addServOpened, { open: openAddService, close: closeAddService }] = useDisclosure(false);
@@ -18,6 +19,7 @@ function Services() {
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
     const [activePage, setPage] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(10);
+    const dispatch = useDispatch()
     const user = useSelector((state: any) => state.auth.userInfo);
     const {data: dataServ, loading: loadServ, error: errServ} = useSubscription(GET_SERVICES,{
         variables:{
@@ -51,6 +53,10 @@ function Services() {
             opened={addServOpened}
             close={closeAddService}
         />
+        <DeleteServModal
+            opened={deleOpended}
+            close={closeDelete}
+        />
         <div className="flex flex-row w-full items-center justify-between">
             <p> Deparments </p>
             <Button
@@ -80,7 +86,3 @@ function Services() {
 }
 
 export default Services;
-
-function dispatch(arg0: { payload: any; type: "delServ/deleteService"; }) {
-    throw new Error("Function not implemented.");
-}
