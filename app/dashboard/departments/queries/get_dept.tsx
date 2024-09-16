@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_DEPT = gql`
-subscription GetDeparment($company_id: uuid = "56d71e10-61af-4843-bfc5-6ccaeec073f0", $limit: Int = 10, $offset: Int = 0) {
+subscription GetDeparment($company_id: uuid! , $limit: Int! , $offset: Int! ) {
   departments(where: {company_id: {_eq: $company_id}}, limit: $limit, offset: $offset) {
     abrev_code
     agency_id
@@ -39,6 +39,17 @@ subscription MyQuery($company_id: uuid! ) {
   departments_aggregate(where: {company_id: {_eq: $company_id}}) {
     aggregate {
       count
+    }
+  }
+}`
+
+
+export const GET_ALL_DEPT = gql`
+query GetAllDept($company_id: uuid!) {
+  departments(where: {company_id: {_eq: $company_id}}) {
+    id
+    text_content {
+      content
     }
   }
 }`
