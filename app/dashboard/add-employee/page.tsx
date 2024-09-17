@@ -224,7 +224,11 @@ function AddEmployee() {
                         key={form.key('department')}
                         {...form.getInputProps('department')}
                         nothingFoundMessage="Nothing found..."
-
+                        styles={{
+                            option:{
+                                color: "#404040"
+                            }
+                        }}
                     />
                     <Select
                         label={ <Text style={{ color: "#404044" }}> Service</Text>}
@@ -239,7 +243,11 @@ function AddEmployee() {
                         key={form.key('service')}
                         {...form.getInputProps('service')}
                         nothingFoundMessage="Nothing found..."
-
+                        styles={{
+                            option:{
+                                color: "#404040"
+                            }
+                        }}
                     />
                     <TextInput
                         withAsterisk
@@ -262,7 +270,11 @@ function AddEmployee() {
                         key={form.key('position')}
                         {...form.getInputProps('position')}
                         nothingFoundMessage="Nothing found..."
-
+                        styles={{
+                            option:{
+                                color: "#404040"
+                            }
+                        }}
                     />
                     <TextInput
                         withAsterisk
@@ -281,7 +293,11 @@ function AddEmployee() {
                         key={form.key('supervisor_id')}
                         {...form.getInputProps('supervisor_id')}
                         nothingFoundMessage="Nothing found..."
-
+                        styles={{
+                            option:{
+                                color: "#404040"
+                            }
+                        }}
                     />
                 </Group>
             </Stack>
@@ -301,6 +317,11 @@ function AddEmployee() {
                     data={['EMPLOYEE', 'ADMIN']}
                     key={form.key('role')}
                     {...form.getInputProps('role')}
+                    styles={{
+                        option:{
+                            color: "#404040"
+                        }
+                    }}
                 />
             </Group>
             

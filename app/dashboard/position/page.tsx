@@ -70,7 +70,7 @@ function Position() {
     return ( 
     <main className="flex min-h-full min-w-full flex-col">
         <div className="flex flex-row justify-between items-center w-full">
-            <p>Positions</p>
+        <h2 style={{ color: "#404044" }}>Positions</h2>
             <AddPosModal
                 close={closeAddpos}
                 opened={addPoseOpened}
@@ -88,7 +88,7 @@ function Position() {
                 bg={"#16DBCC"} 
                 leftSection={<IconPlus size={14} />}
             >
-                <h2 style={{ color: "#404044" }}> Add Position </h2>
+                Add Position
             </Button>
             
         </div>
