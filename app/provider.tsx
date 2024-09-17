@@ -101,7 +101,6 @@ const client_hasura = new ApolloClient({
           <Toaster />
             <NavigationProgress />
             {children}
-        
         </PersistGate>
       </Provider>
       </ApolloProvider>

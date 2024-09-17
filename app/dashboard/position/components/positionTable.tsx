@@ -14,9 +14,9 @@ const elements = [
 export default function PositionTable({datas, onEdit, onDelete}:any) {
   const rows = datas?.map((data: { id: Key | null | undefined; text_content: { content: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; level: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; employees_aggregate: { aggregate: { count: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; }; }) => (
     <Table.Tr key={data?.id}>
-      <Table.Td>{data?.text_content?.content}</Table.Td>
-      <Table.Td>{data?.level}</Table.Td>
-      <Table.Td>{data?.employees_aggregate?.aggregate?.count}</Table.Td>
+      <Table.Td color="#404044">{data?.text_content?.content}</Table.Td>
+      <Table.Td color="#404044">{data?.level}</Table.Td>
+      <Table.Td color="#404044">{data?.employees_aggregate?.aggregate?.count}</Table.Td>
       <Table.Td>
         <ActionIcon onClick={() => onEdit(data)} variant="transparent" color="green" aria-label="Settings">
           <IconEdit style={{ width: '70%', height: '70%' }}  stroke={1.5} />
@@ -33,10 +33,10 @@ export default function PositionTable({datas, onEdit, onDelete}:any) {
     <Table withTableBorder>
       <Table.Thead>
         <Table.Tr>
-          <Table.Th> Position</Table.Th>
-          <Table.Th> Level </Table.Th>
-          <Table.Th>Amount</Table.Th>
-          <Table.Th>Actions</Table.Th>
+          <Table.Th color="#404044"> Position</Table.Th>
+          <Table.Th color="#404044"> Level </Table.Th>
+          <Table.Th color="#404044"> Amount</Table.Th>
+          <Table.Th color="#404044">Actions</Table.Th>
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>{rows}</Table.Tbody>

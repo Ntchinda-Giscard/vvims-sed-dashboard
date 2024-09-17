@@ -86,6 +86,7 @@ export default function ResponsiveSizes(
                           href={sub?.link} 
                           key={sub?.label} 
                           label={sub?.label} 
+                          color='#404044'
                           variant="subtle" 
                           active={isActive(sub?.link)}
                           defaultOpened={isActive(sub?.link)}
