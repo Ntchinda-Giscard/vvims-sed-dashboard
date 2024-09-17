@@ -65,13 +65,13 @@ function Departments(){
                 close={closeDelete}
             />
             <div className="flex flex-row justify-between">
-                <p> Deparments </p>
+                <p style={{color: "#404040"}}> Deparments </p>
                 <Button
                     onClick={openAddDept}
                     bg={"#16DBCC"} 
                     leftSection={<IconPlus size={14} />}
                     >
-                    Add Position
+                    Add Department
                 </Button>
             </div>
             <Paper mt="md" p={15} radius="md" shadow="md">
