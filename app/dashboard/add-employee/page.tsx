@@ -152,7 +152,7 @@ function AddEmployee() {
     Add employees
 
     <Box pos="relative">
-        <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
+        <LoadingOverlay visible={visible} zIndex={9999999999999} overlayProps={{ radius: "sm", blur: 2 }} />
         {/* ...other content */}
     </Box>
     <Paper shadow="md" radius="md" p="md">
