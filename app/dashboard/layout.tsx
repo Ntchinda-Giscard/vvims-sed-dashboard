@@ -1,22 +1,31 @@
+"use client"
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import '@mantine/core/styles.css';
 import '@mantine/charts/styles.css';
 import Providers from "../provider";
 import ResponsiveSizes from "./components/appshell";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 const inter = Poppins({ subsets: ["latin"], weight:["500"] });
-
-export const metadata: Metadata = {
-  title: "Vvims Dashboard",
-  description: "Secure visitor and vehicle managements",
-};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const user = useSelector((state: any) => state.auth.userInfo);
+  const router = useRouter();
+  const pathname = usePathname()
+
+  useEffect(() =>{
+    if(!user){
+      router.push("/auth/login")
+    }
+  },[user, pathname, router])
   return (
     <html lang="en">
       <body className={inter.className}>

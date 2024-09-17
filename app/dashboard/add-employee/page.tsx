@@ -1,7 +1,17 @@
 "use client"
 import { useDisclosure } from '@mantine/hooks';
-import { LoadingOverlay, Button, Group, Box, Paper, TextInput, Divider, Stack, Select, MultiSelect } from '@mantine/core';
+import { LoadingOverlay, Button, Group, Box, Paper, TextInput, Divider, Stack, Select, MultiSelect, PasswordInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useSelector } from 'react-redux';
+import { useMutation, useQuery, useSubscription } from '@apollo/client';
+import { GET_SERV_BY_DEPT_ID } from './query/get_services';
+import { GET_POSIOIONS } from './query/get_positions';
+import { GET_ALL_DEPT } from '../departments/queries/get_dept';
+import { useEffect, useState } from 'react';
+import { GET_ROLES } from './query/get_roles';
+import { GET_EMPLY } from './query/get_all_empl';
+import { INSERT_EMPLOYEE } from './mutation/insert_employee';
+import toast from 'react-hot-toast';
 function AddEmployee() {
     const [visible, { toggle }] = useDisclosure(false);
     const form = useForm({
@@ -10,39 +20,133 @@ function AddEmployee() {
           email: '',
           firstname: "",
           lastname: "",
-          date_of_birth: "",
           region: "",
           address: "",
           phone_number: "",
-          agency: null,
-          department: null,
           service: null,
-          function: "",
-          id_card_number: "",
+          department: null,
+          functions: "",
+          supervisor_id: null,
           license: "",
           password: "",
           position: null,
-          role: null,
+          role: "",
         },
     
         validate: {
           email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
           firstname: (value) => (value.length < 2? "First name should be 2 characters minimum" : null),
           lastname: (value) => (value.length < 2? "Last name should be 2 characters minimum" : null),
-          date_of_birth: (value) => (value.length < 10? "Invalid date of birth" : null),
           region: (value) => (value.length < 3? "Region should be 2 characters minimum" : null),
           address: (value) => (value.length < 3? "Address should be 2 characters minimum" : null),
           phone_number: (value) => (/^6[0-9]{8}$/.test(value)? null : 'Invalid phone number'),
           service: (value) => (value === null? "Select service" : null),
           department: (value) => (value === null? "Select department" : null),
           position: (value) => (value === null? "Select position" : null),
-          function: (value) => (value.length < 2? "Fonction should be 2 characters minimum" : null),
-          id_card_number: (value) => (value.length < 5? "ID number should be 5 characters minimum" : null),
+          functions: (value) => (value.length < 2? "Fonction should be 2 characters minimum" : null),
+        //   supervisor_id: (value) => (value.length < 5? "ID number should be 5 characters minimum" : null),
           license: (value) => (value.length < 2? "License should be 2 characters minimum" : null),
           password: (value) => (value.length < 6? "Password should be 6 characters minimum" : null),
-          role: (value) => (value === null? "Select role" : null),
+          role: (value) => (value.length < 1? "Select role" : null),
         },
       });
+
+    const user = useSelector((state: any) => state.auth.userInfo);
+    const {data: dataService, error: errService, loading: loadService } = useQuery(GET_SERV_BY_DEPT_ID,{
+            variables:{
+            company_id: user?.employee?.company_id,
+            department_id: form.getValues().department
+        }}
+    );
+    const {data: dataPos, error: errPos, loading: loadPos} = useQuery(GET_POSIOIONS,{
+        variables:{
+            company_id: user?.employee?.company_id,
+        }
+    })
+    const {data: dataDept, loading: loadDept, error: errDept} = useQuery(GET_ALL_DEPT,{
+        variables:{
+          company_id: user?.employee?.company_id
+        }
+      });
+    const {data: dataAllEmpl, loading: loadAll, error: errAll} = useSubscription(GET_EMPLY,{
+        variables:{
+            company_id: user?.employee?.company_id
+        }
+    })
+    const {data: dataRoles, loading: loadRoles, error: errRoels} = useQuery(GET_ROLES)
+
+    const [deptArr, setDept] = useState([]);
+    const [servArr, setServ] = useState([]);
+    const [posArr, setPos] = useState([]);
+    const [roleArr, setRole] = useState([]);
+    const [allArr, setAll] = useState([]);
+
+    useEffect(() =>{
+        const deptOptions = dataDept?.departments?.map((d: { id: any; text_content: { content: any; }; }) =>({
+            value: d?.id,
+            label: d?.text_content?.content
+        }))
+        const servOptions = dataService?.services?.map((d: { id: any; text_content: { content: any; }; }) =>({
+            value: d?.id,
+            label: d?.text_content?.content
+        }))
+        const posOptions = dataPos?.positions?.map((d: { id: any; text_content: { content: any; }; }) =>({
+            value: d?.id,
+            label: d?.text_content?.content
+        }))
+        const roleOptions = dataRoles?.roles?.map((d: { id: any; role_name: any }) =>({
+            value: d?.id,
+            label: d?.role_name
+        }))
+        const allOptions = dataAllEmpl?.employees?.map((d: { id: any; firstname: any, lastname:any }) =>({
+            value: d?.id,
+            label: `${d?.firstname}` + " "+ `${d?.lastname}`,
+        }))
+
+        setDept(deptOptions)
+        setServ(servOptions)
+        setPos(posOptions)
+        setRole(roleOptions)
+        setAll(allOptions)
+
+        console.log("Dept id", dataAllEmpl)
+    },[dataPos, dataDept, dataService, dataRoles, form.getValues().department, dataAllEmpl])
+
+    const [insertEmployee, {data, loading, error}] = useMutation(INSERT_EMPLOYEE)
+
+    function handleSubmit(values: any){
+        toggle();
+        insertEmployee({
+            variables:{
+                address: values?.email,
+                companyId: user?.employee?.company_id,
+                departmentId: values?.department,
+                email: values?.email,
+                firstname: values?.firstname,
+                function: values?.functions,
+                lastname: values?.lastname,
+                license: values?.license,
+                password: values?.password,
+                phoneNumber: values?.phone_number,
+                positionId: values?.position,
+                region: values?.region,
+                serviceId: values?.service,
+                roles: values?.role
+
+            },
+            onCompleted: () =>{
+                toggle()
+                toast.success("Operation successful")
+                console.log("Employee inserted", data)
+            },
+            onError: (err) =>{
+                toggle()
+                toast.error(`${err?.message}`)
+            }
+        })
+
+    }
+
     return ( <>
     <main className="flex min-h-full flex-col gap-3">
     Add employees
@@ -52,8 +156,8 @@ function AddEmployee() {
         {/* ...other content */}
     </Box>
     <Paper shadow="md" radius="md" p="md">
-        <form onSubmit={form.onSubmit((values: any) => console.log(values))}>
-            <h3 style={{color: "#386BF6"}}> Personal Details </h3>
+        <form onSubmit={form.onSubmit((values: any) => handleSubmit(values))}>
+            <h3 style={{color: "#386BF6", marginTop: 25}}> Personal Details </h3>
             <Divider my={5} />
             <Stack gap="md" mt="md" mb="xs">
                 <Group justify='space-between' grow gap="md">
@@ -105,31 +209,35 @@ function AddEmployee() {
                 </Group>
             </Stack>
 
-            <h3 style={{color: "#386BF6"}}> Company Profile </h3>
+            <h3 style={{color: "#386BF6", marginTop: 25}}> Company Profile </h3>
             <Divider my={5} />
             <Stack gap="md" mt="md" mb="xs">
                 <Group justify="space-between" grow gap="md">
                     <Select
                         label="Department"
                         placeholder="Pick department"
-                        data={['7']}
+                        data={deptArr}
                         withAsterisk
                         clearable
                         searchable
-                        key={form.key('function')}
-                        {...form.getInputProps('function')}
+                        allowDeselect
+                        key={form.key('department')}
+                        {...form.getInputProps('department')}
                         nothingFoundMessage="Nothing found..."
 
                     />
                     <Select
                         label="Service"
                         placeholder="Pick service"
-                        data={['0']}
+                        allowDeselect
+                    //@ts-ignore
+                        disabled={errService || loadService}
+                        data={servArr}
                         withAsterisk
                         clearable
                         searchable
-                        key={form.key('function')}
-                        {...form.getInputProps('function')}
+                        key={form.key('service')}
+                        {...form.getInputProps('service')}
                         nothingFoundMessage="Nothing found..."
 
                     />
@@ -137,8 +245,8 @@ function AddEmployee() {
                         withAsterisk
                         label="Function"
                         placeholder="function"
-                        key={form.key('function')}
-                        {...form.getInputProps('function')}
+                        key={form.key('functions')}
+                        {...form.getInputProps('functions')}
 
                     />
                 </Group>
@@ -147,7 +255,7 @@ function AddEmployee() {
                     <Select
                         label="Position"
                         placeholder="Pick position"
-                        data={['p']}
+                        data={posArr}
                         withAsterisk
                         clearable
                         searchable
@@ -164,21 +272,40 @@ function AddEmployee() {
                         {...form.getInputProps('license')}
 
                     />
+                    <Select
+                        label="Supervisor"
+                        placeholder="Pick supervisor"
+                        data={allArr}
+                        clearable
+                        searchable
+                        key={form.key('supervisor_id')}
+                        {...form.getInputProps('supervisor_id')}
+                        nothingFoundMessage="Nothing found..."
+
+                    />
                 </Group>
             </Stack>
 
-            <h3 style={{color: "#386BF6"}}> Account Details </h3>
+            <h3 style={{color: "#386BF6", marginTop: 25}}> Account Details </h3>
             <Divider my={5} />
-            <Group justify="space-between" grow gap="md">
-                <MultiSelect
+            <Group justify="space-between" grow gap="md" mt="md">
+                <PasswordInput
+                    label="Password"
+                    placeholder="******"
+                    key={form.key('password')}
+                    {...form.getInputProps('password')}
+                />
+                <Select
                     label="Role"
                     placeholder="Pick role"
-                    data={['React', 'Angular', 'Vue', 'Svelte']}
+                    data={['EMPLOYEE', 'ADMIN']}
+                    key={form.key('role')}
+                    {...form.getInputProps('role')}
                 />
             </Group>
             
 
-            <Group justify="center" mt="md">
+            <Group justify="center" mt="xl" >
                 <Button type="submit" color={"#16DBCC"}>Add Employee</Button>
             </Group>
         </form>
