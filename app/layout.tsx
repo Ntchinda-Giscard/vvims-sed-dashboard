@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const router = useRouter()
-  router.push("/dashboard")
+  // router.push("/dashboard")
   return (
     <html lang="en">
       <body className={inter.className}>

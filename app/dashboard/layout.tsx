@@ -21,11 +21,11 @@ export default function RootLayout({
   const router = useRouter();
   const pathname = usePathname()
 
-  useEffect(() =>{
-    if(!user){
-      router.push("/auth/login")
-    }
-  },[user, pathname, router])
+  // useEffect(() =>{
+  //   if(!user){
+  //     router.push("/auth/login")
+  //   }
+  // },[user, pathname, router])
   return (
     <html lang="en">
       <body className={inter.className}>
