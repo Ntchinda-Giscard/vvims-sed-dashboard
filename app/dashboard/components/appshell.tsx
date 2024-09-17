@@ -1,5 +1,5 @@
 "use client"
-import { AppShell, Burger, Group, NavLink, Skeleton } from '@mantine/core';
+import { AppShell, Burger, Group, NavLink, Skeleton, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import UserTopButton from './userSectionTopBar';
 import classes from "@/app/dashboard/components/css/topBar.module.css"
@@ -85,8 +85,7 @@ export default function ResponsiveSizes(
                         <NavLink 
                           href={sub?.link} 
                           key={sub?.label} 
-                          label={sub?.label} 
-                          color='#404044'
+                          label={ <Text style={{color: "#404044"}}>{sub?.label}</Text>} 
                           variant="subtle" 
                           active={isActive(sub?.link)}
                           defaultOpened={isActive(sub?.link)}
