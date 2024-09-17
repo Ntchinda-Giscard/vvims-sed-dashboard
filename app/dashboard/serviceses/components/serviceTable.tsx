@@ -14,10 +14,10 @@ const elements = [
 export default function ServiceTable({datas, onEdit, onDelete}:any) {
   const rows = datas?.map((data: { id: Key | null | undefined; text_content: { content: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; services_aggregate: { aggregate: { count: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; }; employees_aggregate: { aggregate: { count: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; }; department: { text_content: { content: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; }; }) => (
     <Table.Tr key={data?.id}>
-      <Table.Td>{data?.text_content?.content}</Table.Td>
-      <Table.Td>{data?.department?.text_content?.content}</Table.Td>
-      <Table.Td>{data?.employees_aggregate?.aggregate?.count}</Table.Td>
-      <Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.text_content?.content}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.department?.text_content?.content}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.employees_aggregate?.aggregate?.count}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>
         <ActionIcon onClick={() => onEdit(data)} variant="transparent" color="green" aria-label="Settings">
           <IconEdit style={{ width: '70%', height: '70%' }}  stroke={1.5} />
         </ActionIcon>
@@ -34,9 +34,9 @@ export default function ServiceTable({datas, onEdit, onDelete}:any) {
       <Table.Thead>
         <Table.Tr>
           <Table.Th style={{ color: "#404044" }}> Name </Table.Th>
-          <Table.Th color="#404044"> Deparment </Table.Th>
-          <Table.Th color="#404044">No. Employees</Table.Th>
-          <Table.Th color="#404044">Actions</Table.Th>
+          <Table.Th style={{ color: "#404044" }}> Deparment </Table.Th>
+          <Table.Th style={{ color: "#404044" }} >No. Employees</Table.Th>
+          <Table.Th style={{ color: "#404044" }}>Actions</Table.Th>
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>{rows}</Table.Tbody>

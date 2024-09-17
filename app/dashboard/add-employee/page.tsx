@@ -1,6 +1,6 @@
 "use client"
 import { useDisclosure } from '@mantine/hooks';
-import { LoadingOverlay, Button, Group, Box, Paper, TextInput, Divider, Stack, Select, MultiSelect, PasswordInput } from '@mantine/core';
+import { LoadingOverlay, Button, Group, Box, Paper, Text, TextInput, Divider, Stack, Select, MultiSelect, PasswordInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useSelector } from 'react-redux';
 import { useMutation, useQuery, useSubscription } from '@apollo/client';
@@ -227,7 +227,7 @@ function AddEmployee() {
 
                     />
                     <Select
-                        label="Service"
+                        label={ <Text style={{ color: "#404044" }}> Service</Text>}
                         placeholder="Pick service"
                         allowDeselect
                     //@ts-ignore

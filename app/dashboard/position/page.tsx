@@ -88,7 +88,7 @@ function Position() {
                 bg={"#16DBCC"} 
                 leftSection={<IconPlus size={14} />}
             >
-                Add Position
+                <h2 style={{ color: "#404044" }}> Add Position </h2>
             </Button>
             
         </div>

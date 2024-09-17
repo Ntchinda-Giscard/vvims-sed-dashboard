@@ -58,7 +58,7 @@ function Services() {
             close={closeDelete}
         />
         <div className="flex flex-row w-full items-center justify-between">
-            <p> Deparments </p>
+            <h2 style={{ color: "#404044" }}> Deparments </h2>
             <Button
                 onClick={openAddService}
                 bg={"#16DBCC"} 

@@ -63,7 +63,7 @@ function Agency(){
                 opened={deleAgencyOpened}
             />
             <div className="flex flex-row w-full justify-between">
-                <p>Agencies</p>
+                <h2 style={{ color: "#404044" }}>Agencies</h2>
 
                 <Button
                     onClick={openAgency}
