@@ -33,7 +33,7 @@ export default function ServiceTable({datas, onEdit, onDelete}:any) {
     <Table withTableBorder>
       <Table.Thead>
         <Table.Tr>
-          <Table.Th style={{ color="#404044" }}> Name </Table.Th>
+          <Table.Th style={{ color: "#404044" }}> Name </Table.Th>
           <Table.Th color="#404044"> Deparment </Table.Th>
           <Table.Th color="#404044">No. Employees</Table.Th>
           <Table.Th color="#404044">Actions</Table.Th>
