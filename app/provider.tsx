@@ -93,17 +93,19 @@ const client_hasura = new ApolloClient({
         <ColorSchemeScript />
       </head>
       <body>
+      <MantineProvider>
       <ApolloProvider client={client_hasura}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-        <MantineProvider>
+        
           <Toaster />
             <NavigationProgress />
             {children}
-        </MantineProvider>
+        
         </PersistGate>
       </Provider>
       </ApolloProvider>
+      </MantineProvider>
       </body>
     </html>
   );
