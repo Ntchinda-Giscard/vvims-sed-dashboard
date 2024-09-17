@@ -214,10 +214,9 @@ function AddEmployee() {
             <Stack gap="md" mt="md" mb="xs">
                 <Group justify="space-between" grow gap="md">
                     <Select
-                        label="Department"
+                        label={<Text style={{ color: "#404044" }}> Department</Text>}
                         placeholder="Pick department"
                         data={deptArr}
-                        withAsterisk
                         clearable
                         searchable
                         allowDeselect
@@ -237,7 +236,6 @@ function AddEmployee() {
                     //@ts-ignore
                         disabled={errService || loadService}
                         data={servArr}
-                        withAsterisk
                         clearable
                         searchable
                         key={form.key('service')}
@@ -251,7 +249,7 @@ function AddEmployee() {
                     />
                     <TextInput
                         withAsterisk
-                        label="Function"
+                        label= {<Text style={{ color: "#404044" }}> Function</Text>}
                         placeholder="function"
                         key={form.key('functions')}
                         {...form.getInputProps('functions')}
@@ -261,10 +259,9 @@ function AddEmployee() {
 
                 <Group justify="space-between" grow gap="md">
                     <Select
-                        label="Position"
+                        label={ <Text style={{ color: "#404044" }}> Position</Text> }
                         placeholder="Pick position"
                         data={posArr}
-                        withAsterisk
                         clearable
                         searchable
                         key={form.key('position')}
@@ -278,14 +275,14 @@ function AddEmployee() {
                     />
                     <TextInput
                         withAsterisk
-                        label="License"
+                        label={<Text style={{ color: "#404044" }}> License</Text>}
                         placeholder="license"
                         key={form.key('license')}
                         {...form.getInputProps('license')}
 
                     />
                     <Select
-                        label="Supervisor"
+                        label={<Text style={{ color: "#404044" }}> Supervisor</Text>}
                         placeholder="Pick supervisor"
                         data={allArr}
                         clearable
@@ -306,13 +303,13 @@ function AddEmployee() {
             <Divider my={5} />
             <Group justify="space-between" grow gap="md" mt="md">
                 <PasswordInput
-                    label="Password"
+                    label={<Text style={{ color: "#404044" }}> Password</Text>}
                     placeholder="******"
                     key={form.key('password')}
                     {...form.getInputProps('password')}
                 />
                 <Select
-                    label="Role"
+                    label={<Text style={{ color: "#404044" }}> Role</Text>}
                     placeholder="Pick role"
                     data={['EMPLOYEE', 'ADMIN']}
                     key={form.key('role')}
