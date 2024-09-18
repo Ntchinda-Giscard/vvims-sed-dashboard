@@ -13,7 +13,7 @@ import { GET_EMPLY } from './query/get_all_empl';
 import { INSERT_EMPLOYEE } from './mutation/insert_employee';
 import toast from 'react-hot-toast';
 function AddEmployee() {
-    const [visible, { toggle }] = useDisclosure(false);
+    const [visible, { open, close }] = useDisclosure(false);
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
@@ -115,7 +115,7 @@ function AddEmployee() {
     const [insertEmployee, {data, loading, error}] = useMutation(INSERT_EMPLOYEE)
 
     function handleSubmit(values: any){
-        toggle();
+        open()
         insertEmployee({
             variables:{
                 address: values?.email,
@@ -135,15 +135,16 @@ function AddEmployee() {
 
             },
             onCompleted: () =>{
-                toggle()
+                close()
                 toast.success("Operation successful")
                 console.log("Employee inserted", data)
             },
             onError: (err) =>{
-                toggle()
+                close()
                 toast.error(`${err?.message}`)
             }
         })
+        close()
 
     }
 
@@ -151,11 +152,10 @@ function AddEmployee() {
     <main className="flex min-h-full flex-col gap-3">
     Add employees
 
-    <Box pos="relative">
-        <LoadingOverlay visible={visible} zIndex={9999999999999} overlayProps={{ radius: "sm", blur: 2 }} />
+    <Box pos="relative" w="100%">
+        <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
         {/* ...other content */}
-    </Box>
-    <Paper shadow="md" radius="md" p="md">
+        <Paper shadow="md" radius="md" p="md">
         <form onSubmit={form.onSubmit((values: any) => handleSubmit(values))}>
             <h3 style={{color: "#386BF6", marginTop: 25}}> Personal Details </h3>
             <Divider my={5} />
@@ -324,10 +324,12 @@ function AddEmployee() {
             
 
             <Group justify="center" mt="xl" >
-                <Button type="submit" color={"#16DBCC"}>Add Employee</Button>
+                <Button type="submit" loading={loading} color={"#16DBCC"}>Add Employee</Button>
             </Group>
         </form>
     </Paper>
+    </Box>
+   
     </main>
     </> );
 }
