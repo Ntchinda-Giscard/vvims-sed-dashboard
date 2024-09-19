@@ -69,7 +69,12 @@ export default function ResponsiveSizes(
               <NavLink 
                 href={l?.sub_links.length > 0 ? "" : l?.link} 
                 className={cx([poppins_light.className, isActive(l?.link) ? classes.active : classes.inactive] )}
-                // childrenOffset={28}
+                childrenOffset={28}
+                styles={{
+                  children:{
+                    color: "#404040"
+                  }
+                }}
                 label= {l?.label} 
                 key={l?.label}
                 active= { l?.sub_links.length < 0 ? isActive(l?.link) : false} 
@@ -85,7 +90,7 @@ export default function ResponsiveSizes(
                         <NavLink 
                           href={sub?.link} 
                           key={sub?.label} 
-                          label={ <Text style={{color: "#404044"}}>{sub?.label}</Text>} 
+                          label={sub?.label} 
                           variant="subtle" 
                           active={isActive(sub?.link)}
                           defaultOpened={isActive(sub?.link)}

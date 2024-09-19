@@ -167,6 +167,11 @@ function AddEmployee() {
                         placeholder="firstname"
                         key={form.key('firstname')}
                         {...form.getInputProps('firstname')}
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            }
+                        }}
                     />
                     <TextInput
                         withAsterisk
@@ -174,6 +179,11 @@ function AddEmployee() {
                         placeholder="lastname"
                         key={form.key('lastname')}
                         {...form.getInputProps('lastname')}
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            }
+                        }}
                     />
                     <TextInput
                         withAsterisk
@@ -181,6 +191,11 @@ function AddEmployee() {
                         placeholder="your@email.com"
                         key={form.key('email')}
                         {...form.getInputProps('email')}
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            }
+                        }}
                     />
                 </Group>
 
@@ -191,6 +206,11 @@ function AddEmployee() {
                         placeholder="littoral"
                         key={form.key('region')}
                         {...form.getInputProps('region')}
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            }
+                        }}
                     />
                     <TextInput
                         withAsterisk
@@ -198,13 +218,23 @@ function AddEmployee() {
                         placeholder="address"
                         key={form.key('address')}
                         {...form.getInputProps('address')}
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            }
+                        }}
                     />
                     <TextInput
-                        withAsterisk
                         label="Phone number"
                         placeholder="6xxxxxxxx"
                         key={form.key('phone_number')}
                         {...form.getInputProps('phone_number')}
+                        withAsterisk
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            }
+                        }}
                     />
                 </Group>
             </Stack>
@@ -214,7 +244,7 @@ function AddEmployee() {
             <Stack gap="md" mt="md" mb="xs">
                 <Group justify="space-between" grow gap="md">
                     <Select
-                        label={<Text style={{ color: "#404044" }}> Department</Text>}
+                        label={"Department"}
                         placeholder="Pick department"
                         data={deptArr}
                         clearable
@@ -223,14 +253,15 @@ function AddEmployee() {
                         key={form.key('department')}
                         {...form.getInputProps('department')}
                         nothingFoundMessage="Nothing found..."
+                        withAsterisk
                         styles={{
-                            option:{
+                            label:{
                                 color: "#404040"
                             }
                         }}
                     />
                     <Select
-                        label={ <Text style={{ color: "#404044" }}> Service</Text>}
+                        label={ "Service"}
                         placeholder="Pick service"
                         allowDeselect
                     //@ts-ignore
@@ -241,25 +272,30 @@ function AddEmployee() {
                         key={form.key('service')}
                         {...form.getInputProps('service')}
                         nothingFoundMessage="Nothing found..."
+                        withAsterisk
                         styles={{
-                            option:{
+                            label:{
                                 color: "#404040"
                             }
                         }}
                     />
                     <TextInput
-                        withAsterisk
-                        label= {<Text style={{ color: "#404044" }}> Function</Text>}
+                        label= {"Function"}
                         placeholder="function"
                         key={form.key('functions')}
                         {...form.getInputProps('functions')}
-
+                        withAsterisk
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            }
+                        }}
                     />
                 </Group>
 
                 <Group justify="space-between" grow gap="md">
                     <Select
-                        label={ <Text style={{ color: "#404044" }}> Position</Text> }
+                        label={ "Position" }
                         placeholder="Pick position"
                         data={posArr}
                         clearable
@@ -267,22 +303,27 @@ function AddEmployee() {
                         key={form.key('position')}
                         {...form.getInputProps('position')}
                         nothingFoundMessage="Nothing found..."
+                        withAsterisk
                         styles={{
-                            option:{
+                            label:{
                                 color: "#404040"
                             }
                         }}
                     />
                     <TextInput
-                        withAsterisk
-                        label={<Text style={{ color: "#404044" }}> License</Text>}
+                        label={"License"}
                         placeholder="license"
                         key={form.key('license')}
                         {...form.getInputProps('license')}
-
+                        withAsterisk
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            }
+                        }}
                     />
                     <Select
-                        label={<Text style={{ color: "#404044" }}> Supervisor</Text>}
+                        label={"Supervisor"}
                         placeholder="Pick supervisor"
                         data={allArr}
                         clearable
@@ -291,7 +332,7 @@ function AddEmployee() {
                         {...form.getInputProps('supervisor_id')}
                         nothingFoundMessage="Nothing found..."
                         styles={{
-                            option:{
+                            label:{
                                 color: "#404040"
                             }
                         }}
@@ -303,26 +344,31 @@ function AddEmployee() {
             <Divider my={5} />
             <Group justify="space-between" grow gap="md" mt="md">
                 <PasswordInput
-                    label={<Text style={{ color: "#404044" }}> Password</Text>}
+                    label={"Password"}
                     placeholder="******"
                     key={form.key('password')}
                     {...form.getInputProps('password')}
+                    withAsterisk
+                    styles={{
+                        label:{
+                            color: "#404040"
+                        }
+                    }}
                 />
                 <Select
-                    label={<Text style={{ color: "#404044" }}> Role</Text>}
+                    label={"Role"}
                     placeholder="Pick role"
                     data={['EMPLOYEE', 'ADMIN']}
                     key={form.key('role')}
                     {...form.getInputProps('role')}
+                    withAsterisk
                     styles={{
-                        option:{
+                        label:{
                             color: "#404040"
                         }
                     }}
                 />
             </Group>
-            
-
             <Group justify="center" mt="xl" >
                 <Button type="submit" loading={loading} color={"#16DBCC"}>Add Employee</Button>
             </Group>

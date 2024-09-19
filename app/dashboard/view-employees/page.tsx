@@ -1,25 +1,113 @@
 "use client"
 import { useDisclosure } from '@mantine/hooks';
-import { LoadingOverlay, Button, Group, Box, Paper } from '@mantine/core';
+import { LoadingOverlay, Button, Group, Box, Paper, TextInput, rem } from '@mantine/core';
+import { IconPlus, IconSearch } from '@tabler/icons-react';
+import Link from 'next/link'
+import ViewEmployeeTable from './components/viewEmployeeTable';
+import { useSubscription } from '@apollo/client';
+import { GET_EMPLOYEE_SUB } from './query/get_employee';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import FullWidthSkeletonStack from '../components/defaultTable';
+import FootPage from '../components/fotter';
+import { GET_EMPLOYEE_AGG } from './query/get_employee_agg';
+import {usePathname, useRouter} from 'next/navigation'
+import { editEmployeeFunc } from './slices/editEmployeeSlice';
+import DeleteEmployeeModal from './components/deleteEmployee';
+import { deleteEmployeeFunc } from './slices/deleteEmployeeSlice';
 
-export default function Demo() {
-  const [visible, { toggle }] = useDisclosure(false);
+
+export default function ViewEmployee() {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [activePage, setPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const user = useSelector((state: any) => state.auth.userInfo);
+  const [search, setSearch] = useState('');
+  const [deleteDeptOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
+  const {loading: loadEmployee, error: errEmployee, data: dataEmployee} = useSubscription(GET_EMPLOYEE_SUB,{
+    variables:{
+      company_id: user?.employee?.company_id,
+      limit: itemsPerPage,
+      offset: (activePage-1) * itemsPerPage,  // Pagination logic
+      search: `%${search}%`,
+    }
+  })
+
+  const {loading: loadAgg, error: errAgg, data: dataAgg} = useSubscription(GET_EMPLOYEE_AGG,{
+      variables: {
+        company_id: user?.employee?.company_id,
+        search: `%${search}%`,
+      }
+  })
+
+  const handelSearch= (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {value} = event.currentTarget;
+    setSearch(value);
+  }
+
+  const handleEdit = (value: any) => {
+    dispatch(editEmployeeFunc(value))
+    router.push(`${pathname}/${value?.id}`)
+  }
+
+  const handleDelete = (value: any) => {
+    dispatch(deleteEmployeeFunc(value))
+    openDelete()
+  }
 
   // Note that position: relative is required
   return (
     <>
-      <Box pos="relative">
-        <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
-        {/* ...other content */}
-        Help me
-        <Paper>
-            
+      <main className="flex flex-col min-h-full min-w-full">
+        <DeleteEmployeeModal
+          opened={deleteDeptOpened}
+          close={closeDelete}
+        />
+        <div className="flex flex-row justify-between">
+          <h2 style={{ color: "#404044" }}> Employee </h2>
+            <Button
+                bg={"#16DBCC"} 
+                leftSection={<IconPlus size={14} />}
+                >
+                  <Link href="/dashboard/add-employee"> Add Employee </Link>
+            </Button>
+        </div>
+        <Paper p={15} shadow="md" mt="md" radius="md">
+          <TextInput 
+            leftSectionPointerEvents="none"
+            w={300}
+            leftSection={<IconSearch style={{width: rem(16), height: rem(16)}} />}
+            placeholder="Search"
+            size="md"
+            radius="md"
+            my="md"
+            value={search}
+            onChange={handelSearch}
+          />
+          {
+            errEmployee || loadEmployee ?
+            <FullWidthSkeletonStack /> :
+            <ViewEmployeeTable
+              datas={dataEmployee?.employees}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
+          }
+          <Group justify="center">
+          {
+            errAgg || loadAgg ? null :
+            <FootPage 
+              activePage={activePage}
+              onPage={(v: any) => setPage(v)}
+              total={Math.ceil(dataAgg?.employees_aggregate?.aggregate?.count/itemsPerPage)}
+            />
+          }
+          </Group>
+          
         </Paper>
-      </Box>
-
-      <Group justify="center">
-        <Button onClick={toggle}>Toggle overlay</Button>
-      </Group>
+      </main>
     </>
   );
 }

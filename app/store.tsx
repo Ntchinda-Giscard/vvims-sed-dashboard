@@ -9,6 +9,8 @@ import deleteAgencyReducer from "@/app/dashboard/agency/slices/deleteAgencySlice
 import deleteDeptReducer from "@/app/dashboard/departments/slices/delDepSlice";
 import editDeptReducer from "@/app/dashboard/departments/slices/editDeptSlice";
 import deleteServReducer from "@/app/dashboard/serviceses/slices/deleteServSlice";
+import editEmployeeReducer from "@/app/dashboard/view-employees/slices/editEmployeeSlice";
+import deleteEmployeeReducer from "@/app/dashboard/view-employees/slices/deleteEmployeeSlice";
 // Configuration for Redux Persist
 const persistConfig = {
   key: 'root',
@@ -25,6 +27,8 @@ const rootReducer = combineReducers({
   delDept: deleteDeptReducer,
   editDept: editDeptReducer,
   delServ: deleteServReducer,
+  editEmpl: editEmployeeReducer,
+  deleteEmpl: deleteEmployeeReducer,
 })
 
 // Wrap the root reducer with persistReducer
