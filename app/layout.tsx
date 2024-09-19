@@ -10,6 +10,7 @@ import {usePathname, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Providers from "./provider";
+import AuthState from "./auth_state";
 
 const inter = Poppins({ subsets: ["latin"], weight:["500"] });
 
@@ -19,13 +20,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const router = useRouter()
   // router.push("/dashboard")
   return (
     <html lang="en">
       <body className={inter.className}>
         <Providers>
         <Provider>
+          <AuthState />
           {/* <ResponsiveSizes> */}
             {children}
           {/* </ResponsiveSizes> */}

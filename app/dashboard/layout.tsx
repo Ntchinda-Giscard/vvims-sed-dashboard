@@ -17,15 +17,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const user = useSelector((state: any) => state.auth.userInfo);
-  const router = useRouter();
-  const pathname = usePathname()
-
-  // useEffect(() =>{
-  //   if(!user){
-  //     router.push("/auth/login")
-  //   }
-  // },[user, pathname, router])
   return (
     <html lang="en">
       <body className={inter.className}>

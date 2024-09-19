@@ -15,7 +15,10 @@ import {usePathname, useRouter} from 'next/navigation'
 import { editEmployeeFunc } from './slices/editEmployeeSlice';
 import DeleteEmployeeModal from './components/deleteEmployee';
 import { deleteEmployeeFunc } from './slices/deleteEmployeeSlice';
+import cx from "clsx"
+import { Poppins } from 'next/font/google';
 
+const poppins = Poppins({ subsets: ["latin"], weight:["400"] });
 
 export default function ViewEmployee() {
   const dispatch = useDispatch();
@@ -95,7 +98,12 @@ export default function ViewEmployee() {
               onDelete={handleDelete}
             />
           }
-          <Group justify="center">
+          <Group justify="space-between" mt="md">
+            {
+              errAgg || loadAgg ? null :
+              <p className={poppins.className} style={{color: "#404040", fontSize: "small"}}>
+              Displaying { dataEmployee?.employees?.length ? dataEmployee?.employees?.length*activePage : 0} of {dataAgg?.employees_aggregate?.aggregate?.count} employees.
+            </p>}
           {
             errAgg || loadAgg ? null :
             <FootPage 
