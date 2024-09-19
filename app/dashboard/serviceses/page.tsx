@@ -12,12 +12,13 @@ import { GET_AGG_SERV, GET_SERVICES } from "./queries/get_services";
 import AddserviceModal from "./components/addServiceModal";
 import { deleteService } from "./slices/deleteServSlice";
 import DeleteServModal from "./components/deleteServModal";
+import FullWidthSkeletonStack from "../components/defaultTable";
 
 function Services() {
     const [addServOpened, { open: openAddService, close: closeAddService }] = useDisclosure(false);
     const [deleOpended, { open: openDelete, close: closeDelete }] = useDisclosure(false);
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
-    const [activePage, setPage] = useState(0);
+    const [activePage, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const dispatch = useDispatch()
     const user = useSelector((state: any) => state.auth.userInfo);
@@ -25,7 +26,7 @@ function Services() {
         variables:{
             company_id: user?.employee?.company_id,
             limit: itemsPerPage,
-            offset: activePage * itemsPerPage,  // Pagination logic
+            offset: (activePage-1) * itemsPerPage,  // Pagination logic
         }
     })
 
@@ -58,7 +59,7 @@ function Services() {
             close={closeDelete}
         />
         <div className="flex flex-row w-full items-center justify-between">
-            <h2 style={{ color: "#404044" }}> Deparments </h2>
+            <h2 style={{ color: "#404044" }}> Services </h2>
             <Button
                 onClick={openAddService}
                 bg={"#16DBCC"} 
@@ -70,13 +71,15 @@ function Services() {
         
 
         <Paper mt="md" p={15} radius="md" shadow="md">
-            <ServiceTable 
+            {
+                loadServ || errServ ? <FullWidthSkeletonStack /> :
+                <ServiceTable 
                 datas={dataServ?.services}
                 onEdit={(v: any) =>handelEdit(v)}
                 onDelete={(v: any) => handleDelete(v)}
-            />
+            />}
             <FootPage 
-                activePage={activePage + 1}
+                activePage={activePage}
                 onPage={(v: any) => setPage(v)}
                 total={Math.ceil(dataAgg?.services_aggregate?.aggregate?.count/itemsPerPage)}
             />
