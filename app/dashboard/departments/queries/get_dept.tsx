@@ -14,10 +14,12 @@ subscription GetDeparment($company_id: uuid! , $limit: Int! , $offset: Int! ) {
     department {
       id
       text_content {
+        id
         content
       }
     }
     text_content {
+      id
       content
     }
     services_aggregate {

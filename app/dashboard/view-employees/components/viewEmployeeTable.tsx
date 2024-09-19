@@ -22,18 +22,19 @@ export default function ViewEmployeeTable({datas, onEdit, onDelete, onDeactivate
       <Table.Td style={{ color: "#404044" }}>{data?.function}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{data?.phone_number}</Table.Td>
       <Table.Td>
-        <ActionIcon  onClick={() => onDelete(data)} variant="transparent" color="gray" aria-label="Settings">
-            <Menu shadow="md">
-                <Menu.Target>
-                    <IconDotsVertical style={{ width: '70%', height: '70%' }}  stroke={1.5} />
-                </Menu.Target>
-                <Menu.Dropdown>
-                  <Menu.Item color="green" onClick={() => onEdit(data)} leftSection={<IconEye  style={{ width: rem(14), height: rem(14) }} /> }> View </Menu.Item>
-                  <Menu.Item color="orange" onClick={() => onDeactivate(data)} leftSection={<IconUserX  style={{ width: rem(14), height: rem(14) }} />}> Deactivate </Menu.Item>
-                  <Menu.Item color="red" onClick={() => onDelete(data)} leftSection={<IconTrash  style={{ width: rem(14), height: rem(14) }} /> }> Delete </Menu.Item>
-                </Menu.Dropdown>
-            </Menu>
-        </ActionIcon>
+        <Menu shadow="md">
+            <Menu.Target>
+            <ActionIcon variant="transparent" color="gray" aria-label="Settings">
+                <IconDotsVertical style={{ width: '70%', height: '70%' }}  stroke={1.5} />
+                </ActionIcon>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item color="green" onClick={() => onEdit(data)} leftSection={<IconEye  style={{ width: rem(14), height: rem(14) }} /> }> View </Menu.Item>
+              <Menu.Item color="orange" onClick={() => onDeactivate(data)} leftSection={<IconUserX  style={{ width: rem(14), height: rem(14) }} />}> Deactivate </Menu.Item>
+              <Menu.Item color="red" onClick={() => onDelete(data)} leftSection={<IconTrash  style={{ width: rem(14), height: rem(14) }} /> }> Delete </Menu.Item>
+            </Menu.Dropdown>
+        </Menu>
+        
         {/* <ActionIcon onClick={() => onEdit(data)} variant="transparent" color="green" aria-label="Settings">
           <IconEdit style={{ width: '70%', height: '70%' }}  stroke={1.5} />
         </ActionIcon>

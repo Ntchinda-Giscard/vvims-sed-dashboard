@@ -12,6 +12,8 @@ import FootPage from "../components/fotter";
 import DeleteDeptModal from "./components/deleteDeptModal";
 import { deleteDeparment } from "./slices/delDepSlice";
 import { editDepartment } from "./slices/editDeptSlice";
+import EditDepartment from "./components/editDeparmentModal";
+import EditDepartmentModal from "./components/editDepartmentModal";
 
 
 function Departments(){
@@ -50,13 +52,14 @@ function Departments(){
     }
 
     useEffect(() =>{
-
-    }, [])
+        console.log("Dept", dataDept)
+    }, [dataDept])
 
     return(
         <>
         <main className="flex flex-col min-w-full min-h-full">  
-            <AddDeptModal 
+            <div>
+                <AddDeptModal 
                 opened={addDepatOpened}
                 close={closeAddDept}
             />
@@ -64,6 +67,12 @@ function Departments(){
                 opened={deleteDeptOpened}
                 close={closeDelete}
             />
+            <EditDepartmentModal 
+                opened={editOpened}
+                close={closeEdit}
+            />
+            </div>
+            
             <div className="flex flex-row justify-between">
                 <p style={{color: "#404040"}}> Deparments </p>
                 <Button

@@ -109,6 +109,11 @@ function Login() {
                             key={form.key('email')}
                             {...form.getInputProps('email')}
                             w={"100%"}
+                            styles={{
+                                label:{
+                                    color: "#404040"
+                                }
+                            }}
                         />
 
                         <PasswordInput
@@ -118,6 +123,11 @@ function Login() {
                             placeholder="**********"
                             {...form.getInputProps('password')}
                             w={"100%"}
+                            styles={{
+                                label:{
+                                    color: "#404040"
+                                }
+                            }}
                         />
                         <Group justify="flex-end">
                             <p className={classes.fgp}> Forgot your password ? </p>

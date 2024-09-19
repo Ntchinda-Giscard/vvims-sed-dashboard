@@ -150,7 +150,7 @@ function AddEmployee() {
 
     return ( <>
     <main className="flex min-h-full flex-col gap-3">
-    Add employees
+       Add employees
 
     <Box pos="relative" w="100%">
         <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
