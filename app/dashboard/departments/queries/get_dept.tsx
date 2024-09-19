@@ -7,6 +7,7 @@ subscription GetDeparment($company_id: uuid! , $limit: Int! , $offset: Int! ) {
     agency_id
     chief_department
     company_id
+    status
     created_at
     id
     name

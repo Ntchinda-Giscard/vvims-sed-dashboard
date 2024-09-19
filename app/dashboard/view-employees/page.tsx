@@ -101,7 +101,7 @@ export default function ViewEmployee() {
           <Group justify="space-between" mt="md">
             {
               errAgg || loadAgg ? null :
-              <p className={poppins.className} style={{color: "#404040", fontSize: "small"}}>
+              <p className={poppins.className} style={{color: "#007FFF", fontSize: "small"}}>
               Displaying { dataEmployee?.employees?.length ? dataEmployee?.employees?.length*activePage : 0} of {dataAgg?.employees_aggregate?.aggregate?.count} employees.
             </p>}
           {

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddDeptModal from "./components/AddDeptModal";
 import DeparmentTable from "./components/DepartmentTable";
-import { useSubscription } from "@apollo/client";
+import { useMutation, useSubscription } from "@apollo/client";
 import { GET_DEPT, GET_DEPT_AGG } from "./queries/get_dept";
 import FootPage from "../components/fotter";
 import DeleteDeptModal from "./components/deleteDeptModal";
@@ -14,6 +14,10 @@ import { deleteDeparment } from "./slices/delDepSlice";
 import { editDepartment } from "./slices/editDeptSlice";
 import EditDepartment from "./components/editDeparmentModal";
 import EditDepartmentModal from "./components/editDepartmentModal";
+import FullWidthSkeletonStack from "../components/defaultTable";
+import { ACTIVATE_DEPT } from "./mutation/activate_dept";
+import { DEACTIVTE_DEPT } from "./mutation/deactivate_dept";
+import toast from "react-hot-toast";
 
 
 function Departments(){
@@ -37,8 +41,9 @@ function Departments(){
         variables:{
         company_id: user?.employee?.company_id,
         }
-    
     })
+    const [activateDept, {data: dataActivateDept}]  = useMutation(ACTIVATE_DEPT)
+    const [deactivate, {data: dataDeactivateDept}]  = useMutation(DEACTIVTE_DEPT)
     
     function handelEdit(values: any){
         console.log(values)
@@ -49,6 +54,38 @@ function Departments(){
         console.log(values)
         dispatch(deleteDeparment(values))
         openDelete()
+    }
+
+    function handleDeactivate(values: any){
+        const toasId  = toast.loading("Operation progress...")
+        activateDept({
+            variables:{
+                id: values?.id,
+            },
+            onCompleted: () =>{
+                toast.dismiss(toasId)
+                toast.success("Operation succesful")
+            },
+            onError: (error) =>{
+                toast.error("Operation failed")
+            }
+        })
+    }
+
+    function handleActivate(values: any){
+        const toasId = toast.loading("Operation progress...")
+        deactivate({
+            variables:{
+                id: values?.id,
+            },
+            onCompleted: () =>{
+                toast.dismiss(toasId)
+                toast.success("Operation succesful")
+            },
+            onError: (error) =>{
+                toast.error("Operation failed")
+            }
+        })
     }
 
     useEffect(() =>{
@@ -84,16 +121,23 @@ function Departments(){
                 </Button>
             </div>
             <Paper mt="md" p={15} radius="md" shadow="md">
-                <DeparmentTable 
-                    datas={dataDept?.departments}
-                    onEdit={(v: any) =>handelEdit(v)}
-                    onDelete={(v: any) => handleDelete(v)}
-                />
-                <FootPage 
+                {
+                    loadDept || errDept ? <FullWidthSkeletonStack /> :
+                    <DeparmentTable 
+                        datas={dataDept?.departments}
+                        onEdit={(v: any) =>handelEdit(v)}
+                        onDelete={(v: any) => handleDelete(v)}
+                        onDeactivate = {(v: any) => handleDeactivate(v)  }
+                        onActivate = {(v: any) => handleActivate(v)  }
+                    />
+                }
+                {
+                    loadAgg || errAgg ? null :
+                    <FootPage 
                     activePage={activePage + 1}
                     onPage={(v: any) => setPage(v)}
                     total={Math.ceil(dataAgg?.departments_aggregate?.aggregate?.count/itemsPerPage)}
-                />
+                />}
             </Paper>
         </main>
         </>

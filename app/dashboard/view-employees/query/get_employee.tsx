@@ -11,6 +11,7 @@ subscription GetEmployee($limit: Int! , $offset: Int!, $search: String = "%%", $
     firstname
     function
     lastname
+    status
     phone_number
     position {
       text_content {
