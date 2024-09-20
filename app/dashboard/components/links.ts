@@ -6,6 +6,7 @@ import {
     IconAnalyze,
     IconUsers,
     IconCar,
+    IconUserPin
  } 
     from '@tabler/icons-react';
 
@@ -26,7 +27,7 @@ export const links = [
     {link: '/dashboard/visitors', label: 'Visitors', sub_links: [], icon: IconUsersGroup},
     {link: '/dashboard/appointment', label: 'Appointments', sub_links: [], icon: IconCalendar},
     {link: '/dashboard/vehicle', label: 'Vehicles', sub_links: [], icon: IconCar},
-    {link: '/dashboard/attendance', label: 'Attendances', sub_links: [], icon: IconDashboard},
+    {link: '/dashboard/attendance', label: 'Attendances', sub_links: [], icon: IconUserPin},
     {link: '/dashboard/leave', label: 'Leaves', sub_links: [], icon: IconDashboard},
     {link: '/dashboard/analytics', label: 'Analytics', sub_links: [], icon: IconAnalyze},
     {link: '/dashboard/reports', label: 'Reports', sub_links: [], icon: IconDashboard},

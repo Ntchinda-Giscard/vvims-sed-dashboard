@@ -160,6 +160,7 @@ function CompanySchedule() {
                 </Group>
             <Group justify="center" mt="md">
                 <Button w={300}
+                        bg={"#16DBCC"}
                         loading={loading}
                         type="submit">Submit</Button>
             </Group>
