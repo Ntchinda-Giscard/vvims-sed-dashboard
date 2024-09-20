@@ -42,21 +42,32 @@ function CompanySchedule() {
                 {"Saturday": 6},
                 {"Sunday": 7}
             ]
+    function mapDaysToNumbers(inputDays: any[], dayMapping: any[]) {
+        return inputDays.map(day => {
+            const mappedDay = dayMapping.find(mapping => mapping[day] !== undefined);
+            return mappedDay ? mappedDay[day] : null;
+        });
+    }
         const handleSubmit = (values: any)=>{
             const toastId = toast.loading("In progress...")
+            console.log(values)
             insertSettings({
                 variables:{
                     company_id: user?.employee?.company_id,
                     end_work_time: values?.end_work_time,
-                    max_late_time: `${values?.max_late_time}`,
+                    max_late_time: `${values?.max_late_time*60}`,
                     max_leave_days_per_year: values?.max_leave_days_per_year,
                     number_of_leave_days: values?.number_of_leave_days,
                     start_work_time: values?.start_work_time,
-                    working_days: values?.working_days?.map((m: any) => (day_of_week[m]))
+                    working_days: mapDaysToNumbers(values?.working_days, day_of_week)
                 },
                 onCompleted: () =>{
                     toast.dismiss(toastId)
                     toast.success("Operation successful")
+                },
+                onError: (err) =>{
+                    toast.dismiss(toastId)
+                    toast.error("Operation failed")
                 }
             })
         }
@@ -144,10 +155,13 @@ function CompanySchedule() {
                     }}
                     key={form.key('number_of_leave_days')}
                     {...form.getInputProps('number_of_leave_days')}
+
                 />
                 </Group>
             <Group justify="center" mt="md">
-                <Button w={300} loading={loading}  type="submit">Submit</Button>
+                <Button w={300}
+                        loading={loading}
+                        type="submit">Submit</Button>
             </Group>
         </form>
         </Paper>
