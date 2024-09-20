@@ -12,11 +12,11 @@ import {
 export const links = [
     {link: '/dashboard', label: 'Dashboard', sub_links: [], icon: IconDashboard},
     {link: '/dashboard/company-setup', label: 'Company Setup', sub_links: [
+        {link: "/dashboard/company-settings", label: "company settings"},
         {link: "/dashboard/position", label: "position"},
         {link: "/dashboard/agency", label: "agency"},
         {link: "/dashboard/departments", label:  "departments"},
         {link: "/dashboard/serviceses", label: "services"},
-        {link: "/dashboard/company-settings", label: "company settings"},
     ], icon: IconBuilding},
     {link: '/dashboard/employees', label: 'Employees', 
         sub_links: [

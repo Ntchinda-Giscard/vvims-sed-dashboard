@@ -1,6 +1,7 @@
 "use client"
 import { Group, Tabs, rem } from '@mantine/core';
 import { IconPhoto, IconMessageCircle, IconSettings, IconCalendarMonth, IconMapPin, IconInfoCircle } from '@tabler/icons-react';
+import CompanySchedule from './components/companySchedule';
 
 function Page() {
   const iconStyle = { width: rem(12), height: rem(12) };
@@ -32,7 +33,7 @@ function Page() {
       </Tabs.Panel>
 
       <Tabs.Panel value="settings">
-        Settings tab content
+        <CompanySchedule />
       </Tabs.Panel>
     </Tabs>
       </main>
