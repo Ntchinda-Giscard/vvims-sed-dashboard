@@ -17,13 +17,14 @@ const icons = {
 };
 
 const data = [
+    { title: 'Coupons usage', icon: 'discount', value: '745', diff: 18 },
     { title: 'Revenue', icon: 'receipt', value: '13,456', diff: 34 },
     { title: 'Profit', icon: 'coin', value: '4,145', diff: -13 },
     { title: 'Coupons usage', icon: 'discount', value: '745', diff: 18 },
     { title: 'New customers', icon: 'user', value: '188', diff: -30 },
 ] as const;
 
-export function StatsGrid() {
+export default function StatsGrid() {
     const stats = data.map((stat) => {
         const Icon = icons[stat.icon];
         const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight;
@@ -53,7 +54,7 @@ export function StatsGrid() {
     });
     return (
         <div className={classes.root}>
-            <SimpleGrid cols={{ base: 1, xs: 2, md: 4 }}>{stats}</SimpleGrid>
+            <div className={"flex flex-row justify-between"} >{stats}</div>
         </div>
     );
 }

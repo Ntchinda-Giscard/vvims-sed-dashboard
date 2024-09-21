@@ -7,8 +7,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react';
 import '@mantine/nprogress/styles.css';
 import { NavigationProgress } from '@mantine/nprogress';
-// import { client_hasura } from './apollo/client_hasura';
-import {Notifications} from "@mantine/notifications";
+import NextTopLoader from 'nextjs-toploader';
 import {Toaster} from "react-hot-toast"
 import { ApolloClient, HttpLink, InMemoryCache, split } from '@apollo/client';
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
@@ -64,29 +63,7 @@ const client_hasura = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache(),
 });
-  
 
-//   const authLink = setContext((_, { headers }) => {
-//     const token = localStorage.getItem('token'); // Read the token from localStorage
-//     const adminSecret = 'cBUCi2wfVzpC5j16ede1stHx4nEajfTnWk0V43TRz3gVk0tGrXQ5VcILCqRJ0dkt'; // Replace with your Hasura Admin Secret
-    
-//     return {
-//       headers: {
-//         ...headers,
-//         authorization: `Bearer ${token}`, // Add the Authorization token
-//         'x-hasura-admin-secret': adminSecret, // Add the Hasura Admin Secret
-//         connectionParams: {
-//           headers: {
-//             'Authorization': `Bearer ${token}`
-//            }
-//          }
-//       }
-//     };
-//   });
-//   const hasura_client = new ApolloClient({
-//   link: authLink.concat(splitLink),
-//   cache: new InMemoryCache(),
-// });
   return (
     <html lang="en">
       <head>
@@ -97,8 +74,11 @@ const client_hasura = new ApolloClient({
       <ApolloProvider client={client_hasura}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-        
-          <Toaster />
+            <NextTopLoader
+                color={"#16DBCC"}
+                template='<div class="bar" role="bar"><div class="peg"></div></div>'
+            />
+            <Toaster />
             <NavigationProgress />
             {children}
         </PersistGate>
