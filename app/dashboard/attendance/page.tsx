@@ -1,4 +1,4 @@
-import {Button} from "@mantine/core"
+import {Button, Paper} from "@mantine/core"
 import StatsGrid from "@/app/dashboard/attendance/components/topCards";
 
 function Page(){
@@ -21,6 +21,9 @@ function Page(){
                     </div>
 
                 </div>
+                <Paper shadow="md" radius="md" p="md">
+
+                </Paper>
             </main>
         </>
     )

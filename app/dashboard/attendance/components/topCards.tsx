@@ -77,6 +77,7 @@ export default function StatsGrid() {
 
 
     const stats = data.map((stat) => {
+        //@ts-ignore
         const Icon = icons[stat.icon];
         const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight;
 
