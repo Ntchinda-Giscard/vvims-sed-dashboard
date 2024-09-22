@@ -29,13 +29,13 @@ export const GET_ONTIME_EMPLOYEES = gql`
     }`
 
 export const GET_LATE_EMPLOYEES = gql`
-    subscription GetLateEmployees($company_id: uuid! ) {
-        employees_aggregate(where: {company_id: {_eq: $company_id}, attendance: {is_late: {_eq: true}}}) {
-            aggregate {
-                count
-            }
-        }
-    }`
+subscription GetOnTimeEployees($company_id: uuid! ) {
+    employees_aggregate(where: {company_id: {_eq: $company_id}, attendance: {clock_in_date: {_eq: "now()"}, attendance_state: {is_late: {_eq: true}}}}) {
+    aggregate {
+        count
+    }
+    }
+}`
 
 export const GET_ABSENT_EMPLOYEE = gql`
     subscription GetAbsentEmployee($company_id: uuid!) {
