@@ -8,6 +8,9 @@ import classes from "@/app/dashboard/view-employees/table.module.css";
 export default function AttendanceTable({datas, onEdit, onDelete, onDeactivate}:any) {
   const [scrolled, setScrolled] = useState(false)
   const time_extract = (datetime: any) =>{
+    if (datetime === null){
+      return "--:--:--"
+    }
     const date = new Date(datetime)
 
     const options = {timezone: 'Africa/Douala', hour12: false}
