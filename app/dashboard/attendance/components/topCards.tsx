@@ -99,7 +99,7 @@ export default function StatsGrid() {
                 </Group>
 
                 <Text fz="xs" c="dimmed" mt={7}>
-                    Compared to previous month
+                    Compared to previous day
                 </Text>
             </Paper>
         );
