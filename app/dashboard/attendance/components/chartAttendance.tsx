@@ -20,7 +20,7 @@ export default function AttendanceBarChart() {
       h={300}
       data={dataBars?.get_attendance_weekly}
       dataKey="weekday"
-      orientation='vertical'
+    //   orientation='vertical'
       series={[
         { name: 'on_time_count', color: 'violet.6' },
         { name: 'total_attendance', color: 'blue.6' },

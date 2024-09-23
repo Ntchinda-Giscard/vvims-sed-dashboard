@@ -41,14 +41,14 @@ function Page(){
                     </Button>
                 </div>
                 <StatsGrid />
-                <div className={"flex flex-row min-w-full"}>
-                    <div className={"flex w-2/3"}>
+                <div className={"flex flex-row min-w-full gap-3"}>
+                    <div className={"flex w-3/5"}>
                         <Paper p="md" shadow="md" mt="lg" w="100%" radius="md">
                             <p style={{ fontSize: "medium", fontWeight: 500, marginBottom: 15 }}> Attendance Comparison Chart </p>
                             <AttendanceLineChart />
                         </Paper>
                     </div>
-                    <div className={"flex w-1/3"}>
+                    <div className={"flex w-2/5"}>
                         <Paper p="md" shadow="md" mt="lg" radius="md" w="100%">
                             <p style={{ fontSize: "medium", fontWeight: 500, marginBottom: 15 }}> On time Comparison Chart </p>
                             <AttendanceBarChart />
