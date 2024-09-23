@@ -84,3 +84,30 @@ subscription GetAttendances($limit: Int!, $offset: Int!, $company_id: uuid! ) {
       clock_out_time
     }
   }`;
+
+export const GET_ATT_AGG = gql`
+subscription MyQuery($company_id: uuid! ) {
+  attendance_aggregate(where: {employee: {company_id: {_eq: $company_id}}, clock_in_date: {_eq: "now()"}}) {
+    aggregate {
+      count
+    }
+  }
+}`
+
+
+export const GET_ATT_MONTH = gql`
+subscription MyQuery3 {
+  get_attenance_monthly {
+    clock_in_count
+    day
+  }
+}`
+
+export const GET_ATT_WEEK = gql`
+subscription MyQuery4 {
+  get_attendance_weekly {
+    on_time_count
+    total_attendance
+    weekday
+  }
+}`

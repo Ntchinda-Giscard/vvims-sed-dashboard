@@ -7,6 +7,13 @@ import classes from "@/app/dashboard/view-employees/table.module.css";
 
 export default function AttendanceTable({datas, onEdit, onDelete, onDeactivate}:any) {
   const [scrolled, setScrolled] = useState(false)
+  const time_extract = (datetime: any) =>{
+    const date = new Date(datetime)
+
+    const options = {timezone: 'Africa/Douala', hour12: false}
+    const catTime = date.toLocaleTimeString('en-US', options)
+    return catTime
+  }
   const rows = datas?.map((data: {
     clock_out_time: ReactNode;
     clock_in_time: ReactNode;
@@ -24,12 +31,12 @@ export default function AttendanceTable({datas, onEdit, onDelete, onDeactivate}:
       <Table.Td style={{ color: "#404044" }}>{data?.employee?.department?.text_content?.content}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{data?.employee?.service?.text_content?.content}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{data?.clock_in_date}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.clock_in_time}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{time_extract(data?.clock_in_time)}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>
         {
         data?.attendance_state ? <Badge variant='light' color='red' > Late </Badge> : <Badge variant='light' color='lime' >ON Time</Badge>}
       </Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.clock_out_time}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{time_extract(data?.clock_out_time)}</Table.Td>
     </Table.Tr>
   ));
 
