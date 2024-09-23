@@ -91,7 +91,7 @@ export default function StatsGrid() {
                 </Group>
 
                 <Group align="flex-end" gap="xs" mt={25}>
-                    <Text className={classes.value}>{stat.value}</Text>
+                    <Text className={classes.value} style={{color: "#404040"}} >{stat.value}</Text>
                     <Text c={stat.diff > 0 ? 'teal' : 'red'} fz="sm" fw={500} className={classes.diff}>
                         <span>{stat.diff}%</span>
                         <DiffIcon size="1rem" stroke={1.5} />
