@@ -1,5 +1,6 @@
 import { Title, Text, Button, Container, Group } from '@mantine/core';
 import classes from '@/app/css/NotFountTitle.module.css';
+import Link from "next/link";
 
 export default function NotFound() {
   return (
@@ -15,7 +16,7 @@ export default function NotFound() {
         been moved to another URL.
       </Text>
       <Group justify="center">
-        <Button variant="subtle" size="md">
+        <Button component={Link} href={"/dashboard"} variant="subtle" size="md">
           Take me back to home page
         </Button>
       </Group>
