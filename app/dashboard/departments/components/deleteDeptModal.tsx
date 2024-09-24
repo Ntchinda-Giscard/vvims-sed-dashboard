@@ -56,7 +56,7 @@ export default function DeleteDeptModal({opened, close}: delDept) {
 
         <p className={poppins_medium.className}
         style={{
-          fontSize: 'medium'
+          fontSize: 'medium', color: "#404040"
       }}
         >
           Do you really want to delete this department? This action cannot be undone.

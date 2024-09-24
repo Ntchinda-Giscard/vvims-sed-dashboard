@@ -51,7 +51,9 @@ export default function DeleteAgencyModal({opened, close}: deletAgency) {
         <p className={poppins_medium.className} style={{
             fontSize: 'medium'
         }}>
-            Do you really want to delete this agency? This action cannot be undone.
+            <p style={{ color: "#404040", fontSize: "medium" }}>
+                Do you really want to delete this agency? This action cannot be undone.
+            </p>
         </p>
 
         <Group grow mt={"md"}>

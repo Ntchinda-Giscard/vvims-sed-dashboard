@@ -33,10 +33,11 @@ function DeleteServModal({opened, close}:delServ) {
         })
     }
     return ( <>
-        <Modal opened={opened} onClose={close} title="Delete service">
+        <Modal opened={opened} onClose={close} title= {<p style={{color: "#404040"}}> Delete service</p>  } >
         <p className={poppins_medium.className}
         style={{
-          fontSize: 'medium'
+          fontSize: 'medium',
+          color: "#404040"
       }}
         >
           Do you really want to delete this service? This action cannot be undone.

@@ -48,11 +48,11 @@ export default function DeletePos({opened,close }: addPos) {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Delete Position">
+      <Modal opened={opened} onClose={close} title={ <p style={{color: "#404040"}}>Delete Position</p> } >
         <p className={poppins_medium.className} style={{
             fontSize: 'large'
         }} >
-            Do you really want to delete thsi position ?!
+            <p style={{ color: "#404040", fontSize: "medium" }}> Do you really want to delete thsi position ?! </p>
         </p>
         <Group grow>
             <Button onClick={handleCancel} color="#16DBCC"  radius="md">Cancel</Button>
