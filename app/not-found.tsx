@@ -4,7 +4,11 @@ import classes from '@/app/css/NotFountTitle.module.css';
 export default function NotFound() {
   return (
     <Container className={classes.root}>
-      <div className={classes.label}>404</div>
+      <div className={classes.label}>
+        <span style={{color: "#404040"}}>
+          404
+        </span>
+      </div>
       <Title className={classes.title}>You have found a secret place.</Title>
       <Text c="dimmed" size="lg" ta="center" className={classes.description}>
         Unfortunately, this is only a 404 page. You may have mistyped the address, or the page has
