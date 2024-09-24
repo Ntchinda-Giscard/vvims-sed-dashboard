@@ -69,7 +69,7 @@ export default function ViewEmployee() {
           close={closeDelete}
         />
         <div className="flex flex-row justify-between">
-          <h2 style={{ color: "#404044" }}> Employee </h2>
+        <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> View Employees </p>
             <Button
                 bg={"#16DBCC"} 
                 leftSection={<IconPlus size={14} />}

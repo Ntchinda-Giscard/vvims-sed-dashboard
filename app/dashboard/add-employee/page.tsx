@@ -150,7 +150,7 @@ function AddEmployee() {
 
     return ( <>
     <main className="flex min-h-full flex-col gap-3">
-       Add employees
+    <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Add Employees </p>
 
     <Box pos="relative" w="100%">
         <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />

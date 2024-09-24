@@ -35,7 +35,7 @@ function Page(){
         <>
             <main className={"flex flex-col min-w-full min-h-full"}>
                 <div className={"flex flex-row justify-between mb-8"}>
-                    <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Compnay Attendance </p>
+                    <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Company Attendance </p>
                     <Button bg={"#16DBCC"}>
                         View All Attendance
                     </Button>

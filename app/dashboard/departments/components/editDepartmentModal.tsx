@@ -156,6 +156,9 @@ export default function EditDepartmentModal({opened, close}: any) {
             label:{
                 color: "#404040",
                 fontSize: "small"
+            },
+            option:{
+              color: "#404040"
             }
           }}
         />
@@ -174,6 +177,9 @@ export default function EditDepartmentModal({opened, close}: any) {
             label:{
               color: "#404040",
               fontSize: "small"
+            },
+            option:{
+              color: "#404040"
             }
           }}
         />
