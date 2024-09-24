@@ -111,3 +111,14 @@ subscription MyQuery4 {
     weekday
   }
 }`
+
+
+export const GET_ATTENDANCES_ALL = gql`
+subscription GetAttendnceAllEmployee($day: Int!, $year: Int!, $company_id: uuid! , $limit: Int!, $offset: Int!, $_ilike: String = "%%") {
+  get_attenance_monthly_all_employee(args: {company_id: $company_id, day: $day, year: $year}, limit: $limit, offset: $offset, where: {_or: {firstname: {_ilike: $_ilike}}}) {
+    attendance_status
+    days
+    firstname
+    id
+  }
+}`
