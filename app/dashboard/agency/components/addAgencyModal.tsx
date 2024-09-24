@@ -83,7 +83,7 @@ export default function AddAgencyModal({opened, close}: addAgency) {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Add Agency" size="xl">
+      <Modal opened={opened} onClose={close} title= { <p style={{ color: "#404040" }} > {"Add Agency"} </p> } size="xl">
         {/* Modal content */}
         <form onSubmit={form.onSubmit((values) => handleInsertAgency(values))}>
           <Group grow>
@@ -93,6 +93,11 @@ export default function AddAgencyModal({opened, close}: addAgency) {
             placeholder="Agency Name"
             key={form.key('name')}
             {...form.getInputProps('name')}
+            styles = {{
+              label:{
+                color: "#404040"
+              },
+            }}
           />
            <TextInput 
             withAsterisk
@@ -100,6 +105,11 @@ export default function AddAgencyModal({opened, close}: addAgency) {
             placeholder="Douala"
             key={form.key('city')}
             {...form.getInputProps('city')}
+            styles = {{
+              label:{
+                color: "#404040"
+              },
+            }}
           />
           </Group>
 
@@ -110,6 +120,11 @@ export default function AddAgencyModal({opened, close}: addAgency) {
             placeholder="Littoral"
             key={form.key('region')}
             {...form.getInputProps('region')}
+            styles = {{
+              label:{
+                color: "#404040"
+              },
+            }}
           />
            <TextInput 
             withAsterisk
@@ -117,6 +132,11 @@ export default function AddAgencyModal({opened, close}: addAgency) {
             placeholder="Bonanjo"
             key={form.key('office')}
             {...form.getInputProps('office')}
+            styles = {{
+              label:{
+                color: "#404040"
+              },
+            }}
           />
           </Group>
 
@@ -128,6 +148,11 @@ export default function AddAgencyModal({opened, close}: addAgency) {
             placeholder="6xxxxxxxx"
             key={form.key('phone_number')}
             {...form.getInputProps('phone_number')}
+            styles = {{
+              label:{
+                color: "#404040"
+              },
+            }}
           />
            <TextInput 
             withAsterisk
@@ -135,6 +160,11 @@ export default function AddAgencyModal({opened, close}: addAgency) {
             placeholder="6080"
             key={form.key('po_box')}
             {...form.getInputProps('po_box')}
+            styles = {{
+              label:{
+                color: "#404040"
+              },
+            }}
           />
           </Group>
 
@@ -145,6 +175,11 @@ export default function AddAgencyModal({opened, close}: addAgency) {
             placeholder="Palace"
             key={form.key('neighborhood')}
             {...form.getInputProps('neighborhood')}
+            styles = {{
+              label:{
+                color: "#404040"
+              },
+            }}
           />
             <Textarea 
               withAsterisk
@@ -152,6 +187,11 @@ export default function AddAgencyModal({opened, close}: addAgency) {
               placeholder="D55 Bonanjo Round-about, Opposite Independence Way, Ketu, Ibadan."
               key={form.key('address')}
               {...form.getInputProps('address')}
+              styles = {{
+                label:{
+                  color: "#404040"
+                },
+              }}
             />
           </Stack>
           <Group grow justify="flex-end" mt="md">

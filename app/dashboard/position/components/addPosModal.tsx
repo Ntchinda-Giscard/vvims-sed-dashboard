@@ -48,7 +48,7 @@ export default function AddPosModal({opened, close}: any) {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Add position">
+      <Modal opened={opened} onClose={close} title= {<p style={{ color: "#404040" }} > {"Add position"} </p>}  >
         {/* Modal content */}
         <form onSubmit={form.onSubmit((values) => handleInsertPos(values))}>
       <TextInput
@@ -57,6 +57,11 @@ export default function AddPosModal({opened, close}: any) {
         placeholder="Directeur General"
         key={form.key('name')}
         {...form.getInputProps('name')}
+        styles = {{
+          label:{
+            color: "#404040"
+          },
+        }}
       />
       <NumberInput
         label="Level"
@@ -66,6 +71,11 @@ export default function AddPosModal({opened, close}: any) {
         key={form.key('level')}
         {...form.getInputProps('level')}
         mt="md"
+        styles = {{
+          label:{
+            color: "#404040"
+          },
+        }}
     />
 
 

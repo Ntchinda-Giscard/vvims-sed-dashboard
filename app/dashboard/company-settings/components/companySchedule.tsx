@@ -87,6 +87,9 @@ function CompanySchedule() {
                     styles={{
                         label:{
                             color: "#404040"
+                        },
+                        option:{
+                            color: "#404040"
                         }
                     }}
                     key={form.key('working_days')}

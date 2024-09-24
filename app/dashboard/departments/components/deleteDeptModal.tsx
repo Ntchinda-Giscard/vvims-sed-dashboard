@@ -51,7 +51,7 @@ export default function DeleteDeptModal({opened, close}: delDept) {
   }
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Delete department">
+      <Modal opened={opened} onClose={close} title= { <p style={{ color: "#404040" }}> {"Delete department"} </p>  } >
         {/* Modal content */}
 
         <p className={poppins_medium.className}

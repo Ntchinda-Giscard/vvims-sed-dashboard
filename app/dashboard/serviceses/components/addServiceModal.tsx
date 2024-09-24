@@ -63,7 +63,7 @@ export default function AddserviceModal({opened, close}: addServ) {
     }
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Add  Service">
+      <Modal opened={opened} onClose={close} title= {<p style={{ color: "#404040" }}>{"Add  Service"}</p>}  >
 
         <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
             <Stack>

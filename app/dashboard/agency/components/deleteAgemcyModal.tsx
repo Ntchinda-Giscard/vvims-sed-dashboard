@@ -46,7 +46,7 @@ export default function DeleteAgencyModal({opened, close}: deletAgency) {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Delete agency">
+      <Modal opened={opened} onClose={close} title= {<p style={{ color: "#404040" }} > {"Delete agency"} </p>  } >
         {/* Modal content */}
         <p className={poppins_medium.className} style={{
             fontSize: 'medium'

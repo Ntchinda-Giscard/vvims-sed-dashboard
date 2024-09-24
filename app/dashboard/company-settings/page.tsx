@@ -12,13 +12,13 @@ function Page() {
       <p style={{ fontWeight:  800, fontSize: "large", color: "#404040"}}> Company Settings </p>
       <Tabs mt="xl" defaultValue="settings" styles={{ tabLabel:{color: "#404040"} }} >
         <Tabs.List grow justify="center" >
-          <Tabs.Tab value="gallery" leftSection={<IconInfoCircle style={iconStyle} />}>
+          <Tabs.Tab value="gallery" leftSection={<IconInfoCircle color="black" style={iconStyle} />}>
             Company Information
           </Tabs.Tab>
-          <Tabs.Tab value="messages" leftSection={<IconMapPin style={iconStyle} />}>
+          <Tabs.Tab value="messages" leftSection={<IconMapPin color="black" style={iconStyle} />}>
             Location
           </Tabs.Tab>
-          <Tabs.Tab value="settings" leftSection={<IconCalendarMonth style={iconStyle} />}>
+          <Tabs.Tab value="settings" leftSection={<IconCalendarMonth  color="black" style={iconStyle} />}>
             Work schedules
           </Tabs.Tab>
         </Tabs.List>

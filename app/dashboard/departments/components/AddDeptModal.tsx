@@ -97,7 +97,7 @@ export default function AddDeptModal({ opened, close }: addDept) {
     
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Add departments">
+      <Modal opened={opened} onClose={close} title= { <p style={{color: "#404040"}}> {"Add departments"} </p>  } >
         {/* Modal content */}
         <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
           <Group grow>
