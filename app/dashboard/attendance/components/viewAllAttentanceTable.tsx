@@ -26,8 +26,8 @@ export default function ViewAttendanceTable({datas, onEdit, onDelete, onDeactiva
       <Table.Td style={{ color: "#404044" }} >{ `${data?.firstname}`}</Table.Td>
       <>
         {
-            data?.attendance_status.map((d: number) =>(
-                <Table.Td style={{ color: "#404044" }} >
+            data?.attendance_status.map((d: any) =>(
+                <Table.Td key={d?.id} style={{ color: "#404044" }} >
                     { d===1 ? <IconUserX color="red" /> :(d===-1 ? <IconUserCheck color="lime" /> : "-") }
                 </Table.Td>
             ))
@@ -47,8 +47,8 @@ export default function ViewAttendanceTable({datas, onEdit, onDelete, onDeactiva
           <Table.Th style={{ color: "#404044" }}> Name </Table.Th>
           <>
             {
-                datas?.days?.map((d: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined) =>(
-                    <Table.Th style={{ color: "#404044" }}> {d} </Table.Th>
+                datas?.days?.map((d: any | string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined) =>(
+                    <Table.Th key={d?.id} style={{ color: "#404044" }}> {d} </Table.Th>
                 ))
             }
           </>
