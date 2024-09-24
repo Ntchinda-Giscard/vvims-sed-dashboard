@@ -76,6 +76,14 @@ export default function AddserviceModal({opened, close}: addServ) {
                     nothingFoundMessage="Nothing founed"
                     clearable
                     searchable
+                    styles={{
+                      label:{
+                          color: "#404040"
+                      },
+                      option:{
+                          color: "#404040"
+                      }
+                  }}
                 />
                 <TextInput
                     withAsterisk
@@ -83,6 +91,11 @@ export default function AddserviceModal({opened, close}: addServ) {
                     placeholder="service comptable"
                     key={form.key('name')}
                     {...form.getInputProps('name')}
+                    styles={{
+                      label:{
+                          color: "#404040"
+                      }
+                  }}
                 />
             </Stack>
             

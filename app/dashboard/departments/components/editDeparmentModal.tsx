@@ -163,7 +163,7 @@ export default function EditDepartment({ opened, close }: addDept) {
                 label:{
                     color: "#404040"
                 }
-              }}
+            }}
             />
           </Group>
           <Stack>
@@ -180,8 +180,11 @@ export default function EditDepartment({ opened, close }: addDept) {
               styles={{
                 label:{
                     color: "#404040"
+                },
+                option:{
+                    color: "#404040"
                 }
-              }}
+            }}
               
             />
             <Select 
@@ -197,8 +200,11 @@ export default function EditDepartment({ opened, close }: addDept) {
               styles={{
                 label:{
                     color: "#404040"
+                },
+                option:{
+                    color: "#404040"
                 }
-              }}
+            }}
             />
             <Select 
               label="Chief of Dept."
@@ -213,8 +219,11 @@ export default function EditDepartment({ opened, close }: addDept) {
               styles={{
                 label:{
                     color: "#404040"
+                },
+                option:{
+                    color: "#404040"
                 }
-              }}
+            }}
             />
           </Stack>
       <Group justify="flex-end" mt="md" grow>

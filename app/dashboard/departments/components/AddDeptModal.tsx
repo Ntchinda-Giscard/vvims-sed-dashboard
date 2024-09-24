@@ -107,6 +107,11 @@ export default function AddDeptModal({ opened, close }: addDept) {
               placeholder="Departement"
               key={form.key('name')}
               {...form.getInputProps('name')}
+              styles={{
+                label:{
+                    color: "#404040"
+                }
+            }}
             />
 
             <TextInput
@@ -115,6 +120,11 @@ export default function AddDeptModal({ opened, close }: addDept) {
               placeholder="DAF"
               key={form.key('abrev_code')}
               {...form.getInputProps('abrev_code')}
+              styles={{
+                label:{
+                    color: "#404040"
+                }
+            }}
             />
           </Group>
           <Stack>
@@ -128,6 +138,14 @@ export default function AddDeptModal({ opened, close }: addDept) {
               //@ts-ignore
               disabled={loadAgency || errAgency}
               data={dataArr}
+              styles={{
+                label:{
+                    color: "#404040"
+                },
+                option:{
+                    color: "#404040"
+                }
+            }}
             />
             <Select 
               label="Supervising Dept."
@@ -139,6 +157,14 @@ export default function AddDeptModal({ opened, close }: addDept) {
               //@ts-ignore
               disabled={loadDept || errDept}
               data={dataDeptArr}
+              styles={{
+                label:{
+                    color: "#404040"
+                },
+                option:{
+                    color: "#404040"
+                }
+            }}
             />
           </Stack>
       <Group justify="flex-end" mt="md" grow>

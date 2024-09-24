@@ -257,6 +257,9 @@ function AddEmployee() {
                         styles={{
                             label:{
                                 color: "#404040"
+                            },
+                            option:{
+                                color: "#404040"
                             }
                         }}
                     />
@@ -275,6 +278,9 @@ function AddEmployee() {
                         withAsterisk
                         styles={{
                             label:{
+                                color: "#404040"
+                            },
+                            option:{
                                 color: "#404040"
                             }
                         }}
@@ -307,6 +313,9 @@ function AddEmployee() {
                         styles={{
                             label:{
                                 color: "#404040"
+                            },
+                            option:{
+                                color: "#404040"
                             }
                         }}
                     />
@@ -333,6 +342,9 @@ function AddEmployee() {
                         nothingFoundMessage="Nothing found..."
                         styles={{
                             label:{
+                                color: "#404040"
+                            },
+                            option:{
                                 color: "#404040"
                             }
                         }}
