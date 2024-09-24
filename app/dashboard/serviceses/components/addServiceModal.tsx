@@ -64,7 +64,7 @@ export default function AddserviceModal({opened, close}: addServ) {
   return (
     <>
       <Modal opened={opened} onClose={close} title="Add  Service">
-        {/* Modal content */}
+
         <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
             <Stack>
                 <Select
