@@ -114,11 +114,21 @@ subscription MyQuery4 {
 
 
 export const GET_ATTENDANCES_ALL = gql`
-subscription GetAttendnceAllEmployee($day: Int!, $year: Int!, $company_id: uuid! , $limit: Int!, $offset: Int!, $_ilike: String = "%%") {
-  get_attenance_monthly_all_employee(args: {company_id: $company_id, day: $day, year: $year}, limit: $limit, offset: $offset, where: {_or: {firstname: {_ilike: $_ilike}}}) {
-    attendance_status
+subscription MyQuery($froms: date!, $to: date!, $company_id: uuid!, $_ilike: String = "%%", $limit: Int!, $offset: Int!) {
+  get_attenance_monthly_all_employee(args: {company_id: $company_id, froms: $froms, to: $to}, where: {_or: {firstname: {_ilike: $_ilike}}}, limit: $limit, offset: $offset) {
     days
-    firstname
     id
+    firstname
+    attendance_status
+  }
+}`
+
+export const GET_ATTENDANCES_ALL_AGG = gql`
+subscription MyQuery($froms: date!, $to: date!, $company_id: uuid!, $_ilike: String = "%%") {
+  get_attenance_monthly_all_employee(args: {company_id: $company_id, froms: $froms, to: $to}, where: {_or: {firstname: {_ilike: $_ilike}}}) {
+    days
+    id
+    firstname
+    attendance_status
   }
 }`

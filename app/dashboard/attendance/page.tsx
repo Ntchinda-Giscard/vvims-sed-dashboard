@@ -11,10 +11,13 @@ import FootPage from "../components/fotter";
 import { Poppins } from "next/font/google";
 import AttendanceLineChart from "./components/attendanceLineChart";
 import AttendanceBarChart from "./components/chartAttendance";
+import Link from "next/link"
+import {usePathname} from 'next/navigation'
 
 const poppins = Poppins({ subsets: ["latin"], weight:["400"] });
 
 function Page(){
+    const pathname = usePathname()
     const user = useSelector((state: any) => state.auth.userInfo);
     const [activePage, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -36,20 +39,20 @@ function Page(){
             <main className={"flex flex-col min-w-full min-h-full"}>
                 <div className={"flex flex-row justify-between mb-8"}>
                     <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Company Attendance </p>
-                    <Button bg={"#16DBCC"}>
+                    <Button component={Link} href={`${pathname}/view-all-employee`} bg={"#16DBCC"}>
                         View All Attendance
                     </Button>
                 </div>
                 <StatsGrid />
                 <div className={"flex flex-row min-w-full gap-3"}>
                     <div className={"flex w-3/5"}>
-                        <Paper p="md" shadow="md" mt="lg" w="100%" radius="md">
+                        <Paper p="md" withBorder mt="lg" w="100%" radius="md">
                             <p style={{ fontSize: "medium", fontWeight: 500, marginBottom: 15, color: "#404040" }}> Attendance Comparison Chart </p>
                             <AttendanceLineChart />
                         </Paper>
                     </div>
                     <div className={"flex w-2/5"}>
-                        <Paper p="md" shadow="md" mt="lg" radius="md" w="100%">
+                        <Paper p="md" withBorder mt="lg" radius="md" w="100%">
                             <p style={{ fontSize: "medium", fontWeight: 500, marginBottom: 15, color: "#404040" }}> On time Comparison Chart </p>
                             <AttendanceBarChart />
                         </Paper>
