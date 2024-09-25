@@ -71,8 +71,8 @@ export default function ViewEmployee() {
         <div className="flex flex-row justify-between">
         <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> View Employees </p>
             <Button
-                bg={"#16DBCC"} 
                 leftSection={<IconPlus size={14} />}
+                bg={"#16DBCC"} 
                 >
                   <Link href="/dashboard/add-employee"> Add Employee </Link>
             </Button>
