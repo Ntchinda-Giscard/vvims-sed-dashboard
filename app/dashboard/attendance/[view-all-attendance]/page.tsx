@@ -142,7 +142,7 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
                 {
               errAgg || loadAgg ? null :
               <p className={poppins.className} style={{color: "#007FFF", fontSize: "small"}}>
-              Displaying { data?.get_attenance_monthly_all_employee?.length ? data?.get_attenance_monthly_all_employee?.length*activePage : 0} of {dataAgg?.get_attenance_monthly_all_employee?.length} employees.
+              Displaying { data?.get_attenance_monthly_all_employee?.length ? data?.get_attenance_monthly_all_employee?.length*activePage : 0} of {dataAgg?.get_attenance_monthly_all_employee?.length} attendaces.
             </p>}
                 {
                 errAgg || loadAgg ? null :
