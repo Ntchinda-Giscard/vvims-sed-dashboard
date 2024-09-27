@@ -99,6 +99,17 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
                             label="From"
                             placeholder="Date input"
                             mb={15}
+                            styles={{
+                                label:{
+                                    color: "#404040"
+                                },
+                                calendarHeader:{
+                                    color: "#000"
+                                },
+                                calendarHeaderControl:{
+                                    color: "#000"
+                                }
+                            }}
                         />
                         <DateInput
                             value={toValue}
@@ -107,6 +118,17 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
                             label="To"
                             placeholder="Date input"
                             mb={15}
+                            styles={{
+                                label:{
+                                    color: "#404040"
+                                },
+                                calendarHeader:{
+                                    color: "#000"
+                                },
+                                calendarHeaderControl:{
+                                    color: "#000"
+                                }
+                            }}
                         />
                     </Group>
                 </div>

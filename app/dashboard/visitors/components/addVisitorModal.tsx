@@ -218,8 +218,8 @@ export default function AddVisitor({opened, close}: any) {
                         }}
                     />
                     <Select
-                        label={"Supervisor"}
-                        placeholder="Pick supervisor"
+                        label={"Employee"}
+                        placeholder="Pick employee"
                         data={allArr}
                         clearable
                         searchable
