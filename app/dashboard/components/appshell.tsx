@@ -8,6 +8,9 @@ import cx from 'clsx';
 import {links} from "@/app/dashboard/components/links";
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { useSubscription } from '@apollo/client';
+import { useEffect } from 'react';
+import { GET_NOTIF } from '../query/notif';
 
 
 const poppins_logo = Poppins({ subsets: ["latin"], weight:["500"] });
@@ -21,6 +24,40 @@ export default function ResponsiveSizes(
         children: React.ReactNode;
       }>
 ) {
+  const {data, loading, error} = useSubscription(GET_NOTIF)
+  useEffect(() => {
+    // Request permission for notifications when the component mounts
+    const askNotificationPermission = async () => {
+      if (!('Notification' in window)) {
+        console.log('This browser does not support notifications.');
+        return;
+      }
+
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+      }
+    };
+
+    askNotificationPermission();
+  }, []);
+
+ 
+
+  useEffect(() =>{
+    console.log(data)
+    new Notification('New Visitor Added', {
+      body: `has just visited!`,
+      icon: '/icon.png',})
+
+    if(data){
+      console.log(data)
+      new Notification(`${data?.employee_notifications_stream?.title}`,{
+        body: `${data?.employee_notifications_stream?.message}`,
+        icon: './public/logo.png'
+      })
+    }
+  },[data])
   const [opened, { toggle }] = useDisclosure();
   const pathname = usePathname()
 
