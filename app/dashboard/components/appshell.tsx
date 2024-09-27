@@ -44,19 +44,14 @@ export default function ResponsiveSizes(
 
  
 
-  useEffect(() =>{
-    console.log(data)
-    new Notification('New Visitor Added', {
-      body: `has just visited!`,})
-
-    if(data){
-      console.log(data)
-      new Notification(`${data?.employee_notifications_stream?.title}`,{
-        body: `${data?.employee_notifications_stream?.message}`,
-        icon: './public/logo.png'
-      })
+  useEffect(() => {
+    if (Notification.permission === 'granted') {
+      new Notification('Test Notification', {
+        body: 'This is a test notification!',
+        icon: '/icon.png', // Replace with your icon path
+      });
     }
-  },[data])
+  }, []);
   const [opened, { toggle }] = useDisclosure();
   const pathname = usePathname()
 
