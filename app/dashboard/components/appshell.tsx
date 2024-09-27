@@ -47,8 +47,7 @@ export default function ResponsiveSizes(
   useEffect(() =>{
     console.log(data)
     new Notification('New Visitor Added', {
-      body: `has just visited!`,
-      icon: '/icon.png',})
+      body: `has just visited!`,})
 
     if(data){
       console.log(data)
