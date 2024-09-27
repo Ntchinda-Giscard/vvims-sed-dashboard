@@ -24,7 +24,7 @@ export const GET_ONTIME_EMPLOYEES = gql`
         employees_aggregate(where: {company_id: {_eq: $company_id}, attendance: {clock_in_date: {_eq: "now()"}, attendance_state: {is_late: {_eq: false}}}}) {
         aggregate {
             count
-        }
+          }
         }
     }`
 

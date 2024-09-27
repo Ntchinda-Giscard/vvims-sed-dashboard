@@ -14,6 +14,8 @@ import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { createClient } from "graphql-ws";
 import { getMainDefinition } from '@apollo/client/utilities';
 import { useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+
 
 export default function Providers({
   children,
@@ -71,6 +73,7 @@ const client_hasura = new ApolloClient({
       </head>
       <body>
       <MantineProvider>
+        <ToastContainer />
       <ApolloProvider client={client_hasura}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>

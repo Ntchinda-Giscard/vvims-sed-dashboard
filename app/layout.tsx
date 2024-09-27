@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Providers from "./provider";
 import AuthState from "./auth_state";
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Poppins({ subsets: ["latin"], weight:["500"] });
 

@@ -1,0 +1,253 @@
+"use client"
+import { useQuery, useSubscription } from '@apollo/client';
+import { Modal, Button, TextInput, Group, Stack, Select, Textarea } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { GET_SERV_BY_DEPT_ID } from '../../add-employee/query/get_services';
+import { GET_ALL_DEPT } from '../../departments/queries/get_dept';
+import { GET_EMPLY } from '../../add-employee/query/get_all_empl';
+import { GET_ALL_VISITORS } from '../query/get_all_visitors';
+import { GET_ALL_SERVICES } from '../query/get_all_services';
+
+export default function AddVisitor({opened, close}: any) {
+    const form = useForm({
+        mode: 'uncontrolled',
+        initialValues: {
+          firstname: '',
+          lastname: '',
+          id_card_number: '',
+          service: null,
+          department: null,
+          employee: null,
+          phone_number: "",
+          visitors: null,
+          reason: ""
+        },
+    
+        validate: {
+            firstname: (value) => ( value.length < 3 ? "Firtname must be 3 character at least" : null),
+            lastname: (value) => ( value.length < 3 ? "Lastname must be 3 character at least" : null),
+            id_card_number: (value) => ( value.length < 5 ? "Lastname must be 3 character at least" : null),
+            phone_number: (value) => (/^6[0-9]{8}$/.test(value)? null : 'Invalid phone number'),
+        },
+      });
+        const user = useSelector((state: any) => state.auth.userInfo);
+        const {data: dataVisitor, error: errVisitor, loading: loadVisitor} = useSubscription(GET_ALL_VISITORS, {
+            variables:{
+                company_id: user?.employee?.company_id,
+            }
+        })
+        const {data: dataService, error: errService, loading: loadService } = useQuery(GET_ALL_SERVICES,{
+            variables:{
+            company_id: user?.employee?.company_id,
+        }}
+        );
+
+        const {data: dataDept, loading: loadDept, error: errDept} = useQuery(GET_ALL_DEPT,{
+        variables:{
+        company_id: user?.employee?.company_id
+        }
+        });
+        const {data: dataAllEmpl, loading: loadAll, error: errAll} = useSubscription(GET_EMPLY,{
+        variables:{
+            company_id: user?.employee?.company_id
+        }
+        })
+        const [deptArr, setDept] = useState([]);
+        const [servArr, setServ] = useState([]);
+        const [allArr, setAll] = useState([]);
+        const [arrVisitor, setAllVisitor] = useState([])
+
+        useEffect(() =>{
+            const deptOptions = dataDept?.departments?.map((d: { id: any; text_content: { content: any; }; }) =>({
+                value: d?.id,
+                label: d?.text_content?.content
+            }))
+            const servOptions = dataService?.services?.map((d: { id: any; text_content: { content: any; }; }) =>({
+                value: d?.id,
+                label: d?.text_content?.content
+            }))
+            const allOptions = dataAllEmpl?.employees?.map((d: { id: any; firstname: any, lastname:any }) =>({
+                value: d?.id,
+                label: `${d?.firstname}` + " "+ `${d?.lastname}`,
+            }))
+            const visitorOption = dataVisitor?.visitors?.map((d: {
+                id_number: any;
+                phone_number: any; id: any; firstname: any, lastname:any 
+}) =>({
+                value: d?.id,
+                label: `${d?.firstname}` + " "+ `${d?.lastname}`,
+                phone_number: d?.phone_number,
+                id_card_no: d?.id_number
+            }))
+            setDept(deptOptions)
+            setServ(servOptions)
+            setAll(allOptions)
+            setAllVisitor(visitorOption)
+        }, [dataDept, dataService, dataAllEmpl, dataVisitor])
+
+
+  return (
+    <>
+      <Modal opened={opened} size="lg" onClose={close} title= {<p style={{color: "#404040"}}> Add Visitor </p>}>
+        {/* Modal content */}
+        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+            <Stack gap={5} >
+                <Select
+                    label={"Visitor"}
+                    placeholder="Pick visitor"
+                    data={arrVisitor}
+                    clearable
+                    searchable
+                    allowDeselect
+                    key={form.key('visitors')}
+                    {...form.getInputProps('visitors')}
+                    nothingFoundMessage="Nothing found..."
+                    styles={{
+                        label:{
+                            color: "#404040"
+                        },
+                        option:{
+                            color: "#404040"
+                        }
+                    }}
+                />
+                <Group grow>
+                    <TextInput
+                        withAsterisk
+                        label="Firstname"
+                        placeholder="firstname"
+                        key={form.key('firstname')}
+                        {...form.getInputProps('firstname')}
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            }
+                        }}
+                    />
+                    <TextInput
+                        withAsterisk
+                        label="Lastname"
+                        placeholder="lastname"
+                        key={form.key('lastname')}
+                        {...form.getInputProps('lastname')}
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            }
+                        }}
+                    />
+                </Group>
+                <Group grow>
+                    <TextInput
+                        withAsterisk
+                        label="Id card number"
+                        placeholder="..."
+                        key={form.key('id_card_number')}
+                        {...form.getInputProps('id_card_number')}
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            }
+                        }}
+                    />
+                    <TextInput
+                        withAsterisk
+                        label="Phone number"
+                        placeholder="6xxxxxx"
+                        key={form.key('phone_number')}
+                        {...form.getInputProps('phone_number')}
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            }
+                        }}
+                    />
+                </Group>
+                <Textarea
+                    size="md"
+                    label="Reason"
+                    placeholder=" reason..."
+                    key={form.key('reason')}
+                    {...form.getInputProps('reason')}
+                    styles={{
+                        label:{
+                            color: "#404040"
+                        }
+                    }}
+                />
+                <Select
+                    label={"Department"}
+                    placeholder="Pick department"
+                    data={deptArr}
+                    clearable
+                    searchable
+                    allowDeselect
+                    key={form.key('department')}
+                    {...form.getInputProps('department')}
+                    nothingFoundMessage="Nothing found..."
+                    styles={{
+                        label:{
+                            color: "#404040"
+                        },
+                        option:{
+                            color: "#404040"
+                        }
+                    }}
+                />
+                    <Select
+                        label={ "Service"}
+                        placeholder="Pick service"
+                        allowDeselect
+                    //@ts-ignore
+                        // disabled={errService || loadService}
+                        data={servArr}
+                        clearable
+                        searchable
+                        key={form.key('service')}
+                        {...form.getInputProps('service')}
+                        nothingFoundMessage="Nothing found..."
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            },
+                            option:{
+                                color: "#404040"
+                            }
+                        }}
+                    />
+                    <Select
+                        label={"Supervisor"}
+                        placeholder="Pick supervisor"
+                        data={allArr}
+                        clearable
+                        searchable
+                        key={form.key('employee')}
+                        {...form.getInputProps('employee')}
+                        nothingFoundMessage="Nothing found..."
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            },
+                            option:{
+                                color: "#404040"
+                            }
+                        }}
+                    />
+                
+            </Stack>
+            
+
+
+        <Group justify="flex-end" mt="md" grow>
+            <Button bg={"#16DBCC"}  type="submit">Submit</Button>
+            <Button bg={"red"} onClick={close} >Cancel</Button>
+        </Group>
+        </form>
+      </Modal>
+
+
+    </>
+  );
+}
