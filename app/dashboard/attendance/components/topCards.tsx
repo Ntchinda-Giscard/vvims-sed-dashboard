@@ -40,12 +40,6 @@ export default function StatsGrid() {
             company_id: user?.employee?.company_id
         }
     })
-    useEffect(() =>{
-        console.log(dataEmpl)
-        if(errTotalEmpl){
-            console.log("Error", errTotalEmpl)
-        }
-    }, [dataEmpl])
     const {loading: loadPresent, data: dataPresent, error: errPresent } = useSubscription(GET_PRESENT_EMPLOYEES,{
         variables:{
             company_id: user?.employee?.company_id
@@ -66,6 +60,13 @@ export default function StatsGrid() {
             company_id: user?.employee?.company_id
         }
     })
+    useEffect(() =>{
+        console.log(dataEmpl)
+        if(errTotalEmpl){
+            console.log("Error", errTotalEmpl)
+        }
+    }, [dataEmpl, dataPresent, dataLate, dataAbsent, dataOnTime])
+    
 
     const data = [
         { title: 'Total work force', icon: 'user', value: dataEmpl?.employees_aggregate?.aggregate?.count, diff: 0 },
