@@ -25,33 +25,11 @@ export default function ResponsiveSizes(
       }>
 ) {
   const {data, loading, error} = useSubscription(GET_NOTIF)
-  useEffect(() => {
-    // Request permission for notifications when the component mounts
-    const askNotificationPermission = async () => {
-      if (!('Notification' in window)) {
-        console.log('This browser does not support notifications.');
-        return;
-      }
-
-      const permission = await Notification.requestPermission();
-      if (permission === 'granted') {
-        console.log('Notification permission granted.');
-      }
-    };
-
-    askNotificationPermission();
-  }, []);
+ 
 
  
 
-  useEffect(() => {
-    if (Notification.permission === 'granted') {
-      new Notification('Test Notification', {
-        body: 'This is a test notification!',
-        icon: '/icon.png', // Replace with your icon path
-      });
-    }
-  }, []);
+
   const [opened, { toggle }] = useDisclosure();
   const pathname = usePathname()
 

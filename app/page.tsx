@@ -14,25 +14,6 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    const askNotificationPermission = async () => {
-      if (!('Notification' in window)) {
-        console.log('This browser does not support notifications.');
-        return;
-      }
-
-      // Request notification permission
-      const permission = await Notification.requestPermission();
-      if (permission === 'granted') {
-        console.log('Notification permission granted.');
-        // Optionally, you can show an initial notification here
-        // new Notification("You will receive notifications!");
-      } else {
-        console.log('Notification permission denied.');
-      }
-    };
-
-    // Call the function to request permission
-    askNotificationPermission();
     router.push("/dashboard")
   }, []);
 

@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import Providers from "./provider";
 import AuthState from "./auth_state";
 import 'react-toastify/dist/ReactToastify.css';
-import NotificationPermission from "@/app/components/NotificationPermission"
+
 
 const inter = Poppins({ subsets: ["latin"], weight:["500"] });
 
@@ -24,17 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   // router.push("/dashboard")
-  useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then((registration) => {
-          console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch((error) => {
-          console.error('Service Worker registration failed:', error);
-        });
-    }
-  }, []);
+
 
   return (
     <html lang="en">
@@ -42,9 +32,7 @@ export default function RootLayout({
         <Providers>
         <Provider>
           <AuthState />
-          {/* <ResponsiveSizes> */}
-          <NotificationPermission />
-  
+          {/* <ResponsiveSizes> */}  
             {children}
           {/* </ResponsiveSizes> */}
         </Provider>
