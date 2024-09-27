@@ -1,29 +1,13 @@
-self.addEventListener('push', (event) => {
-    const data = event.data.json();
+// public/service-worker.js
+
+self.addEventListener('push', function(event) {
     const options = {
-      body: data.message,
-      icon: '/icon.png',  // Path to your notification icon
-      badge: '/badge.png', // Path to your badge icon
+      body: event.data ? event.data.text() : 'No data',
+      icon: '/icon.png', // Replace with your icon path
+      badge: '/badge.png', // Optional badge
     };
   
     event.waitUntil(
       self.registration.showNotification('New Notification', options)
-    );
-  });
-  
-  self.addEventListener('notificationclick', (event) => {
-    event.notification.close();
-    event.waitUntil(
-      clients.matchAll({ type: 'window' }).then((clientList) => {
-        for (let i = 0; i < clientList.length; i++) {
-          const client = clientList[i];
-          if (client.url === '/' && 'focus' in client) {
-            return client.focus();
-          }
-        }
-        if (clients.openWindow) {
-          return clients.openWindow('/'); // Open your app's main URL
-        }
-      })
     );
   });
