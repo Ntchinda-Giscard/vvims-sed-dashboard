@@ -9,6 +9,7 @@ import { GET_ALL_DEPT } from '../../departments/queries/get_dept';
 import { GET_EMPLY } from '../../add-employee/query/get_all_empl';
 import { GET_ALL_VISITORS } from '../query/get_all_visitors';
 import { GET_ALL_SERVICES } from '../query/get_all_services';
+import { GET_ALL_VEHICLES } from '../query/get_all_verhicles';
 
 export default function AddVisitor({opened, close}: any) {
     const form = useForm({
@@ -22,7 +23,8 @@ export default function AddVisitor({opened, close}: any) {
           employee: null,
           phone_number: "",
           visitors: null,
-          reason: ""
+          reason: "",
+          vehicle: null
         },
     
         validate: {
@@ -33,6 +35,7 @@ export default function AddVisitor({opened, close}: any) {
         },
       });
         const user = useSelector((state: any) => state.auth.userInfo);
+        const {data: dataVehicle, error: errVehicle, loading: loadVehicle} = useQuery(GET_ALL_VEHICLES)
         const {data: dataVisitor, error: errVisitor, loading: loadVisitor} = useSubscription(GET_ALL_VISITORS, {
             variables:{
                 company_id: user?.employee?.company_id,
@@ -58,6 +61,7 @@ export default function AddVisitor({opened, close}: any) {
         const [servArr, setServ] = useState([]);
         const [allArr, setAll] = useState([]);
         const [arrVisitor, setAllVisitor] = useState([])
+        const [arrVehicle, setArrVehicle] = useState([])
 
         useEffect(() =>{
             const deptOptions = dataDept?.departments?.map((d: { id: any; text_content: { content: any; }; }) =>({
@@ -81,11 +85,16 @@ export default function AddVisitor({opened, close}: any) {
                 phone_number: d?.phone_number,
                 id_card_no: d?.id_number
             }))
+            const vehicleOption = dataVehicle?.vehicles?.map((d: any) =>({
+                value: d?.id,
+                label: d?.license
+            }))
             setDept(deptOptions)
             setServ(servOptions)
             setAll(allOptions)
             setAllVisitor(visitorOption)
-        }, [dataDept, dataService, dataAllEmpl, dataVisitor])
+            setArrVehicle(vehicleOption)
+        }, [dataDept, dataService, dataAllEmpl, dataVisitor, dataVehicle])
 
 
   return (
@@ -235,6 +244,26 @@ export default function AddVisitor({opened, close}: any) {
                             }
                         }}
                     />
+
+                <Select
+                    label={"Vehicles"}
+                    placeholder="Pick vehicle"
+                    data={arrVehicle}
+                    clearable
+                    searchable
+                    allowDeselect
+                    key={form.key('vehicle')}
+                    {...form.getInputProps('vehicle')}
+                    nothingFoundMessage="Nothing found..."
+                    styles={{
+                        label:{
+                            color: "#404040"
+                        },
+                        option:{
+                            color: "#404040"
+                        }
+                    }}
+                />
                 
             </Stack>
             
