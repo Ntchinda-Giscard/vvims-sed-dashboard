@@ -5,11 +5,13 @@ import { IconPlus } from "@tabler/icons-react";
 import VisitorTable from "./components/visitorTable";
 import AddVisitor from "./components/addVisitorModal";
 import { GET_VISITS, GET_VISITS_AGG } from "./query/get_visits";
-import { useSubscription } from "@apollo/client";
+import { useMutation, useSubscription } from "@apollo/client";
 import { useEffect, useState } from "react";
 import FullWidthSkeletonStack from "../components/defaultTable";
 import { Poppins } from 'next/font/google';
 import FootPage from "../components/fotter";
+import { ACCEPT_VISITS, CHECK_OUT_VISIT, REJECT_VISITS } from "./mutation/insert_visits";
+import toast from "react-hot-toast";
 
 const poppins = Poppins({ subsets: ["latin"], weight:["400"] });
 
@@ -36,9 +38,63 @@ function Page() {
         }
     })
 
+    const [acceptVisit, {}] = useMutation(ACCEPT_VISITS)
+    const [rejectVisit, {}] = useMutation(REJECT_VISITS)
+    const [checkOutVisit, {}] = useMutation(CHECK_OUT_VISIT)
+
     useEffect(() =>{
         console.log(dataVisits)
     }, [dataVisits])
+
+    const handleAcceptVisit= (v:any) =>{
+        const toast_id = toast.loading('Operation in progress...')
+        acceptVisit({
+            variables:{
+                id: v?.id
+            },
+            onCompleted: () =>{
+                toast.dismiss(toast_id)
+                toast.success("Operation successful")
+
+            },
+            onError: (err) =>{
+                toast.error(`${err.message}`)
+            }
+        })
+
+    }
+    const handleRejectVisit= (v:any) =>{
+        const toast_id = toast.loading('Operation in progress...')
+        rejectVisit({
+            variables:{
+                id: v?.id
+            },
+            onCompleted: () =>{
+                toast.dismiss(toast_id)
+                toast.success("Operation successful")
+
+            },
+            onError: (err) =>{
+                toast.error(`${err.message}`)
+            }
+        })
+    }
+    const handleCheckOutVisit= (v:any) =>{
+        const toast_id = toast.loading('Operation in progress...')
+        checkOutVisit({
+            variables:{
+                id: v?.id
+            },
+            onCompleted: () =>{
+                toast.dismiss(toast_id)
+                toast.success("Operation successful")
+
+            },
+            onError: (err) =>{
+                toast.error(`${err.message}`)
+            }
+        })
+    }
 
     if (errVisits) return `Error: ${errVisits}`
     return ( <>
@@ -62,7 +118,10 @@ function Page() {
                 loadVisits || errVisits ?
                 <FullWidthSkeletonStack /> :
                 <VisitorTable 
-                datas={dataVisits?.visits}
+                    datas={dataVisits?.visits}
+                    onAccept={(v:any) =>handleAcceptVisit(v)}
+                    onReject={(v:any) => handleRejectVisit(v)}
+                    onCheckOut={(v:any) =>handleCheckOutVisit(v)}
             />}
             <Group justify="space-between" mt="md">
             {
