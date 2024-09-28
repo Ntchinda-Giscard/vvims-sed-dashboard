@@ -1,5 +1,5 @@
 "use client"
-import { useQuery, useSubscription } from '@apollo/client';
+import { useMutation, useQuery, useSubscription } from '@apollo/client';
 import { Modal, Button, TextInput, Group, Stack, Select, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useEffect, useState } from 'react';
@@ -10,6 +10,8 @@ import { GET_EMPLY } from '../../add-employee/query/get_all_empl';
 import { GET_ALL_VISITORS } from '../query/get_all_visitors';
 import { GET_ALL_SERVICES } from '../query/get_all_services';
 import { GET_ALL_VEHICLES } from '../query/get_all_verhicles';
+import { INSERT_VISITS, INSERT_VISITS_VISITOR } from '../mutation/insert_visits';
+import toast from 'react-hot-toast';
 
 export default function AddVisitor({opened, close}: any) {
     const form = useForm({
@@ -95,13 +97,52 @@ export default function AddVisitor({opened, close}: any) {
             setAllVisitor(visitorOption)
             setArrVehicle(vehicleOption)
         }, [dataDept, dataService, dataAllEmpl, dataVisitor, dataVehicle])
+    
+    const [insertVisitWithVisitor, {data: dataVisitWVisitor, loading: loadVWV, error: errVWV}] = useMutation(INSERT_VISITS_VISITOR)
+    const [insertVisit, {data: dataVisit, loading: loadVisit, error: errVisit}] = useMutation(INSERT_VISITS)
+
+    function handleSubmit(values: any){
+        console.log(values)
+        
+        if(!form.getValues().department && !form.getValues().employee && !form.getValues().service){
+            toast.error("Chose either a department, a service or an employee")
+            return
+        }
+        if(form.getValues().visitors){
+            console.log("visitor selected")
+        }
+        else{
+            console.log(" no visitor selected")
+            insertVisitWithVisitor({
+                variables:{
+                    company_id: user?.employee?.company_id,
+                    reason: values.reason,
+                    vehicle: values.vehicle,
+                    host_service: values.service,
+                    host_employee: values.employee,
+                    host_department: values.department,
+                    id_number: values.id_card_number,
+                    lastname: values.lastname,
+                    phone_number: values.phone_number,
+                    firstname: values.firstname,
+                },
+                onCompleted: () =>{
+                    toast.success("Visit inserted successfully")
+                    close()
+                },
+                onError: (err) =>{
+                    toast.error(`${err.message}`)
+                }
+            })
+        }
+    }
 
 
   return (
     <>
       <Modal opened={opened} size="lg" onClose={close} title= {<p style={{color: "#404040"}}> Add Visitor </p>}>
         {/* Modal content */}
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
             <Stack gap={5} >
                 <Select
                     label={"Visitor"}
@@ -270,7 +311,7 @@ export default function AddVisitor({opened, close}: any) {
 
 
         <Group justify="flex-end" mt="md" grow>
-            <Button bg={"#16DBCC"}  type="submit">Submit</Button>
+            <Button bg={"#16DBCC"} loading={loadVWV || loadVisit}  type="submit">Submit</Button>
             <Button bg={"red"} onClick={close} >Cancel</Button>
         </Group>
         </form>

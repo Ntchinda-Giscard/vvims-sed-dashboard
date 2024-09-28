@@ -1,13 +1,24 @@
 "use client"
-import { ActionIcon, Table, Menu, rem, ScrollArea,  } from '@mantine/core';
-import { IconTrash, IconEdit, IconDotsVertical, IconEye, IconUserX, IconUserCheck } from '@tabler/icons-react';
+import { ActionIcon, Table, Menu, rem, ScrollArea, Badge } from '@mantine/core';
+import { IconTrash, IconEdit, IconDotsVertical, IconEye, IconUserX, IconUserCheck, IconDoorExit } from '@tabler/icons-react';
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState } from 'react';
 import cx from 'clsx';
 import classes from "@/app/dashboard/view-employees/table.module.css";
 
-export default function VisitorTable({datas, onEdit, onDelete, onDeactivate}:any) {
+export default function VisitorTable({datas, onEdit, onCheckIn, onCheckOut, onView, onAccept, onReject}:any) {
   const [scrolled, setScrolled] = useState(false)
+  const dateConverter=(date: any) =>{
+    const new_date = new Date(date).toLocaleTimeString('en-GB', {hour12: false})
+    return new_date
+  }
   const rows = datas?.map((data: {
+    date: ReactNode;
+    check_in_at: ReactNode;
+    check_out_at: ReactNode;
+    reason: ReactNode;
+    visit_status: any;
+    employee: any;
+    visitorByVisitor: any;
     function: ReactNode;
       firstname: any;
       lastname: any; id: Key | null | undefined; region: any; department: { text_content: { content: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; }; service: { text_content: { content: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; }; phone_number: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; position: {
@@ -15,12 +26,20 @@ export default function VisitorTable({datas, onEdit, onDelete, onDeactivate}:any
 }; 
 }) => (
     <Table.Tr key={data?.id}>
-      <Table.Td style={{ color: "#404044" }} >{ `${data?.firstname}` + " "+ `${data?.lastname}`}</Table.Td>
+      <Table.Td style={{ color: "#404044" }} >{ `${data?.visitorByVisitor?.firstname}` + " "+ `${data?.visitorByVisitor?.lastname}`}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.visitorByVisitor?.phone_number}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{data?.department?.text_content?.content}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{data?.service?.text_content?.content}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.position?.text_content?.content}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.function}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.phone_number}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{`${data?.employee?.firstname}`+ " "+ `${data?.employee?.lastname}` }</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.date}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{ dateConverter(data?.check_in_at)}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{dateConverter(data?.check_out_at)}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.reason}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>
+        <Badge variant="light" color={data?.visit_status?.status === 'PENDING' ? 'blue' : (data?.visit_status?.status === 'ACCEPTED' ? 'teal' : 'red')}>
+          {data?.visit_status?.status}
+        </Badge> 
+      </Table.Td>
       <Table.Td>
         <Menu shadow="md">
             <Menu.Target>
@@ -29,9 +48,11 @@ export default function VisitorTable({datas, onEdit, onDelete, onDeactivate}:any
                 </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Item color="green" onClick={() => onEdit(data)} leftSection={<IconEye  style={{ width: rem(14), height: rem(14) }} /> }> View </Menu.Item>
-              <Menu.Item color="orange" onClick={() => onDeactivate(data)} leftSection={<IconUserX  style={{ width: rem(14), height: rem(14) }} />}> Deactivate </Menu.Item>
-              <Menu.Item color="red" onClick={() => onDelete(data)} leftSection={<IconTrash  style={{ width: rem(14), height: rem(14) }} /> }> Delete </Menu.Item>
+              <Menu.Item color="green" onClick={() => onView(data)} leftSection={<IconEye  style={{ width: rem(14), height: rem(14) }} /> }> View </Menu.Item>
+              <Menu.Item color="blue" onClick={() => onEdit(data)} leftSection={<IconEdit  style={{ width: rem(14), height: rem(14) }} />}> Edit </Menu.Item>
+              <Menu.Item color="teal" onClick={() => onAccept(data)} leftSection={<IconUserCheck  style={{ width: rem(14), height: rem(14) }} />}> Accept </Menu.Item>
+              <Menu.Item color="orange" onClick={() => onReject(data)} leftSection={<IconUserX  style={{ width: rem(14), height: rem(14) }} />}> Reject </Menu.Item>
+              <Menu.Item color="purple" onClick={() => onCheckOut(data)} leftSection={<IconDoorExit  style={{ width: rem(14), height: rem(14) }} /> }> Checkout </Menu.Item>
             </Menu.Dropdown>
         </Menu>        
       </Table.Td>
@@ -46,13 +67,16 @@ export default function VisitorTable({datas, onEdit, onDelete, onDeactivate}:any
       <Table.Thead className={cx(classes.header, {[classes.scrolled]: scrolled})}>
         <Table.Tr>
           <Table.Th style={{ color: "#404044" }}> Name </Table.Th>
+          <Table.Th style={{ color: "#404044" }}> Phone </Table.Th>
           <Table.Th style={{ color: "#404044" }}>Department</Table.Th>
           <Table.Th style={{ color: "#404044" }}>Service</Table.Th>
+          <Table.Th style={{ color: "#404044" }}>Employee</Table.Th>
           <Table.Th style={{ color: "#404044" }}>Date</Table.Th>
           <Table.Th style={{ color: "#404044" }}>Check in</Table.Th>
           <Table.Th style={{ color: "#404044" }}>Check out</Table.Th>
           <Table.Th style={{ color: "#404044" }}>Reason</Table.Th>
           <Table.Th style={{ color: "#404044" }}>Status</Table.Th>
+          <Table.Th style={{ color: "#404044" }}>Actions</Table.Th>
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>{rows}</Table.Tbody>

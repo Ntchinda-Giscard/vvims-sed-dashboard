@@ -15,7 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     router.push("/dashboard")
-  }, []);
+  },[]);
 
   return (
     <main className="flex min-h-full flex-col gap-3">
