@@ -53,7 +53,9 @@ export default function VisitorTable({datas, onEdit, onCheckIn, onCheckOut, onVi
               <Menu.Item color="blue" onClick={() => onEdit(data)} leftSection={<IconEdit  style={{ width: rem(14), height: rem(14) }} />}> Edit </Menu.Item>
               <Menu.Item color="teal" onClick={() => onAccept(data)} leftSection={<IconUserCheck  style={{ width: rem(14), height: rem(14) }} />}> Accept </Menu.Item>
               <Menu.Item color="orange" onClick={() => onReject(data)} leftSection={<IconUserX  style={{ width: rem(14), height: rem(14) }} />}> Reject </Menu.Item>
-              <Menu.Item color="purple" onClick={() => onCheckOut(data)} leftSection={<IconDoorExit  style={{ width: rem(14), height: rem(14) }} /> }> Checkout </Menu.Item>
+
+              {data?.visit_status?.status === "ACCEPTED" ?
+                <Menu.Item color="purple" onClick={() => onCheckOut(data)} leftSection={<IconDoorExit  style={{ width: rem(14), height: rem(14) }} /> }> Checkout </Menu.Item> : null}
             </Menu.Dropdown>
         </Menu>        
       </Table.Td>
