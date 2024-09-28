@@ -6,6 +6,8 @@ subscription GetVisits($search: String = "%%", $date: timestamptz = "2100-01-01"
     check_in_at
     check_out_at
     date
+    reason
+    id
     department {
       text_content {
         content

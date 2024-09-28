@@ -8,6 +8,7 @@ import classes from "@/app/dashboard/view-employees/table.module.css";
 export default function VisitorTable({datas, onEdit, onCheckIn, onCheckOut, onView, onAccept, onReject}:any) {
   const [scrolled, setScrolled] = useState(false)
   const dateConverter=(date: any) =>{
+    if(date  === null) return '--:--:--'
     const new_date = new Date(date).toLocaleTimeString('en-GB', {hour12: false})
     return new_date
   }
@@ -26,16 +27,16 @@ export default function VisitorTable({datas, onEdit, onCheckIn, onCheckOut, onVi
 }; 
 }) => (
     <Table.Tr key={data?.id}>
-      <Table.Td style={{ color: "#404044" }} >{ `${data?.visitorByVisitor?.firstname}` + " "+ `${data?.visitorByVisitor?.lastname}`}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.visitorByVisitor?.phone_number}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.department?.text_content?.content}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.service?.text_content?.content}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{`${data?.employee?.firstname}`+ " "+ `${data?.employee?.lastname}` }</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.date}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{ dateConverter(data?.check_in_at)}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{dateConverter(data?.check_out_at)}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.reason}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>
+      <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }} >{ `${data?.visitorByVisitor?.firstname}` + " "+ `${data?.visitorByVisitor?.lastname}`}</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{data?.visitorByVisitor?.phone_number}</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{data?.department?.text_content?.content}</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{data?.service?.text_content?.content}</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{`${data?.employee?.firstname}`+ " "+ `${data?.employee?.lastname}` }</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{data?.date}</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: 'capitalize'}}>{ dateConverter(data?.check_in_at)}</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{dateConverter(data?.check_out_at)}</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{data?.reason}</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>
         <Badge variant="light" color={data?.visit_status?.status === 'PENDING' ? 'blue' : (data?.visit_status?.status === 'ACCEPTED' ? 'teal' : 'red')}>
           {data?.visit_status?.status}
         </Badge> 
@@ -43,7 +44,7 @@ export default function VisitorTable({datas, onEdit, onCheckIn, onCheckOut, onVi
       <Table.Td>
         <Menu shadow="md">
             <Menu.Target>
-            <ActionIcon variant="transparent" color="gray" aria-label="Settings">
+            <ActionIcon variant="transparent" color="gray" aria-label="Actions">
                 <IconDotsVertical style={{ width: '70%', height: '70%' }}  stroke={1.5} />
                 </ActionIcon>
             </Menu.Target>

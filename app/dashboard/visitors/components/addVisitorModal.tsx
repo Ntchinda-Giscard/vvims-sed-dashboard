@@ -17,23 +17,23 @@ export default function AddVisitor({opened, close}: any) {
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
-          firstname: '',
-          lastname: '',
-          id_card_number: '',
+          firstname: null,
+          lastname: null,
+          id_card_number: null,
           service: null,
           department: null,
           employee: null,
-          phone_number: "",
+          phone_number: null,
           visitors: null,
-          reason: "",
+          reason: null,
           vehicle: null
         },
     
         validate: {
-            firstname: (value) => ( value.length < 3 ? "Firtname must be 3 character at least" : null),
-            lastname: (value) => ( value.length < 3 ? "Lastname must be 3 character at least" : null),
-            id_card_number: (value) => ( value.length < 5 ? "Lastname must be 3 character at least" : null),
-            phone_number: (value) => (/^6[0-9]{8}$/.test(value)? null : 'Invalid phone number'),
+            // firstname: (value) => ( value.length < 3 ? "Firtname must be 3 character at least" : null),
+            // lastname: (value) => ( value.length < 3 ? "Lastname must be 3 character at least" : null),
+            // id_card_number: (value) => ( value.length < 5 ? "Lastname must be 3 character at least" : null),
+            // phone_number: (value) => (/^6[0-9]{8}$/.test(value)? null : 'Invalid phone number'),
         },
       });
         const user = useSelector((state: any) => state.auth.userInfo);
@@ -110,6 +110,24 @@ export default function AddVisitor({opened, close}: any) {
         }
         if(form.getValues().visitors){
             console.log("visitor selected")
+            insertVisit({
+                variables:{
+                    reason: values.reason,
+                    vehicle: values.vehicle,
+                    host_service: values.service,
+                    host_employee: values.employee,
+                    host_department: values.department,
+                    visitor: values.visitors
+                },
+                onCompleted: () =>{
+                    toast.success("Visit inserted successfully")
+                    form.reset()
+                    close()
+                },
+                onError: (err) =>{
+                    toast.error(`${err.message}`)
+                }
+            })
         }
         else{
             console.log(" no visitor selected")
@@ -128,10 +146,11 @@ export default function AddVisitor({opened, close}: any) {
                 },
                 onCompleted: () =>{
                     toast.success("Visit inserted successfully")
+                    form.reset()
                     close()
                 },
                 onError: (err) =>{
-                    toast.error(`${err.message}`)
+                    toast.error(`Verify that you entered the vistors info if you did not chose a previous visitor`)
                 }
             })
         }
