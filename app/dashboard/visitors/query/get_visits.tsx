@@ -9,20 +9,24 @@ subscription GetVisits($search: String = "%%", $date: timestamptz = "2100-01-01"
     reason
     id
     department {
+      id
       text_content {
         content
       }
     }
     employee {
+      id
       firstname
       lastname
     }
     service {
+      id
       text_content {
         content
       }
     }
     visitorByVisitor {
+      id
       lastname
       phone_number
       id_number
@@ -43,6 +47,10 @@ subscription GetVisits($search: String = "%%", $date: timestamptz = "2100-01-01"
     }
     visit_status {
       status
+    }
+    vehicleByVehicle {
+      id
+      license
     }
   }
 }

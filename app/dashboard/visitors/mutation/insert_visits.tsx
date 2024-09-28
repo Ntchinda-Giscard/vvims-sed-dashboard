@@ -36,4 +36,19 @@ mutation CheckOutVisitor($id: uuid!) {
   update_visits_by_pk(pk_columns: {id: $id}, _set: {check_out_at: now}) {
     id
   }
-}`
+}`;
+
+export const UPDATE_VISITS = gql`
+mutation MyMutation($id: uuid!, $reason: String, $vehicle: uuid, $visitor: uuid, $host_department: uuid, $host_employee: uuid, $host_service: uuid) {
+  update_visits_by_pk(pk_columns: {id: $id}, _set: {reason: $reason, vehicle: $vehicle, visitor: $visitor, host_department: $host_department, host_employee: $host_employee, host_service: $host_service}) {
+    id
+  }
+}`;
+
+export const UPDATE_VISITOR = gql`
+mutation MyMutation($id: uuid!, $phone_number: String, $lastname: String, $id_number: String, $firstname: String) {
+  update_visitors_by_pk(pk_columns: {id: $id}, _set: {phone_number: $phone_number, lastname: $lastname, id_number: $id_number, firstname: $firstname}) {
+    id
+  }
+}
+`

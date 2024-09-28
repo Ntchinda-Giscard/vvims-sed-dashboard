@@ -12,15 +12,18 @@ import { Poppins } from 'next/font/google';
 import FootPage from "../components/fotter";
 import { ACCEPT_VISITS, CHECK_OUT_VISIT, REJECT_VISITS } from "./mutation/insert_visits";
 import toast from "react-hot-toast";
+import EditVisitor from "./components/editVisitor";
 
 const poppins = Poppins({ subsets: ["latin"], weight:["400"] });
 
 
 function Page() {
     const [addOpenedVisitor, { open: openVisitor, close: closeVisitor }] = useDisclosure(false);
+    const [editOpenedVisitor, { open: openEdit, close: closeEdit }] = useDisclosure(false);
     const [activePage, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [date, setDate] = useState('2100-01-01')
+    const [editValue, setEditValue] = useState(null)
 //   const user = useSelector((state: any) => state.auth.userInfo);
   const [search, setSearch] = useState('');
     const {data: dataVisits, loading: loadVisits, error: errVisits} = useSubscription(GET_VISITS,{
@@ -96,12 +99,23 @@ function Page() {
         })
     }
 
+    const handleEdit = (v: any) =>{
+        setEditValue(v)
+        console.log(v)
+        openEdit()
+    }
+
     if (errVisits) return `Error: ${errVisits}`
     return ( <>
     <main className="flex flex-col min-h-full min-w-full">
         <AddVisitor 
             opened = {addOpenedVisitor}
             close={closeVisitor}
+        />
+        <EditVisitor
+            opened={editOpenedVisitor}
+            close={closeEdit}
+            data={editValue}
         />
         <div className="flex md:flex-row flex-col justify-between">
             <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Visitors </p>
@@ -122,6 +136,7 @@ function Page() {
                     onAccept={(v:any) =>handleAcceptVisit(v)}
                     onReject={(v:any) => handleRejectVisit(v)}
                     onCheckOut={(v:any) =>handleCheckOutVisit(v)}
+                    onEdit={(v:any) =>handleEdit(v)}
             />}
             <Group justify="space-between" mt="md">
             {
