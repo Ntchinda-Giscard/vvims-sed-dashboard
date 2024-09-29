@@ -106,8 +106,8 @@ export default function StatsGrid() {
         );
     });
     return (
-        <div className={classes.root}>
-            <div className={"flex flex-row justify-between"} >{stats}</div>
-        </div>
+
+        <div className={"flex gap-3 flex-col min-w-full justify-center md:flex-row md:justify-between"} >{stats}</div>
+
     );
 }

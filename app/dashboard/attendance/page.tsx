@@ -2,10 +2,10 @@
 import {Button, Group, Paper} from "@mantine/core"
 import StatsGrid from "@/app/dashboard/attendance/components/topCards";
 import AttendanceTable from "./components/attendanceTable";
-import { useSubscription } from "@apollo/client";
-import { GET_ATTENDANCES, GET_ATT_AGG } from "./queries/get_total_empl";
+import { useMutation, useSubscription } from "@apollo/client";
+import { GET_ATTENDACES_USER, GET_ATTENDANCES, GET_ATT_AGG } from "./queries/get_total_empl";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FullWidthSkeletonStack from "../components/defaultTable";
 import FootPage from "../components/fotter";
 import { Poppins } from "next/font/google";
@@ -13,6 +13,8 @@ import AttendanceLineChart from "./components/attendanceLineChart";
 import AttendanceBarChart from "./components/chartAttendance";
 import Link from "next/link"
 import {usePathname} from 'next/navigation'
+import { CLOCK_IN, CLOCK_OUT } from "./mutation/clock_in";
+import toast from "react-hot-toast";
 
 const poppins = Poppins({ subsets: ["latin"], weight:["400"] });
 
@@ -33,25 +35,100 @@ function Page(){
         variables:{
             company_id: user?.employee?.company_id,
         }
-    })
+    });
+
+    
+
+    const {data: dataAttStatus, loading: loadAttStatus, error: errorAttStatus} = useSubscription(GET_ATTENDACES_USER,{
+        variables:{id: user?.employee?.id}
+    });
+
+    useEffect(() =>{
+        console.log("status", dataAttStatus)
+    },[dataAttStatus])
+
+    const [clockin, {loading: loadClockin}] = useMutation(CLOCK_IN)
+    const [clockout, {loading: loadClockout}] = useMutation(CLOCK_OUT)
+    const getLocation = () => {
+        if (!navigator.geolocation) {
+          console.error("Geolocation is not supported by your browser");
+        } else {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const { latitude, longitude } = position.coords;
+              console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+              const toast_id = toast.loading("Clocking in...")
+              clockin({
+                variables:{
+                    employee_id: user?.employee?.id,
+                    location: {
+                      type: "Point",
+                      coordinates:[longitude, latitude]
+                    }
+                  },
+                  onCompleted: () =>{
+                    toast.dismiss(toast_id)
+                    toast.success("Clock in successful")
+                  },
+                  onError: (err) =>{
+                    toast.dismiss(toast_id)
+                    toast.error(`${err.message}`)
+                  }
+              })
+            },
+            (err) => {
+              console.error("Unable to retrieve your location");
+            }
+          );
+        }
+      };
+
+      const handleClockOut = () =>{
+        const toast_id = toast.loading("Clocking in...")
+        clockout({
+            variables:{
+                employee_id: user?.employee?.id,
+            },
+            onCompleted: () =>{
+              toast.dismiss(toast_id)
+              toast.success("Clock out successful")
+            },
+            onError: (err) =>{
+              toast.dismiss(toast_id)
+              toast.error(`${err.message}`)
+            }
+        })
+      }
+    
     return(
         <>
             <main className={"flex flex-col min-w-full min-h-full"}>
-                <div className={"flex flex-row justify-between mb-8"}>
+                <div className={"flex flex-col  md:flex-row justify-between mb-8"}>
                     <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Company Attendance </p>
-                    <Button component={Link} href={`${pathname}/view-all-employee`} bg={"#16DBCC"}>
-                        View All Attendance
-                    </Button>
+                    <Group grow>
+                        <Button
+                            disabled ={dataAttStatus?.attendance?.[0]?.clock_out_time || loadAttStatus ? true : false}
+                            loading={loadClockin || loadClockout} 
+                            onClick={ dataAttStatus?.attendance?.[0]?.clock_in_time ? handleClockOut : getLocation} 
+                        bg={dataAttStatus?.attendance?.[0]?.clock_in_time ? 'red' : ''} >
+                            {
+                                dataAttStatus?.attendance?.[0]?.clock_in_time ? 'Clock out' : "Clock in"
+                            }
+                        </Button>
+                        <Button component={Link} href={`${pathname}/view-all-attendances`} bg={"#16DBCC"}>
+                            View All Attendance
+                        </Button>
+                    </Group>
                 </div>
                 <StatsGrid />
-                <div className={"flex flex-row min-w-full gap-3"}>
-                    <div className={"flex w-3/5"}>
+                <div className={"flex flex-col md:flex-row min-w-full gap-3"}>
+                    <div className={"flex md:w-3/5"}>
                         <Paper p="md" withBorder mt="lg" w="100%" radius="md">
                             <p style={{ fontSize: "medium", fontWeight: 500, marginBottom: 15, color: "#404040" }}> Attendance Comparison Chart </p>
                             <AttendanceLineChart />
                         </Paper>
                     </div>
-                    <div className={"flex w-2/5"}>
+                    <div className={"flex md:w-2/5"}>
                         <Paper p="md" withBorder mt="lg" radius="md" w="100%">
                             <p style={{ fontSize: "medium", fontWeight: 500, marginBottom: 15, color: "#404040" }}> On time Comparison Chart </p>
                             <AttendanceBarChart />
