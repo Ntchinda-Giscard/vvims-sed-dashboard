@@ -1,9 +1,10 @@
 "use client"
-import { IconArrowLeft, IconSearch } from "@tabler/icons-react";
+import { IconArrowLeft, IconId, IconIdBadge, IconMapPin, IconPhone, IconPin, IconSearch } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { ActionIcon, Group, Paper, Badge, Text, Image, Card, Stack, Divider, Button } from "@mantine/core";
+import { ActionIcon, Group, Paper, Badge, Text, Image, Card, Stack,rem, Divider, Button } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { ContactIconsList } from "../components/contactSection";
 
 function Pages() {
     const router = useRouter();
@@ -40,39 +41,64 @@ function Pages() {
                 <Badge mt="xs" variant="light" color={visitor?.visit_status?.status === 'PENDING' ? 'blue' : (visitor?.visit_status?.status === 'ACCEPTED' ? 'teal' : 'red')}>
           {visitor?.visit_status?.status}</Badge>
                 </div>
-            <div className="flex flex-row justify-between " >
-                <p style={{fontWeight: 700, fontSize: 'medium', color: "black", textTransform: "capitalize"}}>
+            <div className="flex flex-row justify-center " >
+                <p style={{fontWeight: 700, fontSize: 'medium', color: "black", textTransform: "capitalize", textAlign: "center"}}>
                     {visitor?.visitorByVisitor?.firstname + " " +visitor?.visitorByVisitor?.lastname}
                 </p>
-                <Stack gap={3}>
+                {/* <Stack gap={3}>
                     <Text size="sm" c='dimmed'> {`Clock in: ${dateConverter(visitor?.check_in_at)}`} </Text>
                     <Text size="sm" c='dimmed'> {`Clock out: ${dateConverter(visitor?.check_out_at)}`} </Text>
-                </Stack>
+                </Stack> */}
             </div>
             <div className="flex flex-col mt-9" >
                 <div className="flex flex-row justify-between " >
-                    <Text c='black'> Phone </Text>
+                    <Group>
+                        <IconPhone style={{width: rem(16), height: rem(16)}} stroke={1} />
+                        <Text c='black'>  Phone </Text>
+                    </Group>
                     <Text c='dimmed'> {visitor?.visitorByVisitor?.phone_number} </Text>
                 </div>
                 <Divider mt={2} mb={15} />
                 <div className="flex flex-row justify-between " >
-                    <Text c='black'> Id Number </Text>
+                    <Group>
+                        <IconId style={{width: rem(16), height: rem(16)}} stroke={1}/> 
+                        <Text c='black'> Id Number </Text>
+                    </Group>
                     <Text c='dimmed'> {visitor?.visitorByVisitor?.id_number} </Text>
                 </div>
                 <Divider mt={2} mb={5} />
                 <div className="flex flex-row justify-between " >
-                    <Text c='black'> Reg No. </Text>
+                    <Group>
+                        <IconIdBadge style={{width: rem(16), height: rem(16)}} stroke={1} /> 
+                        <Text c='black'> Reg No. </Text>
+                    </Group>
                     <Text c='dimmed'> {visitor?.reg_no} </Text>
                 </div>
                 <Divider mt={2} mb={5} />
             </div>
-            <Button disabled bg={"#16DBCC"} fullWidth mt="md" radius="md">
+            <p style={{ textAlign: 'center', color: "#404040", fontWeight: 700 }}> Host </p>
+            <Group>
+                <p style={{color: "#404040", fontWeight: 500, textTransform: 'capitalize'}}> {visitor?.employee?.firstname} </p>
+                <p style={{color: "#404040", fontWeight: 500, textTransform: 'capitalize'}}> {visitor?.employee?.lastname} </p>
+            </Group>
+            <div className="flex justify-center min-w-full mt-5 mb-5 gap-3">
+                <IconMapPin style={{width: rem(16), height: rem(16)}} stroke={1} /> 
+                <Text c='black'> {visitor?.visitorByVisitor?.company?.address} </Text>
+            </div>
+            <div className="flex justify-center min-w-full gap-2">
+                <p style={{color: "#404040", fontSize: 'smaller'}}> vvims</p>
+                <p style={{color: "#404040", fontSize: 'smaller'}}> -</p>
+                <p style={{color: "#404040", fontSize: 'smaller'}}>{visitor?.visitorByVisitor?.company?.abbrev} </p>
+            </div>
+
+            <Button disabled color={"#16DBCC"} fullWidth mt="md" radius="md">
                 Print Card
             </Button>
             </Card>
             <div className="flex flex-col">
                 <Paper withBorder p="md" >
-                    <div className="flex flex-col md:flex-row gap-5">
+                    <p style={{color: "#404040", fontWeight: 700, textTransform: 'capitalize'}}> National Identity Card / Passport </p>
+                    <div className="flex flex-col md:flex-row gap-5 mt-5">
                         <div className="flex flex-col">
                             <p style={{color: "#404040", fontSize: 'medium', textTransform: "capitalize", fontWeight: 500}}> Front</p>
                             <Image
@@ -95,7 +121,13 @@ function Pages() {
                         </div>
                     </div> 
                 </Paper>
-                <Paper></Paper>
+                {/* <Paper withBorder mt={'md'}>
+                <Text fz="lg" fw={700} c="#fff">
+                    Contact information
+                </Text>
+
+                <ContactIconsList />
+                </Paper> */}
             </div>
         </div>
     </main>

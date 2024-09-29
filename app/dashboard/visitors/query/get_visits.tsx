@@ -48,6 +48,12 @@ subscription GetVisits($search: String = "%%", $date: timestamptz = "2100-01-01"
         id
       }
       firstname
+      company {
+        abbrev
+        address
+        city
+        email
+      }
     }
     visit_status {
       status

@@ -74,9 +74,13 @@ export default function AddVisitor({opened, close}: any) {
                 value: d?.id,
                 label: d?.text_content?.content
             }))
-            const allOptions = dataAllEmpl?.employees?.map((d: { id: any; firstname: any, lastname:any }) =>({
+            const allOptions = dataAllEmpl?.employees?.map((d: {
+                service: any;
+                department: any; id: any; firstname: any, lastname:any 
+}) =>({
                 value: d?.id,
-                label: `${d?.firstname}` + " "+ `${d?.lastname}`,
+                label: `${d?.firstname}` + " "+ `${d?.lastname}` + " | " + d?.department?.text_content?.content + " | " + d?.service?.text_content?.content ,
+                department: d?.department?.text_content?.content
             }))
             const visitorOption = dataVisitor?.visitors?.map((d: {
                 id_number: any;

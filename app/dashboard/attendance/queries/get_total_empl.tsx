@@ -47,8 +47,8 @@ export const GET_ABSENT_EMPLOYEE = gql`
     }`
 
 export const GET_ATTENDANCES = gql`
-subscription GetAttendances($limit: Int!, $offset: Int!, $company_id: uuid!) {
-  attendance(order_by: {clock_in_time: asc}, limit: $limit, offset: $offset, where: {clock_in_date: {_eq: "now()"}, employee: {company_id: {_eq: $company_id}}}) {
+subscription GetAttendances($limit: Int!, $offset: Int!, $company_id: uuid!, $clock_in_date: date!) {
+  attendance(order_by: {clock_in_time: asc}, limit: $limit, offset: $offset, where: {clock_in_date: {_eq: $clock_in_date}, employee: {company_id: {_eq: $company_id}}}) {
     attendance_state {
       is_late
       id
@@ -83,8 +83,8 @@ subscription GetAttendances($limit: Int!, $offset: Int!, $company_id: uuid!) {
 }`;
 
 export const GET_ATT_AGG = gql`
-subscription MyQuery($company_id: uuid! ) {
-  attendance_aggregate(where: {employee: {company_id: {_eq: $company_id}}, clock_in_date: {_eq: "now()"}}) {
+subscription MyQuery($company_id: uuid!, $clock_in_date: date! ) {
+  attendance_aggregate(where: {employee: {company_id: {_eq: $company_id}}, clock_in_date: {_eq: $clock_in_date}}) {
     aggregate {
       count
     }

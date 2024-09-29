@@ -6,5 +6,17 @@ subscription GetAllEmployee($company_id: uuid! ) {
     id
     firstname
     lastname
+    department{
+      id
+      text_content{
+        content
+      }
+    }
+    service{
+      id
+      text_content{
+        content
+      }
+    }
   }
 }`

@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useSubscription } from "@apollo/client";
 import { GET_ATTENDANCES_ALL, GET_ATTENDANCES_ALL_AGG } from "../queries/get_total_empl";
-import { ActionIcon, Group, Paper, TextInput, rem } from "@mantine/core";
+import { ActionIcon, Group, NumberInput, Paper, TextInput, rem } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { DateInput, MonthPickerInput } from "@mantine/dates";
 import { useSelector } from "react-redux";
@@ -146,11 +146,16 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
             </p>}
                 {
                 errAgg || loadAgg ? null :
-                <FootPage 
-                activePage={activePage}
-                onPage={(v: any) => setPage(v)}
-                total={Math.ceil(dataAgg?.get_attenance_monthly_all_employee.length/itemsPerPage)}
-                />
+                <Group>
+                    <NumberInput value={itemsPerPage} min={10} max={100} 
+                          //@ts-ignore
+                          onChange={setItemsPerPage} />
+                    <FootPage 
+                    activePage={activePage}
+                    onPage={(v: any) => setPage(v)}
+                    total={Math.ceil(dataAgg?.get_attenance_monthly_all_employee.length/itemsPerPage)}
+                    />
+                </Group>
             }
                 </div>
 

@@ -1,22 +1,36 @@
 "use client"
-import { ActionIcon, Table, Menu, rem, ScrollArea, Badge,  } from '@mantine/core';
-import { IconTrash, IconEdit, IconDotsVertical, IconEye, IconUserX, IconUserCheck } from '@tabler/icons-react';
-import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState } from 'react';
+import { ActionIcon, Table, Menu, rem, ScrollArea, Badge, Button } from '@mantine/core';
+import { IconTrash, IconEdit, IconPrinter, IconEye, IconUserX, IconUserCheck } from '@tabler/icons-react';
+import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState, useRef } from 'react';
 import cx from 'clsx';
 import classes from "@/app/dashboard/view-employees/table.module.css";
 
-export default function AttendanceTable({datas, onEdit, onDelete, onDeactivate}:any) {
-  const [scrolled, setScrolled] = useState(false)
-  const time_extract = (datetime: any) =>{
-    if (datetime === null){
-      return "--:--:--"
-    }
-    const date = new Date(datetime)
+export default function AttendanceTable({ datas, onEdit, onDelete, onDeactivate }: any) {
+  const [scrolled, setScrolled] = useState(false);
+  const tableRef = useRef<HTMLDivElement>(null);  // Create a ref to target the table
 
-    const options = {timezone: 'Africa/Douala', hour12: false}
-    const catTime = date.toLocaleTimeString('en-US', options)
-    return catTime
-  }
+  const time_extract = (datetime: any) => {
+    if (datetime === null) {
+      return "--:--:--";
+    }
+    const date = new Date(datetime);
+    const options = { timezone: 'Africa/Douala', hour12: false };
+    const catTime = date.toLocaleTimeString('en-US', options);
+    return catTime;
+  };
+
+  const handlePrint = () => {
+    const printContents = tableRef.current?.innerHTML;  // Get the table content
+    const originalContents = document.body.innerHTML;   // Save the original page content
+    
+    if (printContents) {
+      document.body.innerHTML = printContents;          // Replace body with table content
+      window.print();                                   // Trigger print dialog
+      document.body.innerHTML = originalContents;       // Restore original content
+      window.location.reload();                         // Reload page to reset state
+    }
+  };
+
   const rows = datas?.map((data: {
     clock_out_time: ReactNode;
     clock_in_time: ReactNode;
@@ -24,44 +38,60 @@ export default function AttendanceTable({datas, onEdit, onDelete, onDeactivate}:
     clock_in_date: ReactNode;
     employee: any;
     function: ReactNode;
-      firstname: any;
-      lastname: any; id: Key | null | undefined; region: any; department: { text_content: { content: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; }; service: { text_content: { content: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; }; phone_number: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; position: {
-        function: ReactNode; text_content: { content: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; 
-}; 
-}) => (
+    firstname: any;
+    lastname: any;
+    id: Key | null | undefined;
+    region: any;
+    department: { text_content: { content: ReactNode } };
+    service: { text_content: { content: ReactNode } };
+    phone_number: ReactNode;
+    position: {
+      function: ReactNode;
+      text_content: { content: ReactNode };
+    };
+  }) => (
     <Table.Tr key={data?.id}>
-      <Table.Td style={{ color: "#404044" }} >{ `${data?.employee?.firstname}` + " "+ `${data?.employee?.lastname}`}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{`${data?.employee?.firstname}` + " " + `${data?.employee?.lastname}`}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{data?.employee?.department?.text_content?.content}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{data?.employee?.service?.text_content?.content}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{data?.clock_in_date}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{time_extract(data?.clock_in_time)}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>
-        {
-        data?.attendance_state?.is_late ? <Badge variant='light' radius="md" color='red' > Late </Badge> : <Badge radius="md" variant='light' color='lime' >On Time</Badge>}
+        {data?.attendance_state?.is_late ? (
+          <Badge variant="light" radius="md" color="red">Late</Badge>
+        ) : (
+          <Badge radius="md" variant="light" color="lime">On Time</Badge>
+        )}
       </Table.Td>
       <Table.Td style={{ color: "#404044" }}>{time_extract(data?.clock_out_time)}</Table.Td>
     </Table.Tr>
   ));
 
   return (
-    <ScrollArea h={300} onScrollPositionChange={({y}) => setScrolled(y !== 0)}>
+    <>
+      <Button onClick={handlePrint} leftSection={<IconPrinter style={{ width: rem(16), height: rem(16) }} stroke={1} />}>
+        PDF
+      </Button>
 
-    
-    <Table withRowBorders miw={700}>
-      <Table.Thead className={cx(classes.header, {[classes.scrolled]: scrolled})}>
-        <Table.Tr>
-          <Table.Th style={{ color: "#404044" }}> Name </Table.Th>
-          <Table.Th style={{ color: "#404044" }}>Department</Table.Th>
-          <Table.Th style={{ color: "#404044" }}>Service</Table.Th>
-          <Table.Th style={{ color: "#404044" }}>Date</Table.Th>
-          <Table.Th style={{ color: "#404044" }}>Clock in time</Table.Th>
-          <Table.Th style={{ color: "#404044" }}></Table.Th>
-          <Table.Th style={{ color: "#404044" }}>Clock out time</Table.Th>
-        </Table.Tr>
-      </Table.Thead>
-      <Table.Tbody>{rows}</Table.Tbody>
-    </Table>
-    </ScrollArea>
+      <ScrollArea h={300} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
+        {/* Ref target for printing */}
+        <div ref={tableRef}>
+          <Table withRowBorders miw={700}>
+            <Table.Thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
+              <Table.Tr>
+                <Table.Th style={{ color: "#404044" }}> Name </Table.Th>
+                <Table.Th style={{ color: "#404044" }}>Department</Table.Th>
+                <Table.Th style={{ color: "#404044" }}>Service</Table.Th>
+                <Table.Th style={{ color: "#404044" }}>Date</Table.Th>
+                <Table.Th style={{ color: "#404044" }}>Clock in time</Table.Th>
+                <Table.Th style={{ color: "#404044" }}></Table.Th>
+                <Table.Th style={{ color: "#404044" }}>Clock out time</Table.Th>
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>{rows}</Table.Tbody>
+          </Table>
+        </div>
+      </ScrollArea>
+    </>
   );
 }
-

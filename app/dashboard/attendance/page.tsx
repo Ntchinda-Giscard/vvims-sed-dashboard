@@ -1,5 +1,5 @@
 "use client"
-import {Button, Group, Paper} from "@mantine/core"
+import {Button, Group, NumberInput, Paper} from "@mantine/core"
 import StatsGrid from "@/app/dashboard/attendance/components/topCards";
 import AttendanceTable from "./components/attendanceTable";
 import { useMutation, useSubscription } from "@apollo/client";
@@ -15,6 +15,7 @@ import Link from "next/link"
 import {usePathname} from 'next/navigation'
 import { CLOCK_IN, CLOCK_OUT } from "./mutation/clock_in";
 import toast from "react-hot-toast";
+import { DateInput } from "@mantine/dates";
 
 const poppins = Poppins({ subsets: ["latin"], weight:["400"] });
 
@@ -22,18 +23,22 @@ function Page(){
     const pathname = usePathname()
     const user = useSelector((state: any) => state.auth.userInfo);
     const [activePage, setPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const [value, setValue] = useState<Date | null>(new Date());
+
     const {data: dataAtt, loading: loadAtt, error: errAtt} = useSubscription(GET_ATTENDANCES,{
         variables:{
             company_id: user?.employee?.company_id,
             limit: itemsPerPage,
             offset: (activePage-1) * itemsPerPage,
+            clock_in_date: value
         }
     })
 
     const {data: dataAgg, loading: loadAgg, error: errAgg} = useSubscription(GET_ATT_AGG,{
         variables:{
             company_id: user?.employee?.company_id,
+            clock_in_date: value
         }
     });
 
@@ -95,7 +100,7 @@ function Page(){
             },
             onError: (err) =>{
               toast.dismiss(toast_id)
-              toast.error(`${err.message}`)
+              toast.error(`Clock in error`)
             }
         })
       }
@@ -110,7 +115,7 @@ function Page(){
                             disabled ={dataAttStatus?.attendance?.[0]?.clock_out_time || loadAttStatus ? true : false}
                             loading={loadClockin || loadClockout} 
                             onClick={ dataAttStatus?.attendance?.[0]?.clock_in_time ? handleClockOut : getLocation} 
-                        bg={dataAttStatus?.attendance?.[0]?.clock_in_time ? 'red' : ''} >
+                            color={dataAttStatus?.attendance?.[0]?.clock_in_time ? 'red' : ''} >
                             {
                                 dataAttStatus?.attendance?.[0]?.clock_in_time ? 'Clock out' : "Clock in"
                             }
@@ -136,7 +141,26 @@ function Page(){
                     </div>
                 </div>
                 <Paper mt="lg" shadow="md" radius="md" p="md">
-                    
+                    <div>
+                    <DateInput
+                      value={value}
+                      w={300}
+                      onChange={setValue}
+                      label="Date"
+                      placeholder="Date input"
+                      styles={{
+                        label:{
+                            color: "#404040"
+                        },
+                        calendarHeader:{
+                            color: "#000"
+                        },
+                        calendarHeaderControl:{
+                            color: "#000"
+                        }
+                    }}
+                    />
+                    </div>
                     {
                         loadAtt || errAtt ? <FullWidthSkeletonStack /> :
                         <AttendanceTable
@@ -151,11 +175,16 @@ function Page(){
                         </p>}
                     {
                         errAgg || loadAgg ? null :
-                        <FootPage 
-                        activePage={activePage}
-                        onPage={(v: any) => setPage(v)}
-                        total={Math.ceil(dataAgg?.attendance_aggregate?.aggregate?.count/itemsPerPage)}
-                        />
+                        <Group>
+                          <NumberInput w={"40%"} value={itemsPerPage} min={10} max={100} 
+                          //@ts-ignore
+                          onChange={setItemsPerPage} />
+                          <FootPage 
+                          activePage={activePage}
+                          onPage={(v: any) => setPage(v)}
+                          total={Math.ceil(dataAgg?.attendance_aggregate?.aggregate?.count/itemsPerPage)}
+                          />
+                        </Group>
                     }
                     </Group>
                 </Paper>
