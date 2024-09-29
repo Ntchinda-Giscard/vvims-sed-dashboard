@@ -7,6 +7,7 @@ subscription GetVisits($search: String = "%%", $date: timestamptz = "2100-01-01"
     check_out_at
     date
     reason
+    reg_no
     id
     department {
       id
@@ -35,13 +36,16 @@ subscription GetVisits($search: String = "%%", $date: timestamptz = "2100-01-01"
         visitorsByBackId {
           file {
             file_url
+            id
           }
         }
         visitorsByFrontId {
           file {
             file_url
+            id
           }
         }
+        id
       }
       firstname
     }
@@ -53,8 +57,7 @@ subscription GetVisits($search: String = "%%", $date: timestamptz = "2100-01-01"
       license
     }
   }
-}
-`
+}`
 
 
 export const GET_VISITS_AGG = gql`

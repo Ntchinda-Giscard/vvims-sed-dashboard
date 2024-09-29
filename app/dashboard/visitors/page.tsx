@@ -1,7 +1,7 @@
 "use client"
-import { Button, Group, Paper } from "@mantine/core";
+import { Button, Group, Paper, TextInput, rem } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconPlus } from "@tabler/icons-react";
+import { IconCalendar, IconPlus, IconSearch } from "@tabler/icons-react";
 import VisitorTable from "./components/visitorTable";
 import AddVisitor from "./components/addVisitorModal";
 import { GET_VISITS, GET_VISITS_AGG } from "./query/get_visits";
@@ -13,16 +13,23 @@ import FootPage from "../components/fotter";
 import { ACCEPT_VISITS, CHECK_OUT_VISIT, REJECT_VISITS } from "./mutation/insert_visits";
 import toast from "react-hot-toast";
 import EditVisitor from "./components/editVisitor";
+import { DateInput } from "@mantine/dates";
+import  {useRouter, usePathname} from 'next/navigation'
+import { useDispatch } from "react-redux";
+import { addVisitor } from "./slices/visitorSlices";
 
 const poppins = Poppins({ subsets: ["latin"], weight:["400"] });
 
 
 function Page() {
+    const router = useRouter() 
+    const pathname = usePathname()
+    const dispatch = useDispatch()
     const [addOpenedVisitor, { open: openVisitor, close: closeVisitor }] = useDisclosure(false);
     const [editOpenedVisitor, { open: openEdit, close: closeEdit }] = useDisclosure(false);
     const [activePage, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
-    const [date, setDate] = useState('2100-01-01')
+    const [date, setDate] = useState( new Date('2100-01-01'))
     const [editValue, setEditValue] = useState(null)
 //   const user = useSelector((state: any) => state.auth.userInfo);
   const [search, setSearch] = useState('');
@@ -31,13 +38,13 @@ function Page() {
             limit: itemsPerPage,
             offset: (activePage-1) * itemsPerPage,
             search: `%${search}%`,
-            date: date
+            date: date ? date : "2100-01-01"
         }
     });
     const {data: dataAgg, error: errAgg, loading: loadAgg} = useSubscription(GET_VISITS_AGG,{
         variables:{
             search: `%${search}%`,
-            date: date
+            date: date ? date : "2100-01-01"
         }
     })
 
@@ -98,6 +105,10 @@ function Page() {
             }
         })
     }
+    const handleView= (v: any) =>{
+        dispatch(addVisitor(v))
+        router.push(`${pathname}/${v?.id}`)
+    }
 
     const handleEdit = (v: any) =>{
         setEditValue(v)
@@ -128,6 +139,34 @@ function Page() {
             </Button>
         </div>
         <Paper radius="md" shadow="md" p="md" mt="lg" >
+            <div className="flex flex-row justify-between">
+                <TextInput
+                    value={search}
+                    onChange={(event) => setSearch(event.currentTarget.value)}
+                    leftSection={<IconSearch  style={{ width: rem(16), height: rem(16) }} />}
+                    placeholder="search"
+                />
+                <DateInput
+                //@ts-ignore
+                    value={date}
+                    //@ts-ignore
+                    onChange={setDate}
+                    placeholder="Date input"
+                    leftsection={<IconCalendar style={{ width: rem(16), height: rem(16) }} />}
+                    clearable
+                    styles={{
+                        label:{
+                            color: "#404040"
+                        },
+                        calendarHeader:{
+                            color: "#000"
+                        },
+                        calendarHeaderControl:{
+                            color: "#000"
+                        }
+                    }}
+                />
+            </div>
             {
                 loadVisits || errVisits ?
                 <FullWidthSkeletonStack /> :
@@ -137,6 +176,7 @@ function Page() {
                     onReject={(v:any) => handleRejectVisit(v)}
                     onCheckOut={(v:any) =>handleCheckOutVisit(v)}
                     onEdit={(v:any) =>handleEdit(v)}
+                    onView={(v: any) => handleView(v) }
             />}
             <Group justify="space-between" mt="md">
             {

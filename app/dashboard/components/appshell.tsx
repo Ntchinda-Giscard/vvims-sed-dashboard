@@ -44,7 +44,7 @@ export default function ResponsiveSizes(
     <AppShell
       header={{ height: { base: 60, md: 70, lg: 80 } }}
       navbar={{
-        width: { base: 50, md: 100, lg: 200 },
+        width: { base: 200, md: 200, lg: 200 },
         breakpoint: 'sm',
         collapsed: { mobile: !opened },
       }}
@@ -55,15 +55,14 @@ export default function ResponsiveSizes(
             background: "#386BF6",
         }
       }}>
-        <Group h="100%" px="md">
+        <div className="flex flex-row min-w-full min-h-full items-center">
           
-          <Group justify='space-between' w="100%">
-            
+            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+          <div className="flex flex-row min-w-full justify-start md:justify-between">
             <span className={cx([classes.logo, poppins_logo.className])}>VVIMS <span style={{color: "#17DBCC"}}>®</span></span>
             <UserTopButton />
-          </Group>
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        </Group>
+          </div>
+        </div>
             
       </AppShell.Header>
       <AppShell.Navbar

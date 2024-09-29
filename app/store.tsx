@@ -11,11 +11,12 @@ import editDeptReducer from "@/app/dashboard/departments/slices/editDeptSlice";
 import deleteServReducer from "@/app/dashboard/serviceses/slices/deleteServSlice";
 import editEmployeeReducer from "@/app/dashboard/view-employees/slices/editEmployeeSlice";
 import deleteEmployeeReducer from "@/app/dashboard/view-employees/slices/deleteEmployeeSlice";
+import visitorReducer from '@/app/dashboard/visitors/slices/visitorSlices';
 // Configuration for Redux Persist
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth']
+  whitelist: ['auth', 'visitor']
 };
 
 const rootReducer = combineReducers({
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   delServ: deleteServReducer,
   editEmpl: editEmployeeReducer,
   deleteEmpl: deleteEmployeeReducer,
+  visitor: visitorReducer,
 })
 
 // Wrap the root reducer with persistReducer
