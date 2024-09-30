@@ -1,16 +1,29 @@
 "use client"
 import { ActionIcon, Table, Menu, rem, ScrollArea, Badge,  } from '@mantine/core';
 import { IconUserX, IconUserCheck } from '@tabler/icons-react';
-import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState, useEffect } from 'react';
+import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import classes from "@/app/dashboard/view-employees/table.module.css";
 
 export default function ViewAttendanceTable({datas, onEdit, onDelete, onDeactivate}:any) {
   const [scrolled, setScrolled] = useState(false)
+  const tableRef = useRef<HTMLDivElement>(null);  // Create a ref to target the table
 
   useEffect(()=> {
     console.log("Days", datas?.[0])
-  }, [datas])
+  }, [datas]);
+
+  const handlePrint = () => {
+    const printContents = tableRef.current?.innerHTML;  // Get the table content
+    const originalContents = document.body.innerHTML;   // Save the original page content
+    
+    if (printContents) {
+      document.body.innerHTML = printContents;          // Replace body with table content
+      window.print();                                   // Trigger print dialog
+      document.body.innerHTML = originalContents;       // Restore original content
+      window.location.reload();                         // Reload page to reset state
+    }
+  };
 
   const rows = datas?.map((data: {
       attendance_status: any;
@@ -44,7 +57,7 @@ export default function ViewAttendanceTable({datas, onEdit, onDelete, onDeactiva
   return (
     <ScrollArea h={300} onScrollPositionChange={({y}) => setScrolled(y !== 0)}>
 
-    
+  <div ref={tableRef}>
     <Table withRowBorders miw={700}>
       <Table.Thead className={cx(classes.header, {[classes.scrolled]: scrolled})}>
         <Table.Tr>
@@ -59,6 +72,7 @@ export default function ViewAttendanceTable({datas, onEdit, onDelete, onDeactiva
       </Table.Thead>
       <Table.Tbody>{rows}</Table.Tbody>
     </Table>
+    </div>
     </ScrollArea>
   );
 }

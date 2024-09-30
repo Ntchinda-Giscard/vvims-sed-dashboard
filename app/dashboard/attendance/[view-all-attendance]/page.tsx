@@ -147,7 +147,7 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
                 {
                 errAgg || loadAgg ? null :
                 <Group>
-                    <NumberInput value={itemsPerPage} min={10} max={100} 
+                    <NumberInput value={itemsPerPage} w={80} min={10} max={100} 
                           //@ts-ignore
                           onChange={setItemsPerPage} />
                     <FootPage 
