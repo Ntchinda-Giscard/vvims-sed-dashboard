@@ -1,6 +1,6 @@
 "use client"
-import { ActionIcon, Table, Menu, rem, ScrollArea, Badge,  } from '@mantine/core';
-import { IconUserX, IconUserCheck } from '@tabler/icons-react';
+import { ActionIcon, Table, Menu, rem, ScrollArea, Badge, Button,  } from '@mantine/core';
+import { IconUserX, IconUserCheck, IconPrinter } from '@tabler/icons-react';
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import classes from "@/app/dashboard/view-employees/table.module.css";
@@ -55,25 +55,30 @@ export default function ViewAttendanceTable({datas, onEdit, onDelete, onDeactiva
   ));
 
   return (
-    <ScrollArea h={300} onScrollPositionChange={({y}) => setScrolled(y !== 0)}>
+    <>
+    <Button onClick={handlePrint} leftSection={<IconPrinter style={{ width: rem(16), height: rem(16) }} stroke={1} />}>
+        PDF
+      </Button>
+      <ScrollArea h={300} onScrollPositionChange={({y}) => setScrolled(y !== 0)}>
 
-  <div ref={tableRef}>
-    <Table withRowBorders miw={700}>
-      <Table.Thead className={cx(classes.header, {[classes.scrolled]: scrolled})}>
-        <Table.Tr>
-          <Table.Th style={{ color: "#404044" }}> Name </Table.Th>
-            {
-                datas?.[0]?.days?.map((d: any) =>(
-                  <Table.Th key={d?.id} style={{ color: "#404044" }}> {d} </Table.Th>
-                    
-                ))
-            }
-        </Table.Tr>
-      </Table.Thead>
-      <Table.Tbody>{rows}</Table.Tbody>
-    </Table>
-    </div>
-    </ScrollArea>
+    <div ref={tableRef}>
+      <Table withRowBorders miw={700}>
+        <Table.Thead className={cx(classes.header, {[classes.scrolled]: scrolled})}>
+          <Table.Tr>
+            <Table.Th style={{ color: "#404044" }}> Name </Table.Th>
+              {
+                  datas?.[0]?.days?.map((d: any) =>(
+                    <Table.Th key={d?.id} style={{ color: "#404044" }}> {d} </Table.Th>
+                      
+                  ))
+              }
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
+      </Table>
+      </div>
+      </ScrollArea>
+    </>
   );
 }
 
