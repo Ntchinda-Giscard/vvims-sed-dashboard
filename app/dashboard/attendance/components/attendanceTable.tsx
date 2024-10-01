@@ -58,9 +58,9 @@ export default function AttendanceTable({ datas, onEdit, onDelete, onDeactivate 
       <Table.Td style={{ color: "#404044" }}>{time_extract(data?.clock_in_time)}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>
         {data?.attendance_state?.is_late ? (
-          <Badge variant="light" radius="md" color="red">Late</Badge>
+          <Badge variant="light" radius="md" color="red">L</Badge>
         ) : (
-          <Badge radius="md" variant="light" color="lime">On Time</Badge>
+          <Badge radius="md" variant="light" color="lime">O</Badge>
         )}
       </Table.Td>
       <Table.Td style={{ color: "#404044" }}>{time_extract(data?.clock_out_time)}</Table.Td>
