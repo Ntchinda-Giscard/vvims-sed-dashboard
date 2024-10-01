@@ -1,6 +1,6 @@
 "use client"
 import { ActionIcon, Table, Menu, rem, ScrollArea, Badge, Button } from '@mantine/core';
-import { IconTrash, IconEdit, IconPrinter, IconEye, IconUserX, IconUserCheck } from '@tabler/icons-react';
+import { IconTrash, IconEdit, IconPrinter, IconEye, IconUserX, IconCheck, IconX } from '@tabler/icons-react';
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState, useRef } from 'react';
 import cx from 'clsx';
 import classes from "@/app/dashboard/view-employees/table.module.css";
@@ -58,9 +58,9 @@ export default function AttendanceTable({ datas, onEdit, onDelete, onDeactivate 
       <Table.Td style={{ color: "#404044" }}>{time_extract(data?.clock_in_time)}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>
         {data?.attendance_state?.is_late ? (
-          <Badge variant="light" radius="md" color="red">L</Badge>
+          <IconX key={data?.id} style={{width: rem(10), height: rem(10)}} color="red" />
         ) : (
-          <Badge radius="md" variant="light" color="lime">O</Badge>
+          <IconCheck style={{width: rem(10), height: rem(10)}} key={data?.id}  color="lime" />
         )}
       </Table.Td>
       <Table.Td style={{ color: "#404044" }}>{time_extract(data?.clock_out_time)}</Table.Td>
