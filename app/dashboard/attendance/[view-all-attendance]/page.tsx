@@ -138,25 +138,26 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
                 <ViewAttendanceTable 
                     datas = {data?.get_attenance_monthly_all_employee}
                 />}
-                <div className="justify-between items-center w-full">
-                {
-              errAgg || loadAgg ? null :
-              <p className={poppins.className} style={{color: "#007FFF", fontSize: "small"}}>
-              Displaying { data?.get_attenance_monthly_all_employee?.length ? data?.get_attenance_monthly_all_employee?.length*activePage : 0} of {dataAgg?.get_attenance_monthly_all_employee?.length} attendaces.
-            </p>}
-                {
-                errAgg || loadAgg ? null :
-                <Group>
-                    <NumberInput value={itemsPerPage} w={80} min={10} max={100} 
-                          //@ts-ignore
-                          onChange={setItemsPerPage} />
-                    <FootPage 
-                    activePage={activePage}
-                    onPage={(v: any) => setPage(v)}
-                    total={Math.ceil(dataAgg?.get_attenance_monthly_all_employee.length/itemsPerPage)}
-                    />
-                </Group>
-            }
+                <div className="flex md:flex-row flex-col justify-center md:justify-between items-center w-full">
+                    {
+                        errAgg || loadAgg ? null :
+                        <p className={poppins.className} style={{color: "#007FFF", fontSize: "small"}}>
+                        Displaying { data?.get_attenance_monthly_all_employee?.length ? data?.get_attenance_monthly_all_employee?.length*activePage : 0} of {dataAgg?.get_attenance_monthly_all_employee?.length} attendaces.
+                        </p>
+                    }
+                    {
+                    errAgg || loadAgg ? null :
+                    <Group>
+                        <NumberInput value={itemsPerPage} w={80} min={10} max={100} 
+                            //@ts-ignore
+                            onChange={setItemsPerPage} />
+                        <FootPage 
+                        activePage={activePage}
+                        onPage={(v: any) => setPage(v)}
+                        total={Math.ceil(dataAgg?.get_attenance_monthly_all_employee.length/itemsPerPage)}
+                        />
+                    </Group>
+                    }
                 </div>
 
             </Paper>

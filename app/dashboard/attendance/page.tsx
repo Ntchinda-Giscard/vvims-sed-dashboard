@@ -167,7 +167,7 @@ function Page(){
                             datas={dataAtt?.attendance}
                          />
                     }
-                    <Group justify="space-between" mt="md">
+                    <div className="flex min-w-full items-center md:flex-row flex-col justify-center md:justify-between">
                         {
                         errAgg || loadAgg ? null :
                         <p className={poppins.className} style={{color: "#007FFF", fontSize: "small"}}>
@@ -175,18 +175,18 @@ function Page(){
                         </p>}
                     {
                         errAgg || loadAgg ? null :
-                        <Group>
-                          <NumberInput w={"40%"} value={itemsPerPage} min={10} max={100} 
+                        <div className="flex flex-row">
+                          <NumberInput w={100} value={itemsPerPage} min={10} max={100} 
                           //@ts-ignore
                           onChange={setItemsPerPage} />
                           <FootPage 
-                          activePage={activePage}
-                          onPage={(v: any) => setPage(v)}
-                          total={Math.ceil(dataAgg?.attendance_aggregate?.aggregate?.count/itemsPerPage)}
+                            activePage={activePage}
+                            onPage={(v: any) => setPage(v)}
+                            total={Math.ceil(dataAgg?.attendance_aggregate?.aggregate?.count/itemsPerPage)}
                           />
-                        </Group>
+                        </div>
                     }
-                    </Group>
+                    </div>
                 </Paper>
             </main>
         </>

@@ -1,6 +1,6 @@
 "use client"
 import { ActionIcon, Table, Menu, rem, ScrollArea, Badge, Button,  } from '@mantine/core';
-import { IconUserX, IconUserCheck, IconPrinter } from '@tabler/icons-react';
+import { IconUserX, IconUserCheck, IconPrinter, IconCheck, IconX } from '@tabler/icons-react';
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import classes from "@/app/dashboard/view-employees/table.module.css";
@@ -45,7 +45,7 @@ export default function ViewAttendanceTable({datas, onEdit, onDelete, onDeactiva
         {
             data?.attendance_status.map((d: any) =>(
                 <Table.Td key={d?.id} style={{ color: "#404044" }} >
-                    { d=== -1 ? <IconUserX key={d?.id} color="red" /> :(d===1 ? <IconUserCheck key={d?.id}  color="lime" /> : "-") }
+                    { d=== -1 ? <IconX key={d?.id} style={{width: rem(10), height: rem(10)}} color="red" /> :(d===1 ? <IconCheck style={{width: rem(10), height: rem(10)}} key={d?.id}  color="lime" /> : "-") }
                 </Table.Td>
             ))
         }

@@ -6,9 +6,9 @@ import {
     IconArrowRight,
     IconGripHorizontal,
   } from '@tabler/icons-react';
-
+import icon from "@/app/dashboard/components/dotsFotter"
 function FootPage({activePage, onPage, total}: any) {
-   
+
     return ( <>
     <Group justify="flex-end">
         <Pagination 
@@ -23,10 +23,13 @@ function FootPage({activePage, onPage, total}: any) {
             previousIcon={IconArrowLeft}
             firstIcon={IconArrowBarToLeft}
             lastIcon={IconArrowBarToRight}
-            dotsIcon={IconGripHorizontal}
+            //@ts-ignore
+            dotsIcon={icon}
         />
     </Group>
     </> );
 }
 
 export default FootPage;
+
+
