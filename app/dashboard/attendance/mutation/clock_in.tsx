@@ -10,7 +10,7 @@ mutation ClockIn($employee_id: uuid!, $location: geometry = null) {
 
 export const CLOCK_OUT = gql`
 mutation ClockOut($employee_id: uuid!) {
-  update_attendance(where: {clock_in_date: {_eq: now}}, _set: {clock_out_time: now, employee_id: $employee_id}) {
+  update_attendance(where: {clock_in_date: {_eq: now}, employee_id: {_eq: $employee_id}}, _set: {clock_out_time: now}) {
     affected_rows
   }
 }`
