@@ -19,7 +19,7 @@ export function StatsGridIcons() {
             <Text c="dimmed" tt="uppercase" fw={700} fz="xs" className={classes.label}>
               {stat.title}
             </Text>
-            <Text fw={700} fz="xl">
+            <Text c="#404040" fw={700} fz="xl">
               {stat.value}
             </Text>
           </div>

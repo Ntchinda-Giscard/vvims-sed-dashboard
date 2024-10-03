@@ -1,11 +1,12 @@
 "use client"
-import { ActionIcon, Table, Menu, rem, ScrollArea,  } from '@mantine/core';
+import { ActionIcon, Table, Menu, rem, ScrollArea, Badge } from '@mantine/core';
 import { IconTrash, IconEdit, IconDotsVertical, IconEye, IconUserX, IconUserCheck } from '@tabler/icons-react';
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState } from 'react';
 import cx from 'clsx';
 import classes from "@/app/dashboard/view-employees/table.module.css";
 
-export default function AppointmentTable({datas, onAccept, onDelete, onCanceled}:any) {
+
+export default function AppointmentTable({datas, onEdit, onComplete, onCanceled, onDelete}:any) {
   const [scrolled, setScrolled] = useState(false)
   const rows = datas?.map((data: {
       date: ReactNode;
@@ -26,7 +27,11 @@ export default function AppointmentTable({datas, onAccept, onDelete, onCanceled}
       <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>{data?.date}</Table.Td>
       <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>{data?.start_time}</Table.Td>
       <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>{data?.end_time}</Table.Td>
-      <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>{data?.status}</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>
+        <Badge variant="light" color={data?.status === 'PENDING' ? "grape" : data?.status === 'COMPLETED' ? 'green' : 'red'}>
+        {data?.status}
+        </Badge>
+      </Table.Td>
       <Table.Td>
         <Menu shadow="md">
             <Menu.Target>
@@ -35,9 +40,13 @@ export default function AppointmentTable({datas, onAccept, onDelete, onCanceled}
                 </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Item color="blue" onClick={() => onAccept(data)} leftSection={<IconUserCheck  style={{ width: rem(14), height: rem(14) }} /> }> View </Menu.Item>
-              <Menu.Item color="orange" onClick={() => onCanceled(data)} leftSection={<IconUserX  style={{ width: rem(14), height: rem(14) }} />}> Deactivate </Menu.Item>
-              <Menu.Item color="red" onClick={() => onDelete(data)} leftSection={<IconTrash  style={{ width: rem(14), height: rem(14) }} /> }> Delete </Menu.Item>
+              <Menu.Item color="blue" onClick={() => onEdit(data)} leftSection={<IconEdit  style={{ width: rem(14), height: rem(14) }} />}> Edit </Menu.Item>
+              { data?.status === 'PENDING' ?
+                <Menu.Item color="teal" onClick={() => onComplete(data)} leftSection={<IconUserCheck  style={{ width: rem(14), height: rem(14) }} />}> Accept </Menu.Item>
+              : null}
+              {data?.status === 'COMPLETED' ?
+                <Menu.Item color="orange" onClick={() => onCanceled(data)} leftSection={<IconUserX  style={{ width: rem(14), height: rem(14) }} />}> Canceled </Menu.Item>
+              : null}
             </Menu.Dropdown>
         </Menu>        
       </Table.Td>
