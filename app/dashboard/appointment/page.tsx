@@ -1,5 +1,5 @@
 "use client"
-import { StatsGridIcons } from "./components/stats_card";
+import StatsGridIcons  from "./components/stats_card";
 import { Button, Group, Paper, Select,NumberInput , MultiSelect} from "@mantine/core";
 import AppointmentTable from "./components/appointmentTable";
 import { useState } from "react";
