@@ -4,7 +4,7 @@ import { ReactElement } from 'react'
 import classes from "@/app/dashboard/components/css/dashboard.module.css";
 import { Poppins } from "next/font/google";
 import cx from 'clsx'
-import { IconChevronUp } from '@tabler/icons-react';
+import { IconChevronUp, IconChevronDown, Icon } from '@tabler/icons-react';
 
 const font_heading = Poppins({ subsets: ["latin"], weight:["500"] });
 const font_amnt = Poppins({ subsets: ["latin"], weight:["700"] });
@@ -34,12 +34,12 @@ function CardDashboard({title, amount, perc, bg_img, img}: dashboard_card) {
         </Group>
         <Group justify="flex-start" p={10} pb={0}>
             <p className={cx([font_amnt.className, classes.amount])}> {amount} </p>
-            <Badge leftSection={<IconChevronUp />} variant="light" color="#16DBCC" size="lg"  radius="md">  {perc}% </Badge>
+            <Badge leftSection={ perc > 0 ?<IconChevronUp /> : <IconChevronDown />} variant="light" color={ perc > 0 ? "#16DBCC" : perc < 0 ? 'red' : ''} size="lg"  radius="md">  {perc}% </Badge>
         </Group>
-        <Group p={10} pt={0}>
+        {/* <Group p={10} pt={0}>
             <p className={cx([classes.perc, font_perc.className])}> {perc}% </p>
-            <p className={cx([classes.percDesc, font_perc.className])}> Total Increase </p>
-        </Group>
+            <p className={cx([classes.percDesc, font_perc.className])}> {perc > 0 ? "Total Increase" : perc < 0  ? "Total decrease" : "Equal"} </p>
+        </Group> */}
     </Paper>
 
     </> );

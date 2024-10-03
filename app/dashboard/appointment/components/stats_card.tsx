@@ -1,6 +1,9 @@
 import { Group, Paper, Text, ThemeIcon, SimpleGrid } from '@mantine/core';
 import { IconArrowUpRight, IconArrowDownRight } from '@tabler/icons-react';
 import classes from './StatsGridIcons.module.css';
+import { useSubscription } from '@apollo/client';
+import { useEffect } from 'react';
+import { GET_ALL_VISITS, GET_PERCENTAGE_DIFF } from '../../queries/get_all_visits';
 
 const data = [
   { title: 'Completed', value: '0', diff: 0 },
@@ -9,8 +12,18 @@ const data = [
 ];
 
 export function StatsGridIcons() {
+
   const stats = data.map((stat) => {
     const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight;
+    const data = [
+      { title: 'Completed', value: '0', diff: 0 },
+      { title: 'Todays ', value: '0', diff: -0 },
+      { title: 'Upcoming ', value: '0', diff: 0 },
+    ];
+
+    useEffect(() =>{
+
+    },[])
 
     return (
       <Paper withBorder p="md" radius="md" key={stat.title}>

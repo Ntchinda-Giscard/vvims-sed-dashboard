@@ -15,6 +15,9 @@ import img_cf from "@/public/assets/flaged_cad.svg";
 import bg_r from "@/public/assets/bg_card_r.svg";
 import bg_g from "@/public/assets/bg_card_g.svg";
 import bg_b from "@/public/assets/bg_card_b.svg";
+import { useSubscription } from "@apollo/client";
+import { GET_ALL_VISITS, GET_PERCENTAGE_DIFF } from "./queries/get_all_visits";
+import { useSelector } from "react-redux";
 
 
 
@@ -22,10 +25,17 @@ import bg_b from "@/public/assets/bg_card_b.svg";
 const font_heading = Poppins({ subsets: ["latin"], weight:["500"] });
 
 export default function Home() {
+  const user = useSelector((state: any) => state.auth.userInfo);
+  const {data: dataAgg, loading: loadAgg, error: errAgg} = useSubscription(GET_ALL_VISITS,{
+    variables:{
+      company_id: user?.employee?.company_id
+    }
+  })
+  const {data: dataPercent} = useSubscription(GET_PERCENTAGE_DIFF)
   const card_info = [
-    {title: "Total visitor", amount: 0, perc: 12, bg_img: bg_b, img: img_p},
-    {title: "Total Vehicles", amount: 0, perc: 12, bg_img: bg_g, img: img_c},
-    {title: "Flagged Vehicles", amount: 0, perc: 12, bg_img: bg_r, img: img_cf},
+    {title: "Total visits", amount: dataAgg?.visits_aggregate?.aggregate?.count, perc: dataPercent?.get_visit_percentage_difference?.[0]?.percentage_change, bg_img: bg_b, img: img_p},
+    {title: "Total Vehicles", amount: 0, perc: 0, bg_img: bg_g, img: img_c},
+    {title: "Flagged Vehicles", amount: 0, perc: 0, bg_img: bg_r, img: img_cf},
   ]
   useEffect(() =>{
     const askNotificationPermission = async () => {
@@ -39,7 +49,7 @@ export default function Home() {
       if (permission === 'granted') {
         console.log('Notification permission granted.');
         // Optionally, you can show an initial notification here
-        // new Notification("You will receive notifications!");
+        new Notification("You will receive notifications!");
       } else {
         console.log('Notification permission denied.');
       }
@@ -47,7 +57,7 @@ export default function Home() {
 
     // Call the function to request permission
     askNotificationPermission();
-  },[])
+  },[dataAgg, dataPercent])
   return (
     <main className="flex min-h-full flex-col gap-3">
       <p className={cx([classes.heading, font_heading.className])}> Dashboard </p>

@@ -8,3 +8,12 @@ subscription AllVisits($company_id: uuid!) {
     }
   }
 }`
+
+export const GET_PERCENTAGE_DIFF = gql`
+subscription MyQuery {
+  get_visit_percentage_difference {
+    percentage_change
+    today_visits
+    yesterday_visits
+  }
+}`
