@@ -5,7 +5,7 @@ import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, Await
 import cx from 'clsx';
 import classes from "@/app/dashboard/view-employees/table.module.css";
 
-export default function VisitorTable({datas, onEdit, onCheckIn, onCheckOut, onView, onAccept, onReject}:any) {
+export default function VisitorTable({datas, onEdit, onCheckIn, onCheckOut, onView, onAccept, onReject, onDelete}:any) {
   const [scrolled, setScrolled] = useState(false)
   const dateConverter=(date: any) =>{
     if(date  === null) return '--:--:--'
@@ -56,6 +56,7 @@ export default function VisitorTable({datas, onEdit, onCheckIn, onCheckOut, onVi
 
               {data?.visit_status?.status === "ACCEPTED" ?
                 <Menu.Item color="purple" onClick={() => onCheckOut(data)} leftSection={<IconDoorExit  style={{ width: rem(14), height: rem(14) }} /> }> Checkout </Menu.Item> : null}
+                <Menu.Item color="red" onClick={() => onDelete(data)} leftSection={<IconTrash  style={{ width: rem(14), height: rem(14) }} />}> Delete </Menu.Item>
             </Menu.Dropdown>
         </Menu>        
       </Table.Td>

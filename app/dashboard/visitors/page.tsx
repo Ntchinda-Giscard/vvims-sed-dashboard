@@ -17,6 +17,8 @@ import { DateInput } from "@mantine/dates";
 import  {useRouter, usePathname} from 'next/navigation'
 import { useDispatch } from "react-redux";
 import { addVisitor } from "./slices/visitorSlices";
+import { DELETE_VISITS } from "./mutation/delete_visits";
+import DeleteVisitorModal from "./components/deleteVisitModal";
 
 const poppins = Poppins({ subsets: ["latin"], weight:["400"] });
 
@@ -27,12 +29,14 @@ function Page() {
     const dispatch = useDispatch()
     const [addOpenedVisitor, { open: openVisitor, close: closeVisitor }] = useDisclosure(false);
     const [editOpenedVisitor, { open: openEdit, close: closeEdit }] = useDisclosure(false);
+    const [openedDelete, { open: openDelete, close: closeDelete }] = useDisclosure(false);
     const [activePage, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [date, setDate] = useState( new Date('2100-01-01'))
     const [editValue, setEditValue] = useState(null)
 //   const user = useSelector((state: any) => state.auth.userInfo);
   const [search, setSearch] = useState('');
+  const [deleteData, setDeleteData] = useState();
     const {data: dataVisits, loading: loadVisits, error: errVisits} = useSubscription(GET_VISITS,{
         variables:{
             limit: itemsPerPage,
@@ -51,10 +55,16 @@ function Page() {
     const [acceptVisit, {}] = useMutation(ACCEPT_VISITS)
     const [rejectVisit, {}] = useMutation(REJECT_VISITS)
     const [checkOutVisit, {}] = useMutation(CHECK_OUT_VISIT)
+    const [deleteVisitor, {}] = useMutation(DELETE_VISITS)
 
     useEffect(() =>{
         console.log(dataVisits)
     }, [dataVisits])
+
+    const handleDelete= (v: any) =>{
+        setDeleteData(v)
+        openDelete()
+    }
 
     const handleAcceptVisit= (v:any) =>{
         const toast_id = toast.loading('Operation in progress...')
@@ -119,6 +129,11 @@ function Page() {
     if (errVisits) return `Error: ${errVisits}`
     return ( <>
     <main className="flex flex-col min-h-full min-w-full">
+        <DeleteVisitorModal
+            data={deleteData}
+            opened = {openedDelete}
+            close={closeDelete}
+        />
         <AddVisitor 
             opened = {addOpenedVisitor}
             close={closeVisitor}
@@ -177,6 +192,7 @@ function Page() {
                     onCheckOut={(v:any) =>handleCheckOutVisit(v)}
                     onEdit={(v:any) =>handleEdit(v)}
                     onView={(v: any) => handleView(v) }
+                    onDelete={(v:any) =>handleDelete(v)}
             />}
             <Group justify="space-between" mt="md">
             {
