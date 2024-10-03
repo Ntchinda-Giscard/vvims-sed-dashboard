@@ -142,7 +142,7 @@ function Page(){
                 </div>
                 <Paper mt="lg" shadow="md" radius="md" p="md">
                     <div>
-                    <DateInput
+                    {/* <DateInput
                       value={value}
                       w={300}
                       onChange={setValue}
@@ -159,7 +159,7 @@ function Page(){
                             color: "#000"
                         }
                     }}
-                    />
+                    /> */}
                     </div>
                     {
                         loadAtt || errAtt ? <FullWidthSkeletonStack /> :
