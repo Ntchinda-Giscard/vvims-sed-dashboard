@@ -154,7 +154,7 @@ export default function AddVisitor({opened, close}: any) {
                     close()
                 },
                 onError: (err) =>{
-                    toast.error(`Verify that you entered the vistors info if you did not chose a previous visitor`)
+                    toast.error(`${err.message}`)
                 }
             })
         }
