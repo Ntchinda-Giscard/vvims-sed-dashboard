@@ -57,6 +57,9 @@ function Page(){
     const getLocation = () => {
         if (!navigator.geolocation) {
           console.error("Geolocation is not supported by your browser");
+          toast('Geolocation is not supported by your browser', {
+            icon: '📍',
+          });
         } else {
           navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -83,6 +86,9 @@ function Page(){
             },
             (err) => {
               console.error("Unable to retrieve your location");
+              toast('Unable to retrieve your location', {
+                icon: '📍',
+              });
             }
           );
         }
