@@ -17,3 +17,11 @@ subscription MyQuery {
     yesterday_visits
   }
 }`
+
+export const GET_VISITS_STAT = gql`
+subscription MyQuery2 {
+  get_visits_stat {
+    day
+    visits_per_day
+  }
+}`

@@ -1,9 +1,11 @@
 "use client"
 import { Paper, Group, SegmentedControl, Select } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LineChart } from '@mantine/charts';
 import classes from "@/app/dashboard/components/css/dashboard.module.css"
 import cx from "clsx"
+import { useSubscription } from "@apollo/client";
+import { GET_VISITS_STAT } from "../queries/get_all_visits";
 
 
 
@@ -11,6 +13,10 @@ import cx from "clsx"
 
 function GraphSection() {
     const [value, setValue] = useState('vi');
+    const {data: dataVisitStat} = useSubscription(GET_VISITS_STAT);
+    useEffect(() =>{
+
+    },[dataVisitStat])
     return ( <>
 
     <Paper withBorder pr={20} pb={15} w={"100%"}>
@@ -31,23 +37,31 @@ function GraphSection() {
                 />
             </Group>
         </Group>
-        <LineChart
+        {
+            value === 'vi' ?
+            <LineChart
             h={300}
-            data={[
-                {veh: 23, visitors: 6},
-                {veh: 22, visitors: 64},
-                {veh: 29, visitors: 62},
-                {veh: 10, visitors: 1},
-                {veh: 4, visitors: 5},
-                {veh: 43, visitors: 4},
-            ]}
-            dataKey="veh"
+            data={dataVisitStat?.get_visits_stat
+                }
+            dataKey="day"
             series={[
-                { name: 'visitors', color: '#16DBCC' },
+                { name: 'visits_per_day', color: '#16DBCC' },
             ]}
             curveType="natural"
             withDots={false}
         />
+        :
+        <LineChart
+            h={300}
+            data={[]}
+            dataKey="day"
+            series={[
+                { name: 'visits_per_day', color: '#16DBCC' },
+            ]}
+            curveType="natural"
+            withDots={false}
+        />
+        }
     </Paper>
     
     </> );

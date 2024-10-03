@@ -32,6 +32,7 @@ export default function Home() {
     }
   })
   const {data: dataPercent} = useSubscription(GET_PERCENTAGE_DIFF)
+  
   const card_info = [
     {title: "Total visits", amount: dataAgg?.visits_aggregate?.aggregate?.count, perc: dataPercent?.get_visit_percentage_difference?.[0]?.percentage_change, bg_img: bg_b, img: img_p},
     {title: "Total Vehicles", amount: 0, perc: 0, bg_img: bg_g, img: img_c},
@@ -57,6 +58,7 @@ export default function Home() {
 
     // Call the function to request permission
     askNotificationPermission();
+    console.log(dataPercent)
   },[dataAgg, dataPercent])
   return (
     <main className="flex min-h-full flex-col gap-3">
