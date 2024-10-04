@@ -11,7 +11,7 @@ const poppins = Poppins({ subsets: ["latin"], weight:["700"] });
 
 export default function UserTopButton(){
     //@ts-ignore
-    const userInfo = useSelector((state) => state.auth.userInfo)
+    const userInfo = useSelector((state: any) => state.auth.userInfo)
 
     useEffect(() =>{
         console.log(userInfo)

@@ -14,6 +14,10 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.userInfo = action.payload;  // payload should contain user data
     },
+    update:(state, action) =>{
+      state.isAuthenticated = true;
+      state.userInfo = action.payload;  // payload should contain user data
+    },
     logout: (state) => {
       state.isAuthenticated = false;
       state.userInfo = null;

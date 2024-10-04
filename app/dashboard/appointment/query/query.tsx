@@ -5,7 +5,7 @@ subscription MyQuery($company_id: uuid!, $date: date, $status: [appointment_stat
   appointments(where: {employee: {company_id: {_eq: $company_id}},
     _or: [
       {date: {_eq: $date}}, 
-      {status: {_nin: $status}}]
+      {status: {_in: $status}}]
    }, limit: $limit, offset: $offset) {
     date
     employee {
@@ -35,6 +35,35 @@ subscription MyQuery($company_id: uuid, $date: date, $status: appointment_status
       {status: {_eq: $status}}
     ]
   }) {
+    aggregate {
+      count
+    }
+  }
+}`
+
+export const GET_COMPLETED_APP = gql`
+subscription MyQuery2 {
+  appointments_aggregate(where: {status: {_eq: COMPLETED}}) {
+    aggregate {
+      count
+    }
+  }
+}`;
+
+
+export const UPCOMING_APPOINMENT =gql`
+subscription MyQuery2 {
+  appointments_aggregate(where: {date: {_gt: "now()"}}) {
+    aggregate {
+      count
+    }
+  }
+}`;
+
+
+export const TODAYS_APP = gql`
+subscription MyQuery2 {
+  appointments_aggregate(where: {date: {_eq: "now()"}}) {
     aggregate {
       count
     }

@@ -6,4 +6,12 @@ subscription MySubscription {
     message
     title
   }
-}`
+}`;
+
+export const GET_EMP = gql`
+subscription MyQuery($id: uuid!) {
+  employees_by_pk(id: $id) {
+    id
+    password_change_at
+  }
+}`;

@@ -13,6 +13,7 @@ import { CANCEL_APP, UPDATE_APP_COM } from "./mutation/add_appointments";
 import FullWidthSkeletonStack from "../components/defaultTable";
 import { Poppins } from "next/font/google";
 import FootPage from "../components/fotter";
+import toast from "react-hot-toast";
 
 
 const poppins = Poppins({ subsets: ["latin"], weight:["400"] });
@@ -48,13 +49,39 @@ function Page() {
     const [completeAppointment, {}] = useMutation(UPDATE_APP_COM)
 
     const handleCancelAppointment= (v:any) =>{
+        const toast_id = toast.loading("Processing...")
         console.log(v)
+        canceledAppointment({
+            variables:{
+                id: v.id
+            },
+            onCompleted: ()=>{
+                toast.dismiss(toast_id)
+                toast.success("Operation successful")
+            },
+            onError: (err)=>{
+                toast.error(`${err.message}`)
+            }
+        })
     }
     const handleCompleteAppointment= (v:any) =>{
+        const toast_id = toast.loading("Processing...")
         console.log(v)
+        completeAppointment({
+            variables:{
+                id: v.id
+            },
+            onCompleted: ()=>{
+                toast.dismiss(toast_id)
+                toast.success("Operation successful")
+            },
+            onError: (err)=>{
+                toast.error(`${err.message}`)
+            }
+        })
     }
 
-    if (errApp) return `${errApp}`
+    // if (errApp) return `${errApp}`
     return ( <>
        <main className="flex flex-col min-w-full min-h-full">
         <AddAppoinmentModal

@@ -44,9 +44,8 @@ export default function AppointmentTable({datas, onEdit, onComplete, onCanceled,
               { data?.status === 'PENDING' ?
                 <Menu.Item color="teal" onClick={() => onComplete(data)} leftSection={<IconUserCheck  style={{ width: rem(14), height: rem(14) }} />}> Accept </Menu.Item>
               : null}
-              {data?.status === 'COMPLETED' ?
+
                 <Menu.Item color="orange" onClick={() => onCanceled(data)} leftSection={<IconUserX  style={{ width: rem(14), height: rem(14) }} />}> Canceled </Menu.Item>
-              : null}
             </Menu.Dropdown>
         </Menu>        
       </Table.Td>

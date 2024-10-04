@@ -1,24 +1,27 @@
 import { Group, Paper, Text, ThemeIcon, SimpleGrid } from '@mantine/core';
 import { IconArrowUpRight, IconArrowDownRight } from '@tabler/icons-react';
 import classes from './StatsGridIcons.module.css';
+import { useSubscription } from '@apollo/client';
+import { TODAYS_APP, GET_COMPLETED_APP, UPCOMING_APPOINMENT } from '../query/query';
+import { useEffect } from 'react';
 
-
-const data = [
-  { title: 'Completed', value: '0', diff: 0 },
-  { title: 'Todays ', value: '0', diff: -0 },
-  { title: 'Upcoming ', value: '0', diff: 0 },
-];
 
 export default function StatsGridIcons() {
+  const {data: dataToday } = useSubscription(TODAYS_APP)
+  const {data: dataCompleted} = useSubscription(GET_COMPLETED_APP)
+  const {data: dataUpcoming} = useSubscription(UPCOMING_APPOINMENT)
+
+  useEffect(() =>{
+
+  }, [dataToday, dataCompleted, dataUpcoming])
+  const data = [
+    { title: 'Completed', value: dataToday?.appointments_aggregate?.aggregate?.count, diff: 0 },
+    { title: 'Todays ', value: dataCompleted?.appointments_aggregate?.aggregate?.count, diff: -0 },
+    { title: 'Upcoming ', value: dataUpcoming?.appointments_aggregate?.aggregate?.count, diff: 0 },
+  ];
 
   const stats = data.map((stat) => {
     const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight;
-    const data = [
-      { title: 'Completed', value: '0', diff: 0 },
-      { title: 'Todays ', value: '0', diff: -0 },
-      { title: 'Upcoming ', value: '0', diff: 0 },
-    ];
-
     return (
       <Paper withBorder p="md" radius="md" key={stat.title}>
         <Group justify="apart">

@@ -6,11 +6,13 @@ import classes from "@/app/dashboard/components/css/topBar.module.css"
 import { Poppins } from "next/font/google";
 import cx from 'clsx';
 import {links} from "@/app/dashboard/components/links";
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useSubscription } from '@apollo/client';
 import { useEffect } from 'react';
-import { GET_NOTIF } from '../query/notif';
+import { GET_EMP, GET_NOTIF } from '../query/notif';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '@/app/auth/login/slice/authSlice';
 
 
 const poppins_logo = Poppins({ subsets: ["latin"], weight:["500"] });
@@ -24,7 +26,23 @@ export default function ResponsiveSizes(
         children: React.ReactNode;
       }>
 ) {
-  const {data, loading, error} = useSubscription(GET_NOTIF)
+  const userInfo = useSelector((state: any) => state.auth.userInfo)
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const {data, loading, error} = useSubscription(GET_EMP,{
+    variables:{
+      id: userInfo?.employee?.id
+    }
+  });
+
+  useEffect(()=>{
+    console.log("Loging data :", data);
+    if (new Date(userInfo?.employee?.password_change_at) < new Date(data?.employees_by_pk?.password_change_at)   ){
+      console.log("Logout")
+      dispatch(logout())
+      router.push("/auth/login")
+    }
+  },[data])
  
 
  
@@ -58,8 +76,9 @@ export default function ResponsiveSizes(
         <div className="flex flex-row min-w-full min-h-full items-center">
           
             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <div className="flex flex-row min-w-full justify-start md:justify-between">
+          <div className="flex flex-row min-w-full justify-start md:justify-between pl-4 pr-4">
             <span className={cx([classes.logo, poppins_logo.className])}>VVIMS <span style={{color: "#17DBCC"}}>®</span></span>
+            <p className={classes.abrev}>FODECC</p>
             <UserTopButton />
           </div>
         </div>
