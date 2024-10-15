@@ -154,7 +154,7 @@ function Page() {
             </Button>
         </div>
         <Paper radius="md" shadow="md" p="md" mt="lg" >
-            <div className="flex flex-col md:flex-row justify-between">
+            <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between">
                 <TextInput
                     value={search}
                     onChange={(event) => setSearch(event.currentTarget.value)}
