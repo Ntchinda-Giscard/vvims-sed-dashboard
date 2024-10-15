@@ -109,8 +109,8 @@ function VisitorIcon({file_url, firstname, lastname}: visitor_icon){
       <div className="flex flex-row gap-3 items-center">
         <Avatar variant="filled" radius="xl" src={file_url} alt="no image here" />
         <div className='flex flex-col'>
-          <p style={{fontSize: 'small'}}> {firstname} </p>
-          <p style={{fontSize: 'small'}}> {lastname} </p>
+          <p style={{fontSize: 'small', textTransform: 'uppercase'}}> {firstname} </p>
+          <p style={{fontSize: 'small', textTransform: 'capitalize'}}> {lastname} </p>
         </div>
       </div>
     </>
