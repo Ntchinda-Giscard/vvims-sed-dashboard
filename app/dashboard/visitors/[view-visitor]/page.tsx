@@ -103,7 +103,7 @@ function Pages() {
                             <p style={{color: "#404040", fontSize: 'medium', textTransform: "capitalize", fontWeight: 500}}> Front</p>
                             <Image
                                 radius="md"
-                                src={visitor?.visitorByVisitor?.file?.visitorsByFrontId?.file?.file_url                        }
+                                src={visitor?.visitorByVisitor?.fileByFrontId?.file_url                        }
                                 h={200}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />
@@ -113,7 +113,7 @@ function Pages() {
                             <p style={{color: "#404040", fontSize: 'medium', textTransform: "capitalize", fontWeight: 500}}> Back</p>
                             <Image
                                 radius="md"
-                                src={visitor?.visitorByVisitor?.file?.visitorsByBackId?.file?.file_url                      }
+                                src={visitor?.visitorByVisitor?.fileByBackId?.file_url                       }
                                 h={200}
                                 fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                             />

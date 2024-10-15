@@ -33,18 +33,6 @@ subscription GetVisits($search: String = "%%", $date: timestamptz = "2100-01-01"
       id_number
       file {
         file_url
-        visitorsByBackId {
-          file {
-            file_url
-            id
-          }
-        }
-        visitorsByFrontId {
-          file {
-            file_url
-            id
-          }
-        }
         id
       }
       firstname
@@ -53,6 +41,14 @@ subscription GetVisits($search: String = "%%", $date: timestamptz = "2100-01-01"
         address
         city
         email
+      }
+      fileByBackId {
+        file_url
+        id
+      }
+      fileByFrontId {
+        file_url
+        id
       }
     }
     visit_status {
