@@ -1,5 +1,5 @@
 "use client"
-import { ActionIcon, Table, Menu, rem, ScrollArea, Badge } from '@mantine/core';
+import { ActionIcon, Table, Menu, rem, ScrollArea, Badge, Avatar } from '@mantine/core';
 import { IconTrash, IconEdit, IconDotsVertical, IconEye, IconUserX, IconUserCheck, IconDoorExit } from '@tabler/icons-react';
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState } from 'react';
 import cx from 'clsx';
@@ -27,7 +27,14 @@ export default function VisitorTable({datas, onEdit, onCheckIn, onCheckOut, onVi
 }; 
 }) => (
     <Table.Tr key={data?.id}>
-      <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }} >{ `${data?.visitorByVisitor?.firstname}` + " "+ `${data?.visitorByVisitor?.lastname}`}</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }} >
+        <VisitorIcon 
+          file_url={data?.visitorByVisitor?.file?.file_url}
+          firstname={data?.visitorByVisitor?.firstname}
+          lastname={data?.visitorByVisitor?.lastname}
+        />
+
+      </Table.Td>
       <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{data?.visitorByVisitor?.phone_number}</Table.Td>
       <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{data?.department?.text_content?.content}</Table.Td>
       <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{data?.service?.text_content?.content}</Table.Td>
@@ -70,7 +77,7 @@ export default function VisitorTable({datas, onEdit, onCheckIn, onCheckOut, onVi
     <Table withRowBorders miw={700}>
       <Table.Thead className={cx(classes.header, {[classes.scrolled]: scrolled})}>
         <Table.Tr>
-          <Table.Th style={{ color: "#404044" }}> Name </Table.Th>
+          <Table.Th style={{ color: "#404044" }}> Visitor </Table.Th>
           <Table.Th style={{ color: "#404044" }}> Phone </Table.Th>
           <Table.Th style={{ color: "#404044" }}>Department</Table.Th>
           <Table.Th style={{ color: "#404044" }}>Service</Table.Th>
@@ -87,5 +94,26 @@ export default function VisitorTable({datas, onEdit, onCheckIn, onCheckOut, onVi
     </Table>
     </ScrollArea>
   );
+}
+
+interface visitor_icon{
+  file_url: string,
+  firstname: string,
+  lastname: string
+}
+
+function VisitorIcon({file_url, firstname, lastname}: visitor_icon){
+
+  return(
+    <>
+      <div className="flex flex-row gap-3 items-center">
+        <Avatar variant="filled" radius="xl" src={file_url} alt="no image here" />
+        <div className='flex flex-col'>
+          <p> {firstname} </p>
+          <p> {lastname} </p>
+        </div>
+      </div>
+    </>
+  )
 }
 
