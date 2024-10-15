@@ -194,7 +194,7 @@ function Page() {
                     onView={(v: any) => handleView(v) }
                     onDelete={(v:any) =>handleDelete(v)}
             />}
-            <Group justify="space-between" mt="md">
+            <div className="flex justify-center md:justify-between">
             {
               errAgg || loadAgg ? null :
               <p className={poppins.className} style={{color: "#007FFF", fontSize: "small"}}>
@@ -208,7 +208,7 @@ function Page() {
               total={Math.ceil(dataAgg?.visits_aggregate?.aggregate?.count/itemsPerPage)}
             />
           }
-          </Group>
+          </div>
         </Paper>
     </main>
     </> );
