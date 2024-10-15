@@ -38,7 +38,7 @@ export default function VisitorTable({datas, onEdit, onCheckIn, onCheckOut, onVi
       <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{data?.visitorByVisitor?.phone_number}</Table.Td>
       <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{data?.department?.text_content?.content}</Table.Td>
       <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{data?.service?.text_content?.content}</Table.Td>
-      <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{`${data?.employee?.firstname}`+ " "+ `${data?.employee?.lastname}` }</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{`${data?.employee?.firstname ? data?.employee?.firstname : '' }`+ " "+ `${data?.employee?.lastname ? data?.employee?.lastname:''}` }</Table.Td>
       <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{data?.date}</Table.Td>
       <Table.Td style={{ color: "#404044", textTransform: 'capitalize'}}>{ dateConverter(data?.check_in_at)}</Table.Td>
       <Table.Td style={{ color: "#404044", textTransform: 'capitalize' }}>{dateConverter(data?.check_out_at)}</Table.Td>
