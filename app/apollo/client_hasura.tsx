@@ -4,10 +4,10 @@ import { createClient } from "graphql-ws";
 import { getMainDefinition } from '@apollo/client/utilities';
 
 // Add the admin secret here
-const adminSecret = "cBUCi2wfVzpC5j16ede1stHx4nEajfTnWk0V43TRz3gVk0tGrXQ5VcILCqRJ0dkt";
+const adminSecret = "aFVeqGfcVsDTpS7efXQZ1rlMyIJugSBJ";
 const token = localStorage.getItem('token')
 const httpLink = new HttpLink({
-  uri: 'https://faithful-lynx-39.hasura.app/v1/graphql',
+  uri: 'http://192.168.255.220:32100/v1/graphql',
   headers: {
     'x-hasura-admin-secret': adminSecret, // Add the admin secret in the header
     Authorization: `Bearer ${token}`
@@ -15,7 +15,7 @@ const httpLink = new HttpLink({
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-  url: 'wss://faithful-lynx-39.hasura.app/v1/graphql',
+  url: 'wss://192.168.255.220:32100/v1/graphql',
   connectionParams: {
     headers: {
       'x-hasura-admin-secret': adminSecret, // Add the admin secret for websocket connections too

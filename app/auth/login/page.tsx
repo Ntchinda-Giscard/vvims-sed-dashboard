@@ -39,7 +39,7 @@ function Login() {
       });
 
       async function loginUser(value:any) {
-        const url = "https://ntchinda-giscard-vvims-backend.hf.space/api/v1/login";
+        const url = "http://192.168.255.220:30000/api/v1/login";
         setLoading(true)
         try {
           const response = await fetch(url,{
