@@ -15,7 +15,7 @@ const httpLink = new HttpLink({
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-  url: 'wss://192.168.255.220:32100/v1/graphql',
+  url: 'ws://192.168.255.220:32100/v1/graphql',
   connectionParams: {
     headers: {
       'x-hasura-admin-secret': adminSecret, // Add the admin secret for websocket connections too
