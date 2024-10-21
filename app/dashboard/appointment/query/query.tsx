@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_APPOINTMENT = gql`
-subscription MyQuery($company_id: uuid!, $date: date, $status: [appointment_status_enum!], $limit: Int, $offset: Int) {
+subscription MyQuery($company_id: uuid!, $date: date, $status: [String!], $limit: Int, $offset: Int) {
   appointments(where: {employee: {company_id: {_eq: $company_id}},
     _or: [
       {date: {_eq: $date}}, 

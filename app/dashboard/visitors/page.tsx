@@ -45,12 +45,18 @@ function Page() {
             date: date ? date : "2100-01-01"
         }
     });
+
+    useEffect(() =>{
+        console.log(dataVisits)
+    }, [dataVisits])
     const {data: dataAgg, error: errAgg, loading: loadAgg} = useSubscription(GET_VISITS_AGG,{
         variables:{
             search: `%${search}%`,
             date: date ? date : "2100-01-01"
         }
     })
+
+    
 
     const [acceptVisit, {}] = useMutation(ACCEPT_VISITS)
     const [rejectVisit, {}] = useMutation(REJECT_VISITS)
@@ -126,7 +132,7 @@ function Page() {
         openEdit()
     }
 
-    // if (errVisits) return `Error: ${errVisits}`
+    if (errVisits) return `Error: ${errVisits}`
     return ( <>
     <main className="flex flex-col min-h-full min-w-full">
         <DeleteVisitorModal

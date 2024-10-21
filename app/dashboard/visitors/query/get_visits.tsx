@@ -42,10 +42,6 @@ subscription GetVisits($search: String = "%%", $date: timestamptz = "2100-01-01"
         city
         email
       }
-      fileByBackId {
-        file_url
-        id
-      }
       fileByFrontId {
         file_url
         id
