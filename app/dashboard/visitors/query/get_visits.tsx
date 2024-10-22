@@ -39,7 +39,7 @@ subscription GetVisits($search: String = "%691303282%", $date: timestamptz = "21
       lastname
       phone_number
       id_number
-      file {
+      fileByPhoto {
         file_url
         id
       }
