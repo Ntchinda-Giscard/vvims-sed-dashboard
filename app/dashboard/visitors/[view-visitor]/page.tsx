@@ -30,7 +30,7 @@ function Pages() {
                 <Card.Section>
                     <Image
                         // radius="md"
-                        src={visitor?.visitorByVisitor?.file?.file_url                        }
+                        src={visitor?.visitorByVisitor?.fileByPhoto?.file_url                        }
                         h={200}
                         fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                     />
